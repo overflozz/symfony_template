@@ -2,21 +2,6 @@
 
 {% block title %}{{ parent() }} - Index{% endblock %}
 
-{%- block button_widget -%}
-    {% set attr = attr|merge({class: (attr.class|default('btn-default') ~ ' btn')|trim}) %}
-    {%- if label is empty -%}
-        {%- if label_format is not empty -%}
-            {% set label = label_format|replace({
-                '%name%': name,
-                '%id%': id,
-            }) %}
-        {%- else -%}
-            {% set label = name|humanize %}
-        {%- endif -%}
-    {%- endif -%}
-    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ label|trans({}, translation_domain)|raw }}</button>
-{%- endblock button_widget -%}
-
 
 {% block body %}
 	
@@ -33,7 +18,7 @@
 			{# Affichage des erreurs pour ce champ précis. #}
 			{{ form_errors(form.nom) }}
 
-			<div class="col-sm-10">
+			<div class="col-md-4 col-md-offset-4">
 			  {# Génération de l'input. #}
 				<div id="etape1">
 					{{ form_widget(form.nom, {'attr': {'class': '', 'placeholder' : 'Name' }}) }}
@@ -42,14 +27,22 @@
 					<br />
 					{{ form_widget(form.date, {'attr': {'class': ''}}) }}
 					<br />
-					<a href="" id="boutonintermediaire">zaefazef </a>
+					<span class="col-md-6 col-md-offset-3">
+						<a href="" id="boutonintermediairenext" class = "btn btn-primary style1"> Next </a>
+					</span>
 				</div>
 				<div id="etape2">
 					{{ form_widget(form.cv, {'attr': {'class': '', 'placeholder' : 'Upload your CV' }}) }}
-			
-					{{ form_widget(form.save, {'attr': {'class': ' btn btn-primary validation', 'id' : 'validation'}, 'label' : ' <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Valider la requête'}) }}
+					<br />
+					<br />
+					<span class="col-xs-6 pull-left" >
 
-			 		
+					<a href="" id="boutonintermediaireprev" class = "style1 btn btn-primary "> Previous </a>
+					
+					</span>
+					<span class="col-xs-6 pull-right">
+					{{ form_widget(form.save, {'attr': {'class': ' btn btn-primary style1 '}, 'label' : ' Valider'}) }}
+			 		</span>
 			
 
 				</div>
@@ -75,13 +68,23 @@
 	<script>
 			compteuretape = 0;
 			$('#etape2').hide();
-			$('#boutonintermediaire').click(function(e){
+			$('#boutonintermediairenext').click(function(e){
 
 		        e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
 				if (compteuretape==0){
 		    		compteuretape = 1;
 		    		$('#etape1').hide();
 		    		$('#etape2').fadeIn(1000);
+				}
+
+			});
+			$('#boutonintermediaireprev').click(function(e){
+
+		        e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+				if (compteuretape==1){
+		    		compteuretape = 0;
+		    		$('#etape2').hide();
+		    		$('#etape1').fadeIn(1000);
 				}
 
 			});
