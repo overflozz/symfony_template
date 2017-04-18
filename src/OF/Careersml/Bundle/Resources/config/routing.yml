@@ -1,0 +1,14 @@
+of_careersml_homepage:
+    path:     /
+    defaults: { _controller: OFCareersmlBundle:Candidature:index }
+
+of_careersml_view:
+    path:      /careers/view/{id}
+    defaults: { _controller: OFCareersmlBundle:Candidature:view }
+    requirements:
+      id: \d+
+
+
+of_careersml_new:
+    path:      /careers/new
+    defaults: { _controller: OFCareersmlBundle:Candidature:new }

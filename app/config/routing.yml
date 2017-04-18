@@ -1,0 +1,4 @@
+of_careersml:
+    resource: "@OFCareersmlBundle/Resources/config/routing.yml"
+    prefix:   /
+

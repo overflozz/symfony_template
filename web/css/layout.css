@@ -1,0 +1,124 @@
+@import "compass/css3";
+:root{
+    --color-fond-clair:#fff;
+	--colorbackground :#ecf0f1;
+	--color-secondaire:#4a8bee;;
+	--color-secondaire-hover:#3498db;
+	--color-menu-fond-hover:#f7f7f7;
+	/*alertes et boutons */
+	--color-success : #2980b9;
+	--color-success-secondaire : #3498db; /* des boutons par exemple */
+	--color-error : #e74c3c;
+	--color-error-secondaire : #c0392b;
+	--color-warning : #f39c12;
+	--color-warning-secondaire :#d35400;
+	
+}
+
+
+
+body{
+	background-color:#ecf0f1;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+    margin:0;
+	padding:0; 
+	width:100%;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+#main-content{
+	padding-top:40px;
+}
+
+#menuheader{
+	background:#fff;
+	
+}
+#menuheader li a{
+	color:#777;
+	border-bottom: 2px solid #fff;
+}
+
+#menuheader li a:hover{
+	color:#000;
+	border-bottom: 2px solid var(--color-secondaire);
+}
+#menuheader li a:active{
+	color:#000;
+	font-weight: 600;
+	border-bottom: 2px solid var(--color-secondaire);
+}
+
+
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+.inscriptionBloc{
+	margin-top : 10%;
+	padding:0;
+	
+}
+/*pour changer la couleur du focus des bouton*/
+.champBoxLogin form-control:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(0,0,0,.075);
+}
+
+.main{
+	margin-top : 2%;
+	background-color: #fff;
+	border-color: #ddd;
+	border-width: 1px;
+	border-radius: 4px 4px 4px 4px;
+}
+.champBoxLogin{
+	border : 1px #95a5a6 solid;
+	
+	background-color: var(--color-fond-clair);
+	padding : 40px;
+	border-color: #ddd;
+	border-width: 1px;
+}
+.colorPrimary{
+	background-color : var(--color-secondaire);
+}
+.colorPrimary:hover{
+	background-color : var(--color-secondaire-hover);
+}
+
+.buttonPrimary{
+	
+	color : #fafafa;
+	border :none;
+	border-radius: 0px 0px 0px 0px;
+	
+}
+
+.buttonPrimary:hover{
+	color : #fff;
+}
+
+.linkSecondary{
+	color:var(--color-secondaire);
+}
+.linkSecondary:hover{
+	color:var(--color-secondaire-hover);
+}
+
+.form-control:focus {
+  border-color: var(--color-secondaire);
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 2px var(--color-secondaire-hover);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 2px var(--color-secondaire-hover);
+}
+
+
+
+
+
