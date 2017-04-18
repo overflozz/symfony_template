@@ -11,4 +11,4 @@ of_careersml_view:
 
 of_careersml_new:
     path:      /careers/new
-    defaults: { _controller: OFCareersmlBundle:Candidature:new }
+    defaults: { _controller: OFCareersmlBundle:Candidature:create}

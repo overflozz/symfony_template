@@ -2,33 +2,115 @@
 
 {% block title %}{{ parent() }} - Index{% endblock %}
 
+{%- block button_widget -%}
+    {% set attr = attr|merge({class: (attr.class|default('btn-default') ~ ' btn')|trim}) %}
+    {%- if label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+            }) %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ label|trans({}, translation_domain)|raw }}</button>
+{%- endblock button_widget -%}
+
+
 {% block body %}
-	<h2> Salut </h2>
-  	{{ form_start(form, {'attr': {'class': 'form-horizontal '}}) }}
-  	{# Les erreurs générales du formulaire. #}
-  	{{ form_errors(form) }}
-	{# Génération manuelle et éclatée : #}
-	<div class="form-group">
-		{# Génération du label. #}
-		{{ form_label(form.nom, "Nom", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-
-		{# Affichage des erreurs pour ce champ précis. #}
-		{{ form_errors(form.nom) }}
-
-		<div class="col-sm-10">
-		  {# Génération de l'input. #}
-		  {{ form_widget(form.nom, {'attr': {'class': ''}}) }}
-		</div>
-	</div>
-  {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
-  
-
-  {# Génération automatique des champs pas encore écrits.
-     Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
-     et tous les champs cachés (type « hidden »). #}
-  	{{ form_rest(form) }}
-	{{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
 	
-  {# Fermeture de la balise <form> du formulaire HTML #}
-  {{ form_end(form) }}
+	<div class="contentremplacementajax">
+		<h2> Il suffit de remplir ce formulaire </h2>
+		<h4> Qui ne prend pas plus de 2 minutes </h4>
+	  	{{ form_start(form, {'attr': {'class': 'form-horizontal formAjax'}}) }}
+	  	{# Les erreurs générales du formulaire. #}
+	  	{{ form_errors(form) }}
+		{# Génération manuelle et éclatée : #}
+		<div class="form-group">
+			{# Génération du label. #}
+
+			{# Affichage des erreurs pour ce champ précis. #}
+			{{ form_errors(form.nom) }}
+
+			<div class="col-sm-10">
+			  {# Génération de l'input. #}
+				<div id="etape1">
+					{{ form_widget(form.nom, {'attr': {'class': '', 'placeholder' : 'Name' }}) }}
+					<br />
+					{{ form_widget(form.prenom, {'attr': {'class': '', 'placeholder' : 'Surname' }}) }}
+					<br />
+					{{ form_widget(form.date, {'attr': {'class': ''}}) }}
+					<br />
+					<a href="" id="boutonintermediaire">zaefazef </a>
+				</div>
+				<div id="etape2">
+					{{ form_widget(form.cv, {'attr': {'class': '', 'placeholder' : 'Upload your CV' }}) }}
+			
+					{{ form_widget(form.save, {'attr': {'class': ' btn btn-primary validation', 'id' : 'validation'}, 'label' : ' <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Valider la requête'}) }}
+
+			 		
+			
+
+				</div>
+			
+			</div>
+		</div>
+	  {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+	  
+
+	  {# Génération automatique des champs pas encore écrits.
+	     Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+	     et tous les champs cachés (type « hidden »). #}
+	  	{{ form_rest(form) }}
+		
+	  {# Fermeture de la balise <form> du formulaire HTML #}
+	  {{ form_end(form) }}
+	</div>
 {% endblock %}
+
+
+{% block javascript %}
+	{{ parent() }}
+	<script>
+			compteuretape = 0;
+			$('#etape2').hide();
+			$('#boutonintermediaire').click(function(e){
+
+		        e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+				if (compteuretape==0){
+		    		compteuretape = 1;
+		    		$('#etape1').hide();
+		    		$('#etape2').fadeIn(1000);
+				}
+
+			});
+		
+
+
+			  // Lorsque je soumets le formulaire
+		    $('body').on('submit','.formAjax', function(e) {
+		    	
+		        e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+		 
+		        var $this = $(this); // L'objet jQuery du formulaire
+		 
+		       
+	            // Envoi de la requête HTTP en mode asynchrone
+	            $.ajax({
+	                url: $this.attr('action'), // Le nom du fichier indiqué dans le formulaire
+	                type: $this.attr('method'), // La méthode indiquée dans le formulaire (get ou post)
+	                data: $this.serialize(), // Je sérialise les données (j'envoie toutes les valeurs présentes dans le formulaire)
+	                dataType: "json",
+	                success: function(reponse) { // Je récupère la réponse du fichier PHP
+
+	                    $('.contentremplacementajax').html(reponse.content).hide().fadeIn(1000); // J'affiche cette réponse
+	                }
+	            	});
+      			  
+        
+		    });
+		
+	</script>
+{% endblock %}
+
