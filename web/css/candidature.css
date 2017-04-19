@@ -1,0 +1,27 @@
+@import "compass/css3";
+:root{
+	
+	
+	--fondsombre:#2c3e50;
+}
+.main-content#candidature #rowtop {
+	background: var(--fondsombre);
+	
+	padding-top : 50px;
+	padding-bottom:50px;
+}
+
+.main-content#candidature #rowtop h1{
+	color:#fff;
+	
+	
+}
+
+.main-content#candidature #rowtop h4{
+	color:#ecf0f1;
+	
+	
+}
+
+.main-content#candidature .style1{margin:0 auto;width:100%; border: 1px solid var(--main-color); border-radius: 25px;   background: var(--fondsombre);  color:#fff;padding:10px;font-size:15px;}
+.main-content#candidature .style1:hover{background: #34495e;color:#fff; )}
