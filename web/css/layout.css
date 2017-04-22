@@ -2,11 +2,9 @@
 :root{
     --color-fond-clair:#fff;
 	--colorbackground :#ecf0f1;
-	--color-secondaire:#4a8bee;
+	--color-secondaire:#4a8bee;;
 	--color-secondaire-hover:#3498db;
 	--color-menu-fond-hover:#f7f7f7;
-	
-	
 	/*alertes et boutons */
 	--color-success : #2980b9;
 	--color-success-secondaire : #3498db; /* des boutons par exemple */
@@ -32,7 +30,7 @@ body{
 }
 
 .main-content{
-	padding-top:40px;
+	padding-top:50px;
 }
 
 #menuheader{
@@ -48,7 +46,7 @@ body{
 	color:#000;
 	border-bottom: 2px solid var(--color-secondaire);
 }
-#menuheader .active{
+#menuheader li a:active{
 	color:#000;
 	font-weight: 600;
 	border-bottom: 2px solid var(--color-secondaire);
