@@ -1,0 +1,25 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+	<br/>
+	{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+		<div class="col-md-4 col-md-offset-4" id="loginbloc">
+		<br />
+		{{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder' : 'Email' }})}}<br />
+		{{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder' : 'Username' }})}}<br />
+	
+		{{ form_widget(form.plainPassword.first,{'attr':{'class':'form-row', 'placeholder' : 'Password'}}) }}<br />
+		{{ form_errors(form.plainPassword.first) }}
+
+		{{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder' : 'Confirm Password'}})}}<br />
+		
+
+	    {{ form_widget(form) }}
+	   			
+	        
+	    </div>
+	    <input type="submit" class="col-md-4 col-xs-12 col-md-offset-4 btn-lg buttonLogin" id="_submit" name="_submit" value="{{ 'registration.submit'|trans }}" />
+	{{ form_end(form) }}
+
+
+<span class="col-md-4 col-xs-12 col-md-offset-4" style="text-align:center;">Already a member ? <a href="{{path("fos_user_security_login") }}" > Sign in now ! </a></span>
+

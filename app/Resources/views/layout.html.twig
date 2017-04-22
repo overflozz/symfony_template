@@ -58,6 +58,7 @@
     </div>
     <!-- Menu left -->
     <!-- Main Content -->
+    
     {% block mainContent %}
    
     {% endblock %}
@@ -77,7 +78,14 @@
     {% endblock %}
     //Permet de passer le link du menu en active selon la valeur de la page 
     $($link_active).addClass("active"); 
+
+
 </script>
+<script>
+    $(".disapear").fadeOut(2000);
+</script>
+
+
 {% endblock %}
 </html>
 

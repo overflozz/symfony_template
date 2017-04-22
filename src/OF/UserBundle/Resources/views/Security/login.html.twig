@@ -1,0 +1,9 @@
+{# Fichier qui overwrite le vendor/friendsofsymfony/FOSUSERBUNDLE/ressources/views/Security/#}
+
+{% extends "@FOSUser/layout.html.twig" %}
+
+
+{% block fos_user_content %}
+	
+    {{ include('@FOSUser/Security/login_content.html.twig') }}
+{% endblock fos_user_content %}

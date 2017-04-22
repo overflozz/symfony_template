@@ -7,3 +7,7 @@ services:
     #service_name:
     #    class: AppBundle\Directory\ClassName
     #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
+    OF.UserBundle.profile.form.type:
+        class: OF\UserBundle\Form\Type\ProfileFormType
+        tags:
+            - { name: form.type, alias: OF.UserBundle.profiletype}

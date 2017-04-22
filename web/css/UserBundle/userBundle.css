@@ -1,0 +1,25 @@
+#loginbloc{
+	background-color:#fff;
+	
+}	
+
+
+.buttonLogin{
+	background-color:var(--color-secondaire);
+	color:#fafafa;
+	border:none;
+	border-radius:0px;
+}
+.buttonLogin:hover{
+	background-color:var(--color-secondaire-hover);
+	color:#fff;
+}
+
+#loginbloc .form-control{
+	border-radius:0px;
+	float:none;
+	font-size:16px;
+	font-weight: 600;
+	height: 50px;
+	line-height:50px;
+}
