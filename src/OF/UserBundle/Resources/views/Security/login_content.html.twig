@@ -2,14 +2,11 @@
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-
-
-
 <form action="{{ path("fos_user_security_check") }}"  method="post">
         {% if error %}
              <div class="alert alert-danger col-md-4 col-md-offset-4 disapear" fadeOutDuration="20000">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
-    <div class="col-md-4 col-md-offset-4" id="loginbloc">
+    <div id="loginbloc">
        
         <br />
         {% if csrf_token %}
@@ -28,8 +25,9 @@
 
     </div>
 
-    <input type="submit" class="col-md-4 col-xs-12 col-md-offset-4 btn-lg buttonLogin" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+    <input type="submit" class="col-xs-12 btn-lg buttonLogin" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
 </form>
 
-<span class="col-md-4 col-xs-12 col-md-offset-4" style="text-align:center;">Not a member yet ? <a href="{{path("fos_user_registration_register") }}" > Sign up now ! </a></span>
+<span  style="text-align:center;">Not a member yet ? <a href="{{path("fos_user_registration_register") }}" > Sign up now ! </a></span>
+
 

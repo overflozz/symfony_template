@@ -50,6 +50,49 @@
                             <a class="page-scroll" href="#contact">Link3</a>
                         </li>
                     </ul>
+                    <!-- Lorsque le menu est affiché sur ordinateur ( on autorise le right float + menu deroulant) -->
+                    <ul class="nav navbar-nav pull-right hidden-xs " id="userMenuDropdown">
+                        
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
+                            
+                            <li class="">
+                                <a class="dropdown-toggle" id="username_dropdown" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><img class="img-circle pull-left" src="{{ asset(app.user.getWebProfilePicturePath) }}" style="height : 30px; width:30px; margin-top:-5px; margin-right:5px;" alt=""> {{app.user.username}} <span class="caret"></span></a>
+                                <ul class="dropdown-menu pull-right" id="logged_dropdown">
+                                    <li><a href="{{ path('fos_user_profile_show') }}">Mon Profil</a></li>
+                                    <li><a href="{{ path('fos_user_security_logout') }}">Deconnexion</a></li>
+                                </ul>
+                            </li>
+                          
+
+                        {% else %}
+                            <li class="">
+                                <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Connexion <span class="caret"></span></a>
+                                <ul class="dropdown-menu pull-right" id="login_dropdown" >
+                                
+                                        {{ render(controller('OFUserBundle:User:LoginBis')) }}
+                                   
+                                </ul>
+                            </li>
+
+                        {% endif %}
+                        
+                    </ul>
+                    <!-- Lorsque le menu est affiché sur mobile ( xs ), on enleve le float right -->
+                    <ul class="nav navbar-nav visible-xs ">
+                        
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+                           
+                            <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+
+                        {% else %}
+
+                            <li class=""><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
+
+                        {% endif %}
+                        
+                    </ul>
+
                 </div>
                 <!-- /.navbar-collapse -->
             </div>
@@ -58,7 +101,7 @@
     </div>
     <!-- Menu left -->
     <!-- Main Content -->
-    
+
     {% block mainContent %}
    
     {% endblock %}

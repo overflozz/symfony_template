@@ -34,6 +34,7 @@ body{
 	padding-top:50px;
 }
 
+/* ------------------      MENU       ------------------------ */
 #menuheader{
 	background:#fff;
 	
@@ -47,7 +48,7 @@ body{
 	color:#000;
 	border-bottom: 2px solid var(--color-secondaire);
 }
-#menuheader li a:active{
+#menuheader li a:active, #menuheader #open  a{
 	color:#000;
 	font-weight: 600;
 	border-bottom: 2px solid var(--color-secondaire);
@@ -60,9 +61,71 @@ body{
 }
 .inscriptionBloc{
 	margin-top : 10%;
-	padding:0;
+	padding:5px;
 	
 }
+
+/* Login Dropdown */
+
+#userMenuDropdown .dropdown-menu#logged_dropdown{
+	min-width: 200px;
+	padding:10px;
+}
+#userMenuDropdown .dropdown-menu#login_dropdown{
+	min-width: 300px;
+	padding:10px;
+}
+#userMenuDropdown .dropdown-menu#login_dropdown a{
+	border:none;
+	text-decoration:none;
+	color:var(--color-secondaire);
+}
+#userMenuDropdown .dropdown-menua#login_dropdown li a:hover{
+	border:none;
+	text-decoration:underline;
+	color:var(--color-secondaire);
+}
+#userMenuDropdown .dropdown-menu#logged_dropdown li a{
+	border:none;
+	text-decoration:none;
+	color:var(--color-secondaire);
+
+}
+#userMenuDropdown .dropdown-menua#logged_dropdown a:hover{
+	border:none;
+	text-decoration:underline;
+	color:#000;
+}
+
+#loginbloc{
+	background-color:#fff;
+	
+}	
+
+#username_dropdown{
+	font-weight: 600;
+	color:var(--color-secondaire);
+}
+.buttonLogin{
+	background-color:var(--color-secondaire);
+	color:#fafafa;
+	border:none;
+	border-radius:0px;
+}
+.buttonLogin:hover{
+	background-color:var(--color-secondaire-hover);
+	color:#fff;
+}
+
+#loginbloc .form-control{
+	border-radius:0px;
+	float:none;
+	font-size:16px;
+	font-weight: 600;
+	height: 50px;
+	line-height:50px;
+}
+
 /*pour changer la couleur du focus des bouton*/
 .champBoxLogin form-control:focus {
     border-color: #66afe9;
