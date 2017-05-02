@@ -1,0 +1,38 @@
+
+{% extends "::layout.html.twig" %}
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('css/candidature.css') }}">
+{% endblock %}
+{% block mainContent %}
+
+	<div id ="candidature" class=" main-content">
+
+
+	    <div class="row" id = "rowtop">
+	    	<div class=" container">
+		        <div class="col-lg-12">
+		            <h1>Calendier</h1>
+		            <h4>Grâce à notre calendrier du turfu venez vous enjaillez avec vos rdv bitchies. </h4>
+		        </div>
+	    	</div>
+	    </div>    
+
+
+	    <div class="row">
+	    	<div class=" container">   
+	    		<div class="col-lg-12">             
+	            {% block body %}
+
+
+	            {% endblock %} 
+	            </div>    
+	        </div>
+	    </div>
+	</div>
+
+{% endblock %}
+
+{% block script_menu_active %}
+	$link_active = "#calendar";
+{% endblock %}

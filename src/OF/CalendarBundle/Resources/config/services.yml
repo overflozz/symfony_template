@@ -1,0 +1,10 @@
+services:
+#    of_calendar.example:
+#        class: OF\CalendarBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    of_calendar.calendar_listener:
+        class: OF\CalendarBundle\EventListener\CalendarEventListener
+        tags: 
+            - { name: kernel.event_listener, event: calendar.load_events, method: loadEvents}
+        arguments: ["@doctrine.orm.entity_manager"]

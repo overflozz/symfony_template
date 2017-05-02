@@ -31,7 +31,7 @@ class Candidat
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="date", type="date")
      */
     private $date;
 

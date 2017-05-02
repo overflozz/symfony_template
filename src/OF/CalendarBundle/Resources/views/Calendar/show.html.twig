@@ -1,0 +1,14 @@
+{% extends "OFCalendarBundle::layout.html.twig" %} 
+{% block stylesheets %}
+	{{ parent()}}
+	<link rel="stylesheet" href="{{ asset('bundles/adesignscalendar/css/fullcalendar/fullcalendar.css') }}" />
+{% endblock %}
+{% block body %}
+	{% include 'ADesignsCalendarBundle::calendar.html.twig' %}
+{% endblock %}
+{% block javascript %}
+	{{ parent() }}
+	<script type="text/javascript" src="{{ asset('bundles/adesignscalendar/js/fullcalendar/jquery.fullcalendar.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/adesignscalendar/js/calendar-settings.js') }}"></script>
+
+{% endblock %}

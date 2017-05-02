@@ -22,5 +22,15 @@
 	
 }
 
-.main-content#candidature .style1{margin:0 auto;width:100%; border: 1px solid var(--main-color); border-radius: 25px;   background: var(--fondsombre);  color:#fff;padding:10px;font-size:15px;}
+.main-content#candidature .style1{margin:0 auto;width:100%; border: 1px solid var(--main-color);  background: var(--fondsombre);  color:#fff;padding:10px;font-size:15px;}
 .main-content#candidature .style1:hover{background: #34495e;color:#fff; )}
+
+.contentremplacementajax {background-color:#fff;padding:10px;border:1px solid #bdc3c7;}
+.contentremplacementajax .form-control{ width : 90%; margin: 0 auto; border-radius : 0px; }
+
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
