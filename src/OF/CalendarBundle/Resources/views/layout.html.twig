@@ -1,8 +1,10 @@
 
 {% extends "::layout.html.twig" %}
+
 {% block stylesheets %}
 	{{ parent() }}
 	<link rel="stylesheet" href="{{ asset('css/candidature.css') }}">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
 {% endblock %}
 {% block mainContent %}
 
@@ -35,4 +37,17 @@
 
 {% block script_menu_active %}
 	$link_active = "#calendar";
+{% endblock %}
+
+{% block javascript %}
+	    <script>
+        jQuery(document).ready(function() {
+        	$( '.datepicker' ).datepicker();
+
+           
+      		
+   			
+        });
+
+	</script>
 {% endblock %}

@@ -2,7 +2,6 @@
 
 namespace OF\CalendarBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Event
  * @ORM\HasLifecycleCallbacks()
@@ -59,10 +58,16 @@ class Event
     
     /**
      * @ORM\Column(name="enddatetime", type="datetime")
-     * @var \DateTime DateTime object of the event start date/time. Résoud je sais pas quel bug
      */
 
     protected $endDatetime;
+
+    /**
+     * @ORM\Column(name="startdate", type="date")
+     */
+
+    protected $startDate;
+
 
     /**
      * @ORM\Column(name="allday", type="boolean")
@@ -71,17 +76,34 @@ class Event
     protected $allDay = false;
 
     /**
+     * @ORM\Column(name="heureDebut", type="time")
+     */
+
+    protected $heureDebut;
+    /**
+     * @ORM\Column(name="duration", type="time")
+     */
+
+    protected $duration;
+
+    /**
      * @ORM\Column(name="otherfields", type="string")
      * 
      */
     protected $otherFields = array();
     
-    public function __construct($title, \DateTime $startDatetime = null, \DateTime $endDatetime = null, $allDay = false)
+    public function __construct($title = "", \DateTime $startDatetime = null, \DateTime $endDatetime = null, $allDay = false)
     {
         $this->title = $title;
         $this->startDatetime = $startDatetime;
         $this->startDate = $startDatetime;
         $this->setAllDay($allDay);
+        $this->duration = null;
+        $this->heureDebut = null;
+
+    }
+
+    public function updateValues(){
    
     }
 
@@ -316,5 +338,53 @@ class Event
     public function getOtherFields()
     {
         return $this->otherFields;
+    }
+
+    /**
+     * Set heureDebut
+     *
+     * @param \DateTime $heureDebut
+     *
+     * @return Event
+     */
+    public function setHeureDebut($heureDebut)
+    {
+        $this->heureDebut = $heureDebut;
+
+        return $this;
+    }
+
+    /**
+     * Get heureDebut
+     *
+     * @return \DateTime
+     */
+    public function getHeureDebut()
+    {
+        return $this->heureDebut;
+    }
+
+    /**
+     * Set duration
+     *
+     * @param \Time $duration
+     *
+     * @return Event
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return \Time
+     */
+    public function getDuration()
+    {
+        return $this->duration;
     }
 }
