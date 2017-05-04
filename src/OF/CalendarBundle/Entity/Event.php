@@ -28,24 +28,24 @@ class Event
     /**
      * 
      
-     * @ORM\Column(type="string",length=512)
+     * @ORM\Column(type="string",length=512, nullable=true)
      */
     protected $url;
     
     /**
-     * @ORM\Column(type="string",length=512)
+     * @ORM\Column(type="string",length=512, nullable=true)
      * @var string HTML color code for the bg color of the event label.
      */
     protected $bgColor;
     
     /**
-     * @ORM\Column(type="string",length=512)
+     * @ORM\Column(type="string",length=512, nullable=true)
      * @var string HTML color code for the foregorund color of the event label.
      */
     protected $fgColor;
     
     /**
-     * @ORM\Column(type="string",length=512)
+     * @ORM\Column(type="string",length=512, nullable=true)
      * @var string css class for the event label
      */
     protected $cssClass;
@@ -61,11 +61,11 @@ class Event
      */
 
     protected $endDatetime;
-
     /**
+     * @var \DateTime
+     *
      * @ORM\Column(name="startdate", type="date")
      */
-
     protected $startDate;
 
 
@@ -81,30 +81,26 @@ class Event
 
     protected $heureDebut;
     /**
-     * @ORM\Column(name="duration", type="time")
+     * @ORM\Column(name="heurefin", type="time")
      */
 
-    protected $duration;
+    protected $heureFin;
 
-    /**
-     * @ORM\Column(name="otherfields", type="string")
-     * 
-     */
-    protected $otherFields = array();
     
-    public function __construct($title = "", \DateTime $startDatetime = null, \DateTime $endDatetime = null, $allDay = false)
+    public function __construct()
     {
-        $this->title = $title;
-        $this->startDatetime = $startDatetime;
-        $this->startDate = $startDatetime;
-        $this->setAllDay($allDay);
-        $this->duration = null;
-        $this->heureDebut = null;
+
+        $this->startDate = new \DateTime();
+        $this->startDatetime = new \DateTime();
+        $this->endDatetime = new \DateTime();
+        
 
     }
 
     public function updateValues(){
-   
+        $this->startDatetime = \DateTime::createFromFormat('Y-m-d H:i:s', $this->startDate->format('Y-m-d')." ".$this->heureDebut->format('H:i:s'));
+        $this->endDatetime = \DateTime::createFromFormat('Y-m-d H:i:s', $this->startDate->format('Y-m-d')." ".$this->heureFin->format('H:i:s'));
+        $this->bgColor = '#FFFFFF';
     }
 
     /**
@@ -386,5 +382,29 @@ class Event
     public function getDuration()
     {
         return $this->duration;
+    }
+
+    /**
+     * Set heureFin
+     *
+     * @param \DateTime $heureFin
+     *
+     * @return Event
+     */
+    public function setHeureFin($heureFin)
+    {
+        $this->heureFin = $heureFin;
+
+        return $this;
+    }
+
+    /**
+     * Get heureFin
+     *
+     * @return \DateTime
+     */
+    public function getHeureFin()
+    {
+        return $this->heureFin;
     }
 }

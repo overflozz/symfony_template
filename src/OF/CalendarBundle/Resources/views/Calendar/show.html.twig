@@ -1,10 +1,11 @@
 {% extends "OFCalendarBundle::layout.html.twig" %} 
 {% block stylesheets %}
 	{{ parent()}}
-	<link rel="stylesheet" href="{{ asset('bundles/adesignscalendar/css/fullcalendar/fullcalendar.css') }}" />
+	<link rel="stylesheet" href="{{ asset('css/fullcalendar/fullcalendar.css') }}" />
 {% endblock %}
 {% block body %}
-	{% include 'ADesignsCalendarBundle::calendar.html.twig' %}
+	<div id="calendar-holder"></div>
+
 	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalAdd">
 	  Add Modal
 	</button>
@@ -27,7 +28,7 @@
 {% endblock %}
 {% block javascript %}
 	{{ parent() }}
-	<script type="text/javascript" src="{{ asset('bundles/adesignscalendar/js/fullcalendar/jquery.fullcalendar.min.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('bundles/adesignscalendar/js/calendar-settings.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/calendar/fullcalendar.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/calendar/calendar-settings.js') }}"></script>
 
 {% endblock %}

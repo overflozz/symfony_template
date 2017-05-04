@@ -18,9 +18,9 @@ class EventType extends AbstractType
     {
         $builder
         ->add('title', TextType::class)
-        ->add('startDate', DateType::class, array('widget' => 'single_text'))
+        ->add('startDate', DateType::class, array('widget' => 'single_text','format' => 'yyyy-MM-dd HH:mm:ss'))
         ->add('heureDebut', TimeType::class)
-        ->add('duration', TimeType::class)
+        ->add('heureFin', TimeType::class)
         ->add('save',  SubmitType::class);
     }
     

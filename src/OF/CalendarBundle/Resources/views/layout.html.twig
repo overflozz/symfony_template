@@ -41,8 +41,13 @@
 
 {% block javascript %}
 	    <script>
+
+
         jQuery(document).ready(function() {
-        	$( '.datepicker' ).datepicker();
+    	$( ".datepicker" ).datepicker({
+		  dateFormat: "yy-mm-dd 00:00:00"
+		});
+    	$( '.datepicker' ).datepicker("option", "dateFormat", "yy-mm-dd 00:00:00");
 
            
       		
