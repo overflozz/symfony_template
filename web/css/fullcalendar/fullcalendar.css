@@ -32,7 +32,13 @@ html .fc,
 	}
 
 
-
+.fc-widget-header{
+	background-color:#2c3e50;
+	color:#ecf0f1;
+}
+#calendar-holder tbody{
+	background-color:#fff;
+}
 /* Header
 ------------------------------------------------------------------------*/
 
@@ -279,8 +285,6 @@ a.fc-event {
 	}
 	
 .fc-event-skin {
-	border-color: #36c;     /* default BORDER color */
-	background-color: #36c; /* default BACKGROUND color */
 	color: #fff;            /* default TEXT color */
 	}
 	

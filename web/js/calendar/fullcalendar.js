@@ -1479,7 +1479,6 @@
         var textColor = event.textColor || source.textColor || opt('eventTextColor');
         var statements = [];
         if (backgroundColor) {
-            statements.push('background-color:' + backgroundColor)
         }
         if (borderColor) {
             statements.push('border-color:' + borderColor)
