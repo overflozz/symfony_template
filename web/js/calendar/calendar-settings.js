@@ -6,8 +6,8 @@ $(function () {
 
     $('#calendar-holder').fullCalendar({
         header: {
-            left: 'prev, next',
-            center: 'title',
+            left: ' ',
+            center: 'prev,title, next',
             right: 'month, basicWeek, basicDay,'
         },
         displayEventEnd: true,

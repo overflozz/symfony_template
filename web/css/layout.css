@@ -2,8 +2,8 @@
 :root{
     --color-fond-clair:#fff;
 	--colorbackground :#ecf0f1;
-	--color-secondaire:#4a8bee;;
-	--color-secondaire-hover:#3498db;
+	--color-secondaire:#4a8bee;
+	--color-secondaire-hover:#4681da;
 	--color-menu-fond-hover:#f7f7f7;
 	/*alertes et boutons */
 	--color-success : #2980b9;
@@ -12,13 +12,12 @@
 	--color-error-secondaire : #c0392b;
 	--color-warning : #f39c12;
 	--color-warning-secondaire :#d35400;
-	
 }
 
 
 
 body{
-	background-color:#ecf0f1;
+	background-color:var(--colorbackground);
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -182,7 +181,20 @@ body{
           box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 2px var(--color-secondaire-hover);
 }
 
+/* SIDEBAR */
 
-
+#sidebar .contentSidebar{
+	background-color:#fff;
+	padding: 5px;
+}
+#sidebar .headerSidebar{
+	background-color:var(--color-secondaire);
+	
+	text-align:center;
+	color:#fff;
+	font-size:20px;
+	padding:10px;
+	height:50px;
+}
 
 

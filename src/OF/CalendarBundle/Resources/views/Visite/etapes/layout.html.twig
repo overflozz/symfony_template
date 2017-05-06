@@ -1,23 +1,23 @@
 				<div class="row bs-wizard" style="border-bottom:0;">
-	                <div class="col-xs-3 bs-wizard-step {% if (steptoshow == 0)%}stepshowed{% endif %} {% if (event.step > 0) %}complete{% elseif (event.step== 0)%}active{% else %}disabled{% endif %}">
+	                <div class="col-xs-3 bs-wizard-step {% if (steptoshow == 0)%}stepshowed{% endif %} {% if (event.step|abs > 0) %}complete{% elseif (event.step|abs == 0)%}active{% else %}disabled{% endif %}">
 	                  <div class="text-center bs-wizard-stepnum">Descriptif</div>
 	                  <div class="progress"><div class="progress-bar"></div></div>
 	                  <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '0'})}}" class="bs-wizard-dot"></a>
 	                </div>
 	                
-	                <div class="col-xs-3 bs-wizard-step {% if (steptoshow== 1)%}stepshowed{% endif %} {% if (event.step > 1) %}complete{% elseif (event.step== 1)%}active{% else %}disabled{% endif %}"><!-- complete -->
+	                <div class="col-xs-3 bs-wizard-step {% if (steptoshow== 1)%}stepshowed{% endif %} {% if (event.step|abs > 1) %}complete{% elseif (event.step|abs == 1)%}active{% else %}disabled{% endif %}"><!-- complete -->
 	                  <div class="text-center bs-wizard-stepnum">Logistique</div>
 	                  <div class="progress"><div class="progress-bar"></div></div>
 	                  <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '1'})}}" class="bs-wizard-dot"></a>
 	                </div>
 	                
-	                <div class="col-xs-3 bs-wizard-step {% if (steptoshow== 2)%}stepshowed{% endif %} {% if (event.step > 2) %}complete{% elseif (event.step== 2)%}active{% else %}disabled{% endif %}"><!-- complete -->
+	                <div class="col-xs-3 bs-wizard-step {% if (steptoshow== 2)%}stepshowed{% endif %} {% if (event.step|abs > 2) %}complete{% elseif (event.step|abs == 2)%}active{% else %}disabled{% endif %}"><!-- complete -->
 	                  <div class="text-center bs-wizard-stepnum">Step 2</div>
 	                  <div class="progress"><div class="progress-bar"></div></div>
 	                  <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '2'})}}" class="bs-wizard-dot"></a>
 	                </div>
 	                
-	                <div class="col-xs-3 bs-wizard-step {% if (steptoshow== 3)%}stepshowed{% endif %} {% if (event.step > 3) %}complete{% elseif (event.step== 3)%}active{% else %}disabled{% endif %}"><!-- active -->
+	                <div class="col-xs-3 bs-wizard-step {% if (steptoshow== 3)%}stepshowed{% endif %} {% if (event.step|abs > 3) %}complete{% elseif (event.step|abs == 3)%}active{% else %}disabled{% endif %}"><!-- active -->
 	                  <div class="text-center bs-wizard-stepnum">Step 3</div>
 	                  <div class="progress"><div class="progress-bar"></div></div>
 	                  <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '3'})}}" class="bs-wizard-dot"></a>
@@ -25,14 +25,42 @@
 	            </div>
 
 
-{% if (steptoshow== 0)%}
+{% if (steptoshow == 0)%}
 	{% include("@OFCalendar/Visite/etapes/etape0.html.twig") %}
-{% elseif (steptoshow== 1)%}
+{% elseif (steptoshow == 1)%}
 	{% include("@OFCalendar/Visite/etapes/etape1.html.twig") %}
-{% elseif (steptoshow== 2)%}
+{% elseif (steptoshow == 2)%}
 	{% include("@OFCalendar/Visite/etapes/etape2.html.twig") %}
-{% elseif (steptoshow== 3)%}
+{% elseif (steptoshow == 3)%}
 	{% include("@OFCalendar/Visite/etapes/etape3.html.twig") %}
 {% else %}
 	{% include("@OFCalendar/Visite/etapes/etape0.html.twig") %}
 {% endif %}
+
+<script>
+	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+	$(document).ready(function(){
+		$('#valid').click(function(){
+			$.ajax({
+				url: "{{ path('of_calendar_validerEtapeEvent', {'id' : event.id})}}",
+				method: "post",
+				data:{}
+
+			}).done(function(){
+			
+			});
+		});
+		$('#validreq').click(function(){
+			$.ajax({
+				url: "{{ path('of_calendar_demandeEtapeEvent', {'id' : event.id})}}",
+				method: "post",
+				data:{}
+
+			}).done(function(){
+			
+			});
+		});
+	});
+	{% endif %}
+	
+</script>

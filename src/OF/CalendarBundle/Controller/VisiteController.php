@@ -22,7 +22,7 @@ class VisiteController extends Controller
 		if ($event == null){
 			throw new NotFoundHttpException("Page not found");
 		}
-		if($event->getStep()< $etape){ // il veut voir la prochaine etape sans avoir valider les anciennes
+		if(abs($event->getStep())< $etape){ // il veut voir la prochaine etape sans avoir valider les anciennes
 			$etape  = $event->getStep();
 		}
 		$applications = $event->getApplications();
@@ -99,6 +99,41 @@ class VisiteController extends Controller
 		}else{
 			return new Response("Erreur, ce n'est pas une requete Ajax.", 400 );
 		}
+
+	}
+
+	public function validerEtapeAction($id, Request $req){
+		$em = $this->getDoctrine()->getManager();
+		$repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
+		if ($req->isXMLHttpRequest()){
+			$event = $repositoryEvent->findOneBy(array('id' => $id));
+			if($event->getStep() < 0){// il y a eu une demande de validation
+				$event->setStep(-($event->getStep()) + 1);
+
+			}else{
+				$event->setStep(($event->getStep()) + 1);
+			}
+			$em->persist($event);
+			$em->flush();
+			return new Response("Validé.", 200 );
+		}
+		return new Response("pas validé.", 200 );
+
+	}
+	public function miseenvalidationEtapeAction($id, Request $req){
+		$em = $this->getDoctrine()->getManager();
+		$repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
+		if ($req->isXMLHttpRequest()){
+			$event = $repositoryEvent->findOneBy(array('id' => $id));
+			if($event->getStep() > 0){// il y a eu une demande de validation
+				$event->setStep(-($event->getStep()));
+				$em->persist($event);
+				$em->flush();
+			}
+
+			return new Response("demande effectuée.", 200 );
+		}
+		return new Response("demande non effectuée.", 200 );
 
 	}
 }

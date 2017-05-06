@@ -13,6 +13,18 @@ of_calendar_supprUserEvent:
         _controller: OFCalendarBundle:Visite:supprUser
     methods: [post]
 
+of_calendar_validerEtapeEvent:
+    path:     /visite/{id}/valider
+    defaults:
+        _controller: OFCalendarBundle:Visite:validerEtape
+    methods: [post]
+
+of_calendar_demandeEtapeEvent:
+    path:     /visite/{id}/validreq
+    defaults:
+        _controller: OFCalendarBundle:Visite:miseenvalidationEtape
+    methods: [post]
+
 of_calendar_view_visite:
     path:     /visite/{id}/{etape}
     defaults:

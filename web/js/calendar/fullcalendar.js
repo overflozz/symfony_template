@@ -3,9 +3,9 @@
         defaultView: 'month',
         aspectRatio: 1.35,
         header: {
-            left: 'title',
+            left: 'prev, title, next',
             center: '',
-            right: 'today prev,next'
+            right: 'today'
         },
         displayEventEnd: true,
         weekends: true,
@@ -34,8 +34,8 @@
         dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
         dayNamesShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeudi', 'Ven', 'Sam'],
         buttonText: {
-            prev: '&nbsp;&#9668;&nbsp;',
-            next: '&nbsp;&#9658;&nbsp;',
+            prev: '<span class="glyphicon glyphicon-chevron-left"></span>&nbsp;',
+            next: '<span class="glyphicon glyphicon-chevron-right"></span>',
             prevYear: '&nbsp;&lt;&lt;&nbsp;',
             nextYear: '&nbsp;&gt;&gt;&nbsp;',
             today: 'Aujourd\'hui',
@@ -53,8 +53,8 @@
     };
     var rtlDefaults = {
         header: {
-            left: 'next,prev today',
-            center: '',
+            left: 'today',
+            center: 'next,prev ',
             right: 'title'
         },
         buttonText: {
@@ -64,7 +64,7 @@
             nextYear: '&nbsp;&lt;&lt;&nbsp;'
         },
         buttonIcons: {
-            prev: 'circle-triangle-e',
+            prev: 'left-double-arrow',
             next: 'circle-triangle-w'
         }
     };
