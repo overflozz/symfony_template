@@ -31,11 +31,16 @@ html .fc,
 	vertical-align: top;
 	}
 
-
+/* Perso */
+.locked{
+	opacity:0.3;
+}
 .fc-widget-header{
 	background-color:#2c3e50;
 	color:#ecf0f1;
+	line-height:25px;
 }
+
 #calendar-holder tbody{
 	background-color:#fff;
 }
@@ -134,7 +139,7 @@ html .fc,
 	}
 	
 .fc-state-highlight { /* <td> today cell */ /* TODO: add .fc-today to <th> */
-	background: #ffc;
+	background: #ecf0f1;
 	}
 	
 .fc-cell-overlay { /* semi-transparent rectangle while dragging */
@@ -269,6 +274,7 @@ html .fc,
 	border-width: 0;
 	font-size: .85em;
 	cursor: default;
+	background-color:#ecf0f1;
 	}
 	
 a.fc-event,
@@ -285,8 +291,19 @@ a.fc-event {
 	}
 	
 .fc-event-skin {
-	color: #fff;            /* default TEXT color */
+	margin : 0 auto;
+	color: #2c3e50;            /* default TEXT color */
+	border:none;
+	
+	border-radius:5px;
+	margin : 5px;
+	margin-bottom:10px;
+	padding:5px;
 	}
+
+.fc-event-skin:hover{
+	background-color:#e7eaeb;
+}
 	
 .fc-event-inner {
 	position: relative;
@@ -349,12 +366,12 @@ a.fc-event {
 ------------------------------------------------------------*/
 	
 .fc-corner-left {
-	margin-left: 1px;
+
 	}
 	
 .fc-corner-left .fc-button-inner,
 .fc-corner-left .fc-event-inner {
-	margin-left: -1px;
+	
 	}
 	
 .fc-corner-right {
@@ -388,19 +405,19 @@ a.fc-event {
 -----------------------------------------------------------------*/
 	
 .fc-corner-left .fc-event-inner {
-	border-left-width: 1px;
+
 	}
 	
 .fc-corner-right .fc-event-inner {
-	border-right-width: 1px;
+	
 	}
 	
 .fc-corner-top .fc-event-inner {
-	border-top-width: 1px;
+	
 	}
 	
 .fc-corner-bottom .fc-event-inner {
-	border-bottom-width: 1px;
+
 	}
 	
 	

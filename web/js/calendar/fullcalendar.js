@@ -2969,7 +2969,7 @@
             } else {
                 html += "div"
             }
-            html += " class='" + classes.join(' ') + "'" + " style='position:absolute;z-index:8;top:" + seg.top + "px;left:" + seg.left + "px;" + skinCss + "'" + ">" + "<div class='fc-event-inner fc-event-skin'" + skinCssAttr + ">" + "<div class='fc-event-head fc-event-skin'" + skinCssAttr + ">" + "<div class='fc-event-time'>" + htmlEscape(formatDates(event.start, event.end, opt('timeFormat'))) + "</div>" + "</div>" + "<div class='fc-event-content'>" + "<div class='fc-event-title'>" + htmlEscape(event.title) + "</div>" + "</div>" + "<div class='fc-event-bg'></div>" + "</div>";
+            html += " class='" + classes.join(' ') + "'" + " style='position:absolute;z-index:8;top:" + seg.top + "px;left:" + seg.left + "px;" + "'" + ">" + "<div class='fc-event-inner fc-event-skin'"  + ">" + "<div class='fc-event-head fc-event-skin'" + skinCssAttr + ">" + "<div class='fc-event-time'>" + htmlEscape(formatDates(event.start, event.end, opt('timeFormat'))) + "</div>" + "</div>" + "<div class='fc-event-content'>" + "<div class='fc-event-title'>" + htmlEscape(event.title) + "</div>" + "</div>" + "<div class='fc-event-bg'></div>" + "</div>";
             if (seg.isEnd && isEventResizable(event)) {
                 html += "<div class='ui-resizable-handle ui-resizable-s'>=</div>"
             }
@@ -3516,19 +3516,19 @@
                 url = event.url;
                 skinCss = getSkinCss(event, opt);
                 if (url) {
-                    html += "<a href='" + htmlEscape(url) + "'"
+                    html += "<div idDay='" + htmlEscape(url) + "' "
                 } else {
                     html += "<div"
                 }
-                html += " class='" + classes.join(' ') + "'" + " style='position:absolute;z-index:8;left:" + left + "px;" + skinCss + "'" + ">" + "<div" + " class='fc-event-inner fc-event-skin'" + (skinCss ? " style='" + skinCss + "'" : '') + ">";
+                html += " class='" + classes.join(' ') + "' style='position:absolute;z-index:8;left:" + left + "px;" + "'" + ">" + "<div" + " class='fc-event-inner fc-event-skin' >";
                 if (!event.allDay && seg.isStart) {
-                    html += "<span class='fc-event-time'>" + htmlEscape(formatDates(event.start, event.end, opt('timeFormat'))) + "</span>"
+                    html += "<span class='fc-event-time'>" + htmlEscape(formatDates(event.start, event.start, opt('timeFormat'))) + " - " + htmlEscape(formatDates(event.end, event.end, opt('timeFormat'))) + "</span>"
                 }
-                html += "<span class='fc-event-title'>" + htmlEscape(event.title) + "</span>" + "</div>";
+                html += "<br /><span class='fc-event-title'>" + htmlEscape(event.title) + "</span>" + "</div>";
                 if (seg.isEnd && isEventResizable(event)) {
                     html += "<div class='ui-resizable-handle ui-resizable-" + (rtl ? 'w' : 'e') + "'>" + "&nbsp;&nbsp;&nbsp;" + "</div>"
                 }
-                html += "</" + (url ? "a" : "div") + ">";
+                html += "</" + (url ? "div" : "div") + ">";
                 seg.left = left;
                 seg.outerWidth = right - left;
                 seg.startCol = leftCol;
