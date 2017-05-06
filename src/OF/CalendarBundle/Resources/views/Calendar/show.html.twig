@@ -15,24 +15,52 @@
 	</button>
 	<!-- Modal -->
 	<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="myModalLabel">Ajouter une visite</h4>
-	      </div>
-	      <div class="modal-body">
-	        {% include 'OFCalendarBundle:Calendar:addevent.html.twig' %}
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-	    </div>
-	  </div>
+		<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Ajouter une visite</h4>
+		      </div>
+		      <div class="modal-body">
+		        {% include 'OFCalendarBundle:Calendar:addevent.html.twig' %}
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+		    </div>
+		  </div>
+		</div>
 	</div>
+	<div id="modalShow" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-body">
+				
+			
+			</div>
+		</div>
+	</div>
+
 {% endblock %}
 {% block javascript %}
 	{{ parent() }}
+
 	<script type="text/javascript" src="{{ asset('js/calendar/fullcalendar.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/calendar/calendar-settings.js') }}"></script>
+	<script>
+$(function(){
+
+$('.main-content').on("click", "#modalVisitetrigger", function(){
+                $.ajax({
+                    url: "{{ path('of_calendar_showModalEvent')}}",
+                    method: "post",
+                    data:{"idVisite" : $(this).attr("idVisite")}
+
+                }).done(function($reponse){
+                	$('#modalShow .modal-body').html($reponse);
+                	$('#modalShow ').modal("show");
+                });
+                
+            });
+});
+	</script>
 
 {% endblock %}

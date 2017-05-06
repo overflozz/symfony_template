@@ -2965,7 +2965,7 @@
                 classes = classes.concat(event.source.className || [])
             }
             if (url) {
-                html += "a href='" + htmlEscape(event.url) + "'"
+                html += "a href='' idVisite='" + htmlEscape(event.url) + "'"
             } else {
                 html += "div"
             }
@@ -3516,7 +3516,7 @@
                 url = event.url;
                 skinCss = getSkinCss(event, opt);
                 if (url) {
-                    html += "<a href='" + htmlEscape(url) + "' "
+                    html += "<div id='modalVisitetrigger' idVisite = '" + htmlEscape(url) + "' "
                 } else {
                     html += "<div"
                 }
@@ -3528,11 +3528,14 @@
                 if (seg.isEnd && isEventResizable(event)) {
                     html += "<div class='ui-resizable-handle ui-resizable-" + (rtl ? 'w' : 'e') + "'>" + "&nbsp;&nbsp;&nbsp;" + "</div>"
                 }
-                html += "</" + (url ? "a" : "div") + ">";
+                html += "</" + (url ? "div" : "div") + ">";
                 seg.left = left;
                 seg.outerWidth = right - left;
                 seg.startCol = leftCol;
                 seg.endCol = rightCol + 1
+
+      
+        
             }
             return html
         }

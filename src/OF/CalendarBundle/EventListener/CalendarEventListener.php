@@ -63,7 +63,7 @@ class CalendarEventListener
 
 		    //optional calendar event settings
 		    $eventEntity->setAllDay($companyEvent->getAllDay()); // default is false, set to true if this is an all day event
-		    $eventEntity->setUrl($this->router->generate('of_calendar_view_visite', array('id'=>$companyEvent->getId()))); // url to send user to when event label is clicked
+		    $eventEntity->setUrl((string)$companyEvent->getId()); // url to send user to when event label is clicked
 		    $eventEntity->setCssClass($companyEvent->getCssClass()); // a custom class you may want to apply to event labels
 		    if ($companyEvent->getUsers()->contains($this->token->getToken()->getUser())){
 		    	$eventEntity->setCssClass('applying');

@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0430a3807ff1a7a5cb6d686b04e3b23e",
+    "content-hash": "24bc0cee6578c8ce8cbc3dd0be9fd406",
     "packages": [
         {
             "name": "adesigns/calendar-bundle",
-            "version": "1.1.1",
+            "version": "dev-master",
             "target-dir": "ADesigns/CalendarBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/adesigns/calendar-bundle.git",
-                "reference": "24aacadbbc37a685f54ee2ee53f79b2c6b6879bb"
+                "reference": "056861b042f4c70c7d929c3ad62d891fe4eb0e36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adesigns/calendar-bundle/zipball/24aacadbbc37a685f54ee2ee53f79b2c6b6879bb",
-                "reference": "24aacadbbc37a685f54ee2ee53f79b2c6b6879bb",
+                "url": "https://api.github.com/repos/adesigns/calendar-bundle/zipball/056861b042f4c70c7d929c3ad62d891fe4eb0e36",
+                "reference": "056861b042f4c70c7d929c3ad62d891fe4eb0e36",
                 "shasum": ""
             },
             "require": {
@@ -58,7 +58,7 @@
                 "fullcalendar",
                 "jquery calendar"
             ],
-            "time": "2016-02-14T23:25:22+00:00"
+            "time": "2017-04-30 15:50:57"
         },
         {
             "name": "composer/ca-bundle",
@@ -2547,7 +2547,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "adesigns/calendar-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

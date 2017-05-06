@@ -3,12 +3,11 @@
 		Mes visites
 	</div>
 	<div class="contentSidebar">
-	{{ app.user.username }}
-	
-	iuzaebfaze
-	fzaeiufbaizuef
-	azfeihazbfahzef
-	azefbhazefpazef
-	azefbhazefazef
+		<ul>
+		{% for event in userApplications %}
+			<li><b>{{event.startDatetime|date("d/m/Y", "Europe/Paris")}}</b> :  {{event.title}}</li>
+		{% endfor %}
+		</ul>
 	</div>
+	
 {% endif %}

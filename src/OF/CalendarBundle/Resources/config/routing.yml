@@ -7,6 +7,13 @@ of_calendar_ajoutUserEvent:
     defaults:
         _controller: OFCalendarBundle:Visite:ajoutUser
     methods: [post]
+
+of_calendar_showModalEvent:
+    path:     /calendar/show
+    defaults:
+        _controller: OFCalendarBundle:Visite:viewModal
+    methods: [post]
+
 of_calendar_supprUserEvent:
     path:     /visite/{id}/supprUser
     defaults:

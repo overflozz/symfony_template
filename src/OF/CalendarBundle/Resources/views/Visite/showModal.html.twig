@@ -1,0 +1,17 @@
+
+<p> Bienvenue sur l'aperçu de visite.
+	Voici l'id : {{ event.id }} <br />
+	Voici le titre : {{ event.title }} <br />
+	Conférenciers :  {{ nbParticipants }}/ {{ event.nbUserMax}}
+	{% if nbParticipants < event.nbUserMax %}
+		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userParticipe == false %}
+			<a href="" id="ajout_conferencier" >S'ajouter</a>
+		{% endif %}
+		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userParticipe == true %}
+
+			
+		{% endif %}
+
+	{% endif %}
+</p>
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

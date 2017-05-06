@@ -615,4 +615,6 @@ table.fc-border-separate {
 	_overflow: hidden;
 	}
 	
-	
+#modalShow .modal-body{
+	background:#fff;
+}

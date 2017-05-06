@@ -32,7 +32,23 @@ class VisiteController extends Controller
     		
 
 	}
+    public function viewModalAction(Request $request)
+    {	
 
+    	$repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
+    	$repositoryEventUser = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:EventUser');
+		$event = $repositoryEvent->findOneBy(array('id' => $request->get("idVisite")));
+		if ($event == null){
+			throw new NotFoundHttpException("Page not found");
+		}
+
+		$applications = $event->getApplications();
+		$userParticipe = $event->getUsers()->contains($this->getUser());
+		
+		return $this->render('OFCalendarBundle:Visite:showModal.html.twig', array('event' => $event, 'nbParticipants' => count($applications), 'userParticipe' => $userParticipe));
+    		
+
+	}
 	public function ajoutUserAction($id, Request $req){
 
 		$em = $this->getDoctrine()->getManager();

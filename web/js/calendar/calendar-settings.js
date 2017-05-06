@@ -10,6 +10,9 @@ $(function () {
             center: 'prev,title, next',
             right: 'month, basicWeek, basicDay,'
         },
+      
+
+
         displayEventEnd: true,
         lazyFetching: true,
         timeFormat: {
@@ -19,7 +22,7 @@ $(function () {
             // for all other views
                     // 7p
         },
-        displayEventEnd: true,
+        
         eventSources: [
             {
                 url: Routing.generate('fullcalendar_loader'),
@@ -27,10 +30,13 @@ $(function () {
                 // A way to add custom filters to your event listeners
                 data: {
                 },
+
                 error: function() {
                    //alert('There was an error while fetching Google Calendar!');
                 }
             }
         ]
     });
+
+
 });

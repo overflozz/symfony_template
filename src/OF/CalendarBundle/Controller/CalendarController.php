@@ -28,6 +28,7 @@ class CalendarController extends Controller
 	    }
 
 
-        return $this->render('OFCalendarBundle:Calendar:show.html.twig', array('form' => $form->createView()));
+        return $this->render('OFCalendarBundle:Calendar:show.html.twig', array('form' => $form->createView(), 'userApplications' => $this->getUser()->getEvents()));
     }
+    
 }
