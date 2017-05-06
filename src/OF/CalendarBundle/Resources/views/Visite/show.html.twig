@@ -1,0 +1,59 @@
+{% extends "OFCalendarBundle::layout.html.twig" %} 
+{% block stylesheets %}
+	{{ parent()}}
+	<link rel="stylesheet" href="{{ asset('css/visites/visites.css') }}">
+{% endblock %}
+
+
+
+{% block body %}
+		<p> Bienvenue sur l'aperçu de visite.
+			Voici l'id : {{ event.id }} <br />
+			Voici le titre : {{ event.title }} <br />
+			Conférenciers :  {{ nbParticipants }}/ {{ event.nbUserMax}}
+			{% if nbParticipants < event.nbUserMax %}
+				{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userParticipe == false %}
+					<a href="" id="ajout_conferencier" >S'ajouter</a>
+				{% endif %}
+				{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userParticipe == true %}
+					{% include("@OFCalendar/Visite/etapes/layout.html.twig") %}
+
+					
+				{% endif %}
+
+			{% endif %}
+		</p>
+{% endblock %}
+
+
+
+{% block javascript %}
+	{{ parent()}}
+	<script>
+	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+	$(document).ready(function(){
+		$('#ajout_conferencier').click(function(){
+			$.ajax({
+				url: "{{ path('of_calendar_ajoutUserEvent', {'id' : event.id})}}",
+				method: "post",
+				data:{idUser: {{ app.user.id}}}
+
+			}).done(function(){
+			
+			});
+		});
+		$('#suppr_conferencier').click(function(){
+			$.ajax({
+				url: "{{ path('of_calendar_supprUserEvent', {'id' : event.id})}}",
+				method: "post",
+				data:{idUser: {{ app.user.id}}}
+
+			}).done(function(){
+			
+			});
+		});
+	});
+	{% endif %}
+	
+	</script>
+{% endblock %}

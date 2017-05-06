@@ -3516,7 +3516,7 @@
                 url = event.url;
                 skinCss = getSkinCss(event, opt);
                 if (url) {
-                    html += "<div idDay='" + htmlEscape(url) + "' "
+                    html += "<a href='" + htmlEscape(url) + "' "
                 } else {
                     html += "<div"
                 }
@@ -3528,7 +3528,7 @@
                 if (seg.isEnd && isEventResizable(event)) {
                     html += "<div class='ui-resizable-handle ui-resizable-" + (rtl ? 'w' : 'e') + "'>" + "&nbsp;&nbsp;&nbsp;" + "</div>"
                 }
-                html += "</" + (url ? "div" : "div") + ">";
+                html += "</" + (url ? "a" : "div") + ">";
                 seg.left = left;
                 seg.outerWidth = right - left;
                 seg.startCol = leftCol;

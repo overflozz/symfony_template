@@ -1,3 +1,21 @@
 of_calendar_homepage:
     path:     /calendar
     defaults: { _controller: OFCalendarBundle:Calendar:show }
+
+of_calendar_ajoutUserEvent:
+    path:     /visite/{id}/ajoutUser
+    defaults:
+        _controller: OFCalendarBundle:Visite:ajoutUser
+    methods: [post]
+of_calendar_supprUserEvent:
+    path:     /visite/{id}/supprUser
+    defaults:
+        _controller: OFCalendarBundle:Visite:supprUser
+    methods: [post]
+
+of_calendar_view_visite:
+    path:     /visite/{id}/{etape}
+    defaults:
+        _controller: OFCalendarBundle:Visite:view
+        etape: 0
+

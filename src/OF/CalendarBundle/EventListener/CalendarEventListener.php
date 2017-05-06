@@ -5,15 +5,21 @@ namespace OF\CalendarBundle\EventListener;
 
 use ADesigns\CalendarBundle\Event\CalendarEvent;
 use ADesigns\CalendarBundle\Entity\EventEntity;
+use \Symfony\Bundle\FrameworkBundle\Routing\Router;
+use \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Doctrine\ORM\EntityManager;
 
 class CalendarEventListener
 {
 	private $entityManager;
-	
-	public function __construct(EntityManager $entityManager)
+	private $router;
+	protected $token;
+
+	public function __construct(EntityManager $entityManager, Router $router, TokenStorage $token)
 	{
 		$this->entityManager = $entityManager;
+		$this->token = $token;
+		$this->router = $router;
 	}
 	
 	public function loadEvents(CalendarEvent $calendarEvent)
@@ -57,9 +63,16 @@ class CalendarEventListener
 
 		    //optional calendar event settings
 		    $eventEntity->setAllDay($companyEvent->getAllDay()); // default is false, set to true if this is an all day event
-		    $eventEntity->setUrl((string)$companyEvent->getId()); // url to send user to when event label is clicked
+		    $eventEntity->setUrl($this->router->generate('of_calendar_view_visite', array('id'=>$companyEvent->getId()))); // url to send user to when event label is clicked
 		    $eventEntity->setCssClass($companyEvent->getCssClass()); // a custom class you may want to apply to event labels
-
+		    if ($companyEvent->getUsers()->contains($this->token->getToken()->getUser())){
+		    	$eventEntity->setCssClass('applying');
+		    }
+		    else if (count($companyEvent->getApplications()) >= $companyEvent->getNbUserMax()){
+		    	$eventEntity->setCssClass('locked');
+		    }else{
+		    	$eventEntity->setCssClass('open');
+		    }
 		    //finally, add the event to the CalendarEvent for displaying on the calendar
 		    $calendarEvent->addEvent($eventEntity);
 		}

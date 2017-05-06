@@ -233,46 +233,5 @@ class User extends BaseUser
 
 
     
-
-    /**
-     * Add visite
-     *
-     * @param \OF\CalendarBundle\Entity\EventUser $visite
-     *
-     * @return User
-     */
-    public function addVisite(\OF\CalendarBundle\Entity\EventUser $visite)
-    {
-        $this->visites[] = $visite;
-        $visite->setUser($this); //On lie lutilisater à l'event
-        return $this;
-    }
-
-    /**
-     * Remove visite
-     *
-     * @param \OF\CalendarBundle\Entity\EventUser $visite
-     */
-    public function removeVisite(\OF\CalendarBundle\Entity\EventUser $visite)
-    {
-        $this->visites->removeElement($visite);
-    }
-
-    /**
-     * Get visites
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    // Retourne les entités EventUser
-    public function getVisites()
-    {
-        return $this->visites;
-    }
-    // Retourne les entités Event
-    public function getEvents(){
-        return $this->getVisites()->map(
-            function($element){
-                return $element->getEvent();
-            });
-    }
 }
+

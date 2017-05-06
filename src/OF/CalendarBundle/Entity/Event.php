@@ -24,6 +24,12 @@ class Event
      * @ORM\Column(type="string",length=512)
      */
     protected $title;
+
+    /**
+     * 
+     * @ORM\Column(type="integer")
+     */
+    protected $step;
     
     /**
      * 
@@ -80,11 +86,27 @@ class Event
      */
 
     protected $heureDebut;
+
+    /**
+     * @ORM\Column(name="nbUserMax", type="integer")
+     */
+
+    protected $nbUserMax;
+    
     /**
      * @ORM\Column(name="heurefin", type="time")
      */
 
     protected $heureFin;
+  /**
+
+   * @ORM\OneToMany(targetEntity="OF\CalendarBundle\Entity\EventUser", mappedBy="event")
+
+   */
+
+  private $applications; // Notez le « s », une annonce est liée à plusieurs candidatures
+
+
 
     
     public function __construct()
@@ -93,7 +115,7 @@ class Event
         $this->startDate = new \DateTime();
         $this->startDatetime = new \DateTime();
         $this->endDatetime = new \DateTime();
-        
+        $this->step = 0;
 
     }
 
@@ -406,5 +428,107 @@ class Event
     public function getHeureFin()
     {
         return $this->heureFin;
+    }
+
+    /**
+     * Add application
+     *
+     * @param \OF\CalendarBundle\Entity\EventUser $application
+     *
+     * @return Event
+     */
+    public function addApplication(\OF\CalendarBundle\Entity\EventUser $application)
+    {
+        $this->applications[] = $application;
+        $application->setEvent($this); //On lie lutilisater à l'event
+
+        return $this;
+    }
+
+    /**
+     * Remove application
+     *
+     * @param \OF\CalendarBundle\Entity\EventUser $application
+     */
+    public function removeApplication(\OF\CalendarBundle\Entity\EventUser $application)
+    {
+        $this->applications->removeElement($application);
+    }
+
+    /**
+     * Get applications
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getApplications()
+    {
+        return $this->applications;
+    }
+    /**
+     * Get applications
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */    
+    public function getUsers(){
+        return $this->getApplications()->map(
+            function($element){
+                return $element->getUser();
+            });
+    }
+
+    public function getApplication(\OF\UserBundle\Entity\User $user){
+            $listeEvents = $this->getUsers(); /// on fait la liste des evnts ordonnés
+            $index = $listeEvents->indexOf($user); // on regarde l'id correspondant à notre event
+            return $this->getApplications()->get($index) ; // on renvoie l'application associé à cette idée.
+
+    }
+
+    /**
+     * Set nbUserMax
+     *
+     * @param integer $nbUserMax
+     *
+     * @return Event
+     */
+    public function setNbUserMax($nbUserMax)
+    {
+        $this->nbUserMax = $nbUserMax;
+
+        return $this;
+    }
+   
+
+    /**
+     * Get nbUserMax
+     *
+     * @return integer
+     */
+    public function getNbUserMax()
+    {
+        return $this->nbUserMax;
+    }
+
+    /**
+     * Set step
+     *
+     * @param integer $step
+     *
+     * @return Event
+     */
+    public function setStep($step)
+    {
+        $this->step = $step;
+
+        return $this;
+    }
+
+    /**
+     * Get step
+     *
+     * @return integer
+     */
+    public function getStep()
+    {
+        return $this->step;
     }
 }
