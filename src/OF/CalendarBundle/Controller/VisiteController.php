@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OF\CalendarBundle\Form\EventType;
+use OF\CalendarBundle\Form\Etape1Type;
 use OF\CalendarBundle\Entity\Event;
 use OF\CalendarBundle\Entity\EventUser;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -15,6 +16,7 @@ class VisiteController extends Controller
     public function viewAction($id, $etape, Request $request)
     {	
 
+    	$form = null;
     	$repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
     	$repositoryEventUser = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:EventUser');
 
@@ -26,9 +28,34 @@ class VisiteController extends Controller
 			$etape  = $event->getStep();
 		}
 		$applications = $event->getApplications();
-		$userParticipe = $event->getUsers()->contains($this->getUser());
+		if($this->getUser() != NULL){
+			$userParticipe = $event->getUsers()->contains($this->getUser());
+		}else{
+			$userParticipe = false;
+		}
+		if($etape == 1 ){
+			$form   = $this->get('form.factory')->create(Etape1Type::class, $event);
+		}
+
+	    if($form == null){
 
 		return $this->render('OFCalendarBundle:Visite:show.html.twig', array('event' => $event, 'nbParticipants' => count($applications), 'userParticipe' => $userParticipe, 'steptoshow' => $etape));
+	    }
+
+    	if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+	      $em = $this->getDoctrine()->getManager();
+	      
+	      $em->persist($event);
+
+	      $em->flush();
+
+	      $request->getSession()->getFlashBag()->add('notice', 'Event ajouté.');
+
+	      return $this->redirectToRoute('of_calendar_view_visite', array('id' => $id, 'etape' => $etape));
+	    }
+
+
+		return $this->render('OFCalendarBundle:Visite:show.html.twig', array('event' => $event, 'nbParticipants' => count($applications), 'userParticipe' => $userParticipe, 'steptoshow' => $etape, 'form' => $form->createView()));
     		
 
 	}
@@ -131,9 +158,11 @@ class VisiteController extends Controller
 			}
 			$em->persist($event);
 			$em->flush();
-			return new Response("Validé.", 200 );
+
+
+	   	return new Response("Validé.", 200 );
 		}
-		return new Response("pas validé.", 200 );
+		return new Response("pas validé.", 400 );
 
 	}
 	public function miseenvalidationEtapeAction($id, Request $req){

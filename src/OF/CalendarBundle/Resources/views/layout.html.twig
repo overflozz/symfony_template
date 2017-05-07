@@ -34,13 +34,13 @@
 
 
 {% block javascript %}
-	{% block script_menu_active %}
-		$link_active = "#calendar";
-	{% endblock %}
+
 
 	{{ parent()}}
 	    <script>
-
+	{% block script_menu_active %}
+		$link_active = "#calendar";
+	{% endblock %}
 
     	$( ".datepicker" ).datepicker({
 		  dateFormat: "yy-mm-dd 00:00:00"
@@ -51,6 +51,4 @@
       		
    			
 	</script>
-}
-}
 {% endblock %}

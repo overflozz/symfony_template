@@ -27,8 +27,12 @@ class CalendarController extends Controller
 	      return $this->redirectToRoute('of_calendar_homepage');
 	    }
 
-
-        return $this->render('OFCalendarBundle:Calendar:show.html.twig', array('form' => $form->createView(), 'userApplications' => $this->getUser()->getEvents()));
+	    if($this->getUser() == null){
+	    	$userApplications = null;
+	    }else{
+	    	$userApplications =$this->getUser()->getEvents();
+	    }
+        return $this->render('OFCalendarBundle:Calendar:show.html.twig', array('form' => $form->createView(), 'userApplications' => $userApplications));
     }
     
 }

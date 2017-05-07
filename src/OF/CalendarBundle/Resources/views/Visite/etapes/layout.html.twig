@@ -24,7 +24,7 @@
 	                </div>
 	            </div>
 
-
+<div class="etapeBloc">
 {% if (steptoshow == 0)%}
 	{% include("@OFCalendar/Visite/etapes/etape0.html.twig") %}
 {% elseif (steptoshow == 1)%}
@@ -37,6 +37,7 @@
 	{% include("@OFCalendar/Visite/etapes/etape0.html.twig") %}
 {% endif %}
 
+</div>
 <script>
 	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 	$(document).ready(function(){
@@ -46,8 +47,8 @@
 				method: "post",
 				data:{}
 
-			}).done(function(){
-			
+			}).done(function(response){
+    			$('.etapeBloc').fadeOut(1000);      
 			});
 		});
 		$('#validreq').click(function(){

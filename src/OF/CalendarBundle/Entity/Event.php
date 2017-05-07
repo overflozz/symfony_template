@@ -1,6 +1,9 @@
 <?php
 
 namespace OF\CalendarBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 /**
  * Event
@@ -24,10 +27,15 @@ class Event
      * @ORM\Column(type="string",length=512)
      */
     protected $title;
+    /**
+     * @ORM\Column(name="otherinfos", type="array")
+     */
+    protected $otherInfos;
+
 
     /**
      * 
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $step;
     
@@ -116,6 +124,8 @@ class Event
         $this->startDatetime = new \DateTime();
         $this->endDatetime = new \DateTime();
         $this->step = 0;
+        $this->otherInfos = array();
+        $this->nbUserMax = 2;
 
     }
 
@@ -530,5 +540,29 @@ class Event
     public function getStep()
     {
         return $this->step;
+    }
+
+    /**
+     * Set otherInfos
+     *
+     * @param array $otherInfos
+     *
+     * @return Event
+     */
+    public function setOtherInfos($otherInfos)
+    {
+        $this->otherInfos = $otherInfos;
+
+        return $this;
+    }
+
+    /**
+     * Get otherInfos
+     *
+     * @return array
+     */
+    public function getOtherInfos()
+    {
+        return $this->otherInfos;
     }
 }
