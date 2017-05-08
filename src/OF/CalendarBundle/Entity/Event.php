@@ -28,6 +28,41 @@ class Event
      */
     protected $title;
     /**
+     * 
+     * @ORM\Column(type="string",length=512)
+     */
+    protected $client;
+    /**
+     * 
+     * @ORM\Column(type="string",length=512)
+     */
+    protected $typeClient;
+    /**
+     * 
+     * @ORM\Column(type="text")
+     */
+    protected $theme;
+    /**
+     * 
+     * @ORM\Column(type="integer")
+     */
+    protected $nombreParticipants;
+    /**
+     * 
+     * @ORM\Column(type="string",length=512)
+     */
+    protected $langue;
+    /**
+     * 
+     * @ORM\Column(type="string",length=512)
+     */
+    protected $description;
+    /**
+     * 
+     * @ORM\Column(type="text")
+     */
+    protected $objectif;
+    /**
      * @ORM\Column(name="otherinfos", type="array")
      */
     protected $otherInfos;
@@ -564,5 +599,174 @@ class Event
     public function getOtherInfos()
     {
         return $this->otherInfos;
+    }
+
+    /**
+     * Set client
+     *
+     * @param string $client
+     *
+     * @return Event
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return string
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * Set theme
+     *
+     * @param string $theme
+     *
+     * @return Event
+     */
+    public function setTheme($theme)
+    {
+        $this->theme = $theme;
+
+        return $this;
+    }
+
+    /**
+     * Get theme
+     *
+     * @return string
+     */
+    public function getTheme()
+    {
+        return $this->theme;
+    }
+
+    /**
+     * Set nombreParticipants
+     *
+     * @param integer $nombreParticipants
+     *
+     * @return Event
+     */
+    public function setNombreParticipants($nombreParticipants)
+    {
+        $this->nombreParticipants = $nombreParticipants;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreParticipants
+     *
+     * @return integer
+     */
+    public function getNombreParticipants()
+    {
+        return $this->nombreParticipants;
+    }
+
+    /**
+     * Set langue
+     *
+     * @param string $langue
+     *
+     * @return Event
+     */
+    public function setLangue($langue)
+    {
+        $this->langue = $langue;
+
+        return $this;
+    }
+
+    /**
+     * Get langue
+     *
+     * @return string
+     */
+    public function getLangue()
+    {
+        return $this->langue;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Event
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+
+    /**
+     * Set objectif
+     *
+     * @param string $objectif
+     *
+     * @return Event
+     */
+    public function setObjectif($objectif)
+    {
+        $this->objectif = $objectif;
+
+        return $this;
+    }
+
+    /**
+     * Get objectif
+     *
+     * @return string
+     */
+    public function getObjectif()
+    {
+        return $this->objectif;
+    }
+
+    /**
+     * Set typeClient
+     *
+     * @param string $typeClient
+     *
+     * @return Event
+     */
+    public function setTypeclient($typeClient)
+    {
+        $this->typeClient = $typeClient;
+
+        return $this;
+    }
+
+    /**
+     * Get typeClient
+     *
+     * @return string
+     */
+    public function getTypeclient()
+    {
+        return $this->typeClient;
     }
 }

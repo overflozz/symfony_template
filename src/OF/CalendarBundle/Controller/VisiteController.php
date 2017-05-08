@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OF\CalendarBundle\Form\EventType;
 use OF\CalendarBundle\Form\Etape1Type;
+use OF\CalendarBundle\Form\Etape2Type;
 use OF\CalendarBundle\Entity\Event;
 use OF\CalendarBundle\Entity\EventUser;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -34,8 +35,11 @@ class VisiteController extends Controller
 		}else{
 			$userParticipe = false;
 		}
-		if($etape == 2 ){
+		if($etape == 1 ){
 			$form   = $this->get('form.factory')->create(Etape1Type::class, $event);
+		}
+		if($etape == 2 ){
+			$form   = $this->get('form.factory')->create(Etape2Type::class, $event);
 		}
 
 	    if($form == null){

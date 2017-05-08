@@ -5,7 +5,7 @@
     <div class="panel-body">
       {% if event.step >= steptoshow %}
         <div class="alert alert-success">
-          <strong>Validée</strong> Cette étape a déjà été validée.
+          <strong>Validée. </strong> Cette étape a déjà été validée.
         </div>
       {% elseif event.step|abs == steptoshow and event.step <0 %}
         <div class="alert alert-warning">
@@ -16,7 +16,7 @@
         Valider l'étape : <button type="button" id="valid" class="btn btn-primary">Valider</button>
         Mettre en Validation : <button type="button" id="validreq" class="btn btn-primary">Valider</button>
       {% endif %}
-
+      {{ form(form) }}
 
     </div>
 </div>

@@ -23,13 +23,13 @@
 		<div class="divider"></div>
 		<div class="row">
 			<div class="col-md-6 pull-left">
-				<b>Langue</b> : Français<br />
-				<b>Client</b> : EDF <br />
+				<b>Langue</b> : {{ event.langue }}<br />
+				<b>Client</b> : {{ event.client }} <br />
 
 			</div>
 			<div class="col-md-6  pull-right">
-				<b>Nombre de visiteurs</b> : 25 <br />
-				<b>Type de public</b> : interne Edf <br />
+				<b>Nombre de visiteurs</b> : {{ event.nombreParticipants }} <br />
+				<b>Type de public</b> : {{ event.typeclient }} <br />
 			</div>
 		</div>
 </div>

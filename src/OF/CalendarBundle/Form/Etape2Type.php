@@ -6,12 +6,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-class Etape1Type extends AbstractType
+class Etape2Type extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -19,13 +18,19 @@ class Etape1Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('client', TextType::class)
-        ->add('typeClient', TextType::class)
-        ->add('theme', TextType::class)
-        ->add('langue', TextType::class)
-        ->add('description', TextType::class)
-        ->add('objectif', TextType::class)
-        ->add('nombreParticipants', IntegerType::class)
+        ->add('title', TextType::class)
+        ->add('otherInfos', CollectionType::class, array(
+        // each entry in the array will be an "email" field
+        'entry_type'   => TextType::class,
+        'allow_add' => true,
+        'allow_delete' => true,
+        'prototype' => true,
+
+        // these options are passed to each "email" type
+        'entry_options'  => array(
+            'attr'      => array('class' => 'form-control')
+        
+        )))
         ->add('save',SubmitType::class);
         
     }

@@ -6,11 +6,12 @@
 					Informations générales
 				</div>
  				<div class="panel-body">
-					<b> Client </b>: Entreprise <br />
-					<b> Thématique</b> : Innovation <br />
-					<b> Objectif de la visite</b>: Découvrir de nouveaux procédés <br />
-					<b> Nombre de partcipants </b> : 30 <br />
-					<b> Langue </b> : Anglais <br />
+					<b> Client </b>: {{ event.client }} <br />
+					<b> Type Client </b>: {{ event.typeclient }} <br />
+					<b> Thématique</b> : {{ event.theme }} <br />
+					<b> Objectif de la visite</b>: {{ event.objectif }} <br />
+					<b> Nombre de partcipants </b> : {{ event.nombreParticipants }} <br />
+					<b> Langue </b> : {{ event.langue }}  <br />
 				</div>
 			</div>
 			<div class="panel panel-default">
@@ -18,7 +19,7 @@
 						Description
 					</div>
 					<div class="panel-body">
-						Dans le but de faire découvrir tzaefabzefoazfaz azefouzheaf zaefazuhef zaefuhzaef azeifhzae fzakehf,za ,nefjzahefkz aefazehf zeaflkjazhf zefoazuehfza efazejfzae fzaejfhaze fazelif 
+						{{ event.description }}
 					</div>
 			</div>
 		</div>
