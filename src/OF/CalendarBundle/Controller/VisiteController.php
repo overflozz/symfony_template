@@ -28,18 +28,19 @@ class VisiteController extends Controller
 			$etape  = $event->getStep();
 		}
 		$applications = $event->getApplications();
+
 		if($this->getUser() != NULL){
 			$userParticipe = $event->getUsers()->contains($this->getUser());
 		}else{
 			$userParticipe = false;
 		}
-		if($etape == 1 ){
+		if($etape == 2 ){
 			$form   = $this->get('form.factory')->create(Etape1Type::class, $event);
 		}
 
 	    if($form == null){
 
-		return $this->render('OFCalendarBundle:Visite:show.html.twig', array('event' => $event, 'nbParticipants' => count($applications), 'userParticipe' => $userParticipe, 'steptoshow' => $etape));
+		return $this->render('OFCalendarBundle:Visite:show.html.twig', array('event' => $event, 'Participants' => $applications, 'userParticipe' => $userParticipe, 'steptoshow' => $etape));
 	    }
 
     	if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
@@ -72,7 +73,7 @@ class VisiteController extends Controller
 		$applications = $event->getApplications();
 		$userParticipe = $event->getUsers()->contains($this->getUser());
 		
-		return $this->render('OFCalendarBundle:Visite:showModal.html.twig', array('event' => $event, 'nbParticipants' => count($applications), 'userParticipe' => $userParticipe));
+		return $this->render('OFCalendarBundle:Visite:showModal.html.twig', array('event' => $event, 'Participants' => $applications, 'userParticipe' => $userParticipe));
     		
 
 	}

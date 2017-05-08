@@ -37,4 +37,6 @@ of_calendar_view_visite:
     defaults:
         _controller: OFCalendarBundle:Visite:view
         etape: 0
+    options:
+        expose: true
 

@@ -1,46 +1,51 @@
-				<div class="row bs-wizard" style="border-bottom:0;">
-	                <div class="col-xs-3 bs-wizard-step {% if (steptoshow == 0)%}stepshowed{% endif %} {% if (event.step|abs > 0) %}complete{% elseif (event.step|abs == 0)%}active{% else %}disabled{% endif %}">
-	                  <div class="text-center bs-wizard-stepnum">Descriptif</div>
-	                  <div class="progress"><div class="progress-bar"></div></div>
-	                  <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '0'})}}" class="bs-wizard-dot"></a>
-	                </div>
-	                
-	                <div class="col-xs-3 bs-wizard-step {% if (steptoshow== 1)%}stepshowed{% endif %} {% if (event.step|abs > 1) %}complete{% elseif (event.step|abs == 1)%}active{% else %}disabled{% endif %}"><!-- complete -->
-	                  <div class="text-center bs-wizard-stepnum">Logistique</div>
-	                  <div class="progress"><div class="progress-bar"></div></div>
-	                  <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '1'})}}" class="bs-wizard-dot"></a>
-	                </div>
-	                
-	                <div class="col-xs-3 bs-wizard-step {% if (steptoshow== 2)%}stepshowed{% endif %} {% if (event.step|abs > 2) %}complete{% elseif (event.step|abs == 2)%}active{% else %}disabled{% endif %}"><!-- complete -->
-	                  <div class="text-center bs-wizard-stepnum">Step 2</div>
-	                  <div class="progress"><div class="progress-bar"></div></div>
-	                  <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '2'})}}" class="bs-wizard-dot"></a>
-	                </div>
-	                
-	                <div class="col-xs-3 bs-wizard-step {% if (steptoshow== 3)%}stepshowed{% endif %} {% if (event.step|abs > 3) %}complete{% elseif (event.step|abs == 3)%}active{% else %}disabled{% endif %}"><!-- active -->
-	                  <div class="text-center bs-wizard-stepnum">Step 3</div>
-	                  <div class="progress"><div class="progress-bar"></div></div>
-	                  <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '3'})}}" class="bs-wizard-dot"></a>
-	                </div>
-	            </div>
+<div class="background-nav-wizard col-md-12">
+	<ul class="nav nav-wizard col-md-8 col-md-offset-2">
+	    <li class="{% if (steptoshow == 0)%}stepshowed{% endif %} {% if (event.step|abs > 0) %}complete{% elseif (event.step|abs == 0)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '0'})}}">Descriptif</a>
+	    </li>
+	    
+	    <li class="{% if (steptoshow== 1)%}stepshowed{% endif %} {% if (event.step|abs > 1) %}complete{% elseif (event.step|abs == 1)%}active{% else %}disabled{% endif %}"><!-- complete -->
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '1'})}}" >Formulaire de Visite</a>
+	    </li>
+	    
+	    <li class="{% if (steptoshow== 2)%}stepshowed{% endif %} {% if (event.step|abs > 2) %}complete{% elseif (event.step|abs == 2)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '2'})}}">Logistique</a>
+	    </li>
+	    
+	    <li class="{% if (steptoshow== 4)%}stepshowed{% endif %} {% if (event.step|abs > 4) %}complete{% elseif (event.step|abs == 4)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '4'})}}">Récapitulatif EDF</a>
+	    </li>
+	   	<li class="{% if (steptoshow== 5)%}stepshowed{% endif %} {% if (event.step|abs > 5) %}complete{% elseif (event.step|abs == 5)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '5'})}}">Proposition Visite</a>
+	    </li>
+	    <li class="{% if (steptoshow== 6)%}stepshowed{% endif %} {% if (event.step|abs > 6) %}complete{% elseif (event.step|abs == 6)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '6'})}}">Déroulé</a>
+	    </li>
+	</ul>
+</div>
 
-<div class="etapeBloc">
-{% if (steptoshow == 0)%}
-	{% include("@OFCalendar/Visite/etapes/etape0.html.twig") %}
-{% elseif (steptoshow == 1)%}
-	{% include("@OFCalendar/Visite/etapes/etape1.html.twig") %}
-{% elseif (steptoshow == 2)%}
-	{% include("@OFCalendar/Visite/etapes/etape2.html.twig") %}
-{% elseif (steptoshow == 3)%}
-	{% include("@OFCalendar/Visite/etapes/etape3.html.twig") %}
-{% else %}
-	{% include("@OFCalendar/Visite/etapes/etape0.html.twig") %}
-{% endif %}
+<div class="col-lg-8 col-lg-offset-2">      
+	<br />
+	<div class="etapeBloc">
+	{% if (steptoshow == 0)%}
+		{% include("@OFCalendar/Visite/etapes/etape0.html.twig") %}
+	{% elseif (steptoshow == 1)%}
+		{% include("@OFCalendar/Visite/etapes/etape1.html.twig") %}
+	{% elseif (steptoshow == 2)%}
+		{% include("@OFCalendar/Visite/etapes/etape2.html.twig") %}
+	{% elseif (steptoshow == 3)%}
+		{% include("@OFCalendar/Visite/etapes/etape3.html.twig") %}
+	{% else %}
+		{% include("@OFCalendar/Visite/etapes/etape0.html.twig") %}
+	{% endif %}
 
+	</div>
 </div>
 <script>
 	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 	$(document).ready(function(){
+		var $eventStep = {{ event.step }};
+		var $idEvent = {{event.id}}
 		$('#valid').click(function(){
 			$.ajax({
 				url: "{{ path('of_calendar_validerEtapeEvent', {'id' : event.id})}}",
@@ -48,7 +53,18 @@
 				data:{}
 
 			}).done(function(response){
-    			$('.etapeBloc').fadeOut(1000);      
+				$('#visitecontent').fadeOut(1000);  
+    			$eventStep +=1;
+    			$.ajax({
+				   url: Routing.generate('of_calendar_view_visite',{id: $idEvent, etape:$eventStep + 1}),
+				   type:'GET',
+				   success: function(data){
+
+				       $('#visitecontent').html($(data).filter('#visitecontent').first().children()); // ici on choisi filter car visitecontent est un top element. Sinon on prend find.
+				       $('#visitecontent').fadeIn(1000);  
+				   }
+				});  
+			
 			});
 		});
 		$('#validreq').click(function(){

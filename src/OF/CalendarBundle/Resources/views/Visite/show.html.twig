@@ -7,22 +7,18 @@
 
 
 {% block body %}
-		<p> Bienvenue sur l'aperçu de visite.
-			Voici l'id : {{ event.id }} <br />
-			Voici le titre : {{ event.title }} <br />
-			Conférenciers :  {{ nbParticipants }}/ {{ event.nbUserMax}}
-			{% if nbParticipants < event.nbUserMax %}
-				{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userParticipe == false %}
-					<a href="" id="ajout_conferencier" >S'ajouter</a>
-				{% endif %}
-				{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userParticipe == true %}
-					{% include("@OFCalendar/Visite/etapes/layout.html.twig") %}
 
-					
-				{% endif %}
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userParticipe == true %}
+	{% include("@OFCalendar/Visite/etapes/layout.html.twig") %}
+{% else %}
+	<div class="alert alert-danger">
+	<div class="col-md-8 col-md-offset-2">      
+	  	<strong> Page inaccessible.</strong> Vous n'êtes pas conférencier pour cette visite.
+	<div>
+	</div>
+{% endif %}
 
-			{% endif %}
-		</p>
+
 {% endblock %}
 
 

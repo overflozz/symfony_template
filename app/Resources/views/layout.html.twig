@@ -36,7 +36,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand page-scroll" id="home"  href="#page-top">Symfony Template</a>
+                    <a class="navbar-brand page-scroll" id="home"  href="#page-top">CHELLE Studio</a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -50,11 +50,9 @@
                             <a class="page-scroll"  id="findajob" href="{{path('of_careersml_new') }}" >FindAJob</a></a>
                         </li>
                         <li>
-                            <a class="page-scroll" id="calendar" href="{{path('of_calendar_homepage')}}">Calendar</a>
+                            <a class="page-scroll" id="calendar" href="{{path('of_calendar_homepage')}}">EDF Visites</a>
                         </li>
-                        <li>
-                            <a class="page-scroll" href="#contact">Link3</a>
-                        </li>
+
                     </ul>
                     <!-- Lorsque le menu est affiché sur ordinateur ( on autorise le right float + menu deroulant) -->
                     <ul class="nav navbar-nav pull-right hidden-xs " id="userMenuDropdown">
@@ -111,15 +109,20 @@
     {% block mainContent %}
    
     {% endblock %}
-  
 
   </body>
-
+<div class="col-xs-12" style="text-align:center">
+    <img src="{{ asset('images/ajax-loader.gif')}}" id= "loading-image"></img>
+</div>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+<script>
+    $('#loading-image').hide();
+</script>
 {% block javascript %}
 <script>
+
     //Permet d'initialiser le link active du menu à celui de Home 
     $link_active = "#home";
     {% block script_menu_active %}
@@ -131,8 +134,10 @@
 
 
 </script>
+
 <script>
     $(".disapear").fadeOut(2000);
+
 </script>
 
 

@@ -1,7 +1,80 @@
-<a href="" id="suppr_conferencier" >Se desinscrire</a>
-Valider l'étape : <button type="button" id="valid" class="btn btn-primary">Primary</button>
+<div style="margin: 0 auto; width: 220px; text-align:center; border-bottom: 2px solid var(--color-secondaire);padding-bottom:5px"><b>Récapitulatif de la visite {{ event.id }}</b></div><br />
+	<div class="row">
+		<div class="col-md-6 pull-left">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Informations générales
+				</div>
+ 				<div class="panel-body">
+					<b> Client </b>: Entreprise <br />
+					<b> Thématique</b> : Innovation <br />
+					<b> Objectif de la visite</b>: Découvrir de nouveaux procédés <br />
+					<b> Nombre de partcipants </b> : 30 <br />
+					<b> Langue </b> : Anglais <br />
+				</div>
+			</div>
+			<div class="panel panel-default">
+					<div class="panel-heading">
+						Description
+					</div>
+					<div class="panel-body">
+						Dans le but de faire découvrir tzaefabzefoazfaz azefouzheaf zaefazuhef zaefuhzaef azeifhzae fzakehf,za ,nefjzahefkz aefazehf zeaflkjazhf zefoazuehfza efazejfzae fzaejfhaze fazelif 
+					</div>
+			</div>
+		</div>
+		<div class="col-md-6 pull-right col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Progression de la visite 
+				</div>
+				<div class="panel-body">
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ event.step|abs/7 * 100}}" aria-valuemin="0" aria-valuemax="100" style="width:{{ event.step|abs/7 * 100}}%"></div>
+					</div>
+					{% if event.step<=0 %}
+						<div class="alert alert-warning">
+						  <strong>Etape {{ event.step|abs  }}</strong> en cours de validation.
+						  Valider l'étape : <button type="button" id="valid" class="btn btn-primary">Valider</button>
+						</div>
+					{% else %}
+						<div class="alert alert-success">
+						  <strong>Etape {{ event.step|abs  - 1 }}</strong> validée.
+						</div>
+					{% endif %}
 
+				</div>
+		
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Gestion de la visite
+				</div>
+				<div class="panel-body">
+					<div class="col-xs-6">
+						<span class="glyphicon glyphicon-bullhorn" style="border-radius:50%; background-color:#2ecc71;padding : 3px; font-size:12px; color:#fff;"></span> <b>Conférenciers</b> :  
+						<ul>
+							{% for participant in Participants %}
+								<li>{{participant.user.username}}</li>
+							{% endfor %}
+							{% for i in 0..(event.nbUserMax - Participants|length) %}
+								<li>
+									N/A
 
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+					<div class="col-xs-6">
+						<span class="glyphicon glyphicon-thumbs-up" style="border-radius:50%; background-color:#f1c40f;padding : 3px; font-size:12px; color:#fff;"></span>  <b>Reponsable Qualité</b> :<br /> 
+						<ul>
+							<li>Jean Dubois</li><br />
+						</ul>
+					</div>
+				</div>
+		
+			</div>
 
-Mettre en validation l'étape : <button type="button" id="validreq" class="btn btn-primary">Primary</button>
+			
 
+	</div>
+</div>

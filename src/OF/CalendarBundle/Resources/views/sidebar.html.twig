@@ -3,11 +3,11 @@
 		Mes visites
 	</div>
 	<div class="contentSidebar">
-		<ul>
 		{% for event in userApplications %}
-			<li><b>{{event.startDatetime|date("d/m/Y", "Europe/Paris")}}</b> :  {{event.title}}</li>
+			<a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : event.step})}}">
+				Le <b>{{event.startDatetime|date("d/m", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b> : <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{event.title}}</li><br/>
+			</a>
 		{% endfor %}
-		</ul>
 	</div>
 	
 {% endif %}

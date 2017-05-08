@@ -162,7 +162,12 @@ body{
 	border-radius: 0px 0px 0px 0px;
 	
 }
-
+.btn-outline-danger:hover{
+	color:#e74c3c;
+}
+.btn-outline-primary:hover{
+	color:var(--color-secondaire);
+}
 .buttonPrimary:hover{
 	color : #fff;
 }
@@ -196,6 +201,29 @@ body{
 	padding:10px;
 	height:50px;
 }
+.row-fluid div, .row-fluid button {
+	overflow: hidden;
+    -webkit-transition: width 0.3s ease, margin 0.3s ease;
+    -moz-transition: width 0.3s ease, margin 0.3s ease;
+    -o-transition: width 0.3s ease, margin 0.3s ease;
+    transition: width 0.3s ease, margin 0.3s ease;
+    height: 50px;
+}
 
+.row-fluid .col-xs-0 {
+    width:0px;
+    padding:0px;
+}
 
-
+.row-fluid [class*="col"]{
+    margin-left: 0;
+}
+.row-fluid .col-xs-12,.row-fluid .col-xs-8,.row-fluid .col-xs-4, .row-fluid .col-xs-0{
+    margin-left: 0;
+}
+.divider{
+	height : 1px;
+	margin: 0 auto;
+	background-color:#ecf0f1;
+	margin:10px;
+}
