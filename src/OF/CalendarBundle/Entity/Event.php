@@ -24,42 +24,42 @@ class Event
     
     /**
      * 
-     * @ORM\Column(type="string",length=512)
+     * @ORM\Column(type="string",length=512, nullable=true)
      */
     protected $title;
     /**
      * 
-     * @ORM\Column(type="string",length=512)
+     * @ORM\Column(type="string",length=512, nullable="true", nullable=true)
      */
     protected $client;
     /**
      * 
-     * @ORM\Column(type="string",length=512)
+     * @ORM\Column(type="string",length=512, nullable=true)
      */
     protected $typeClient;
     /**
      * 
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $theme;
     /**
      * 
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $nombreParticipants;
     /**
      * 
-     * @ORM\Column(type="string",length=512)
+     * @ORM\Column(type="string",length=512, nullable=true)
      */
     protected $langue;
     /**
      * 
-     * @ORM\Column(type="string",length=512)
+     * @ORM\Column(type="string",length=512, nullable=true)
      */
     protected $description;
     /**
      * 
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $objectif;
     /**
@@ -737,7 +737,7 @@ class Event
     }
 
     /**
-     * Get objectif
+     * Get objectifè
      *
      * @return string
      */
