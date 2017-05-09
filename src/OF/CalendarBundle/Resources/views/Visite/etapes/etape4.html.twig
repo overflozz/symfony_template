@@ -1,0 +1,66 @@
+
+
+<div class="panel-group" id="choixVisite">
+	<div class="col-md-6 pull-left ">
+		<div class="panel panel-default">
+		 	<div class="panel-heading">
+		 		Elements de composition
+		 	</div>
+		 	<div class="panel-body">
+		 	<ul>
+		  		<li id="draggable">   
+		  			<div id="collapsingpanel" class="panel panel-default " style="margin:auto; width:auto;">
+				      <div class="panel-heading">
+				        <h4 class="panel-title">Collapsible panel </h4>
+				      </div>
+				      <div id="collapse" class="panel-default collapse">
+				        <div class="panel-body">Panel Body</div>
+				        <div class="panel-footer">Panel Footer</div>
+				      </div>
+				    </div>
+				</li>
+		  	</ul>
+
+
+		 	</div>
+		 </div>
+	</div>
+
+	<div class="col-md-6 pull-right" >
+		<div class="panel panel-default">
+		 	<div class="panel-heading">
+		 		Ordre de visite
+		 	</div>
+		 	<div class="panel-body">
+				<ul id="sortable">
+					<br />
+				</ul>
+		 
+		 	</div>
+		</div>
+	</div>
+</div>
+ <script>
+  $( function() {
+    $( "#sortable" ).sortable({
+      revert: true
+    });
+
+    $( "#draggable" ).draggable({
+		connectToSortable: "#sortable",
+		helper: "clone",
+		revert: "invalid",
+		stop: function(){
+			$(this).removeAttr("style");
+		}
+    });
+
+    $( "ul, li" ).disableSelection();
+  } );
+    $( function() {
+    	$('.panel-group').on("click", "#collapsingpanel",  function(){
+    		$(this).find("#collapse").collapse('toggle');
+    	});
+    });
+
+  </script>

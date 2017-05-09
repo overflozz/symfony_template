@@ -76,18 +76,18 @@ ul.nav-wizard li:after {
   right: -15px;
 }
 ul.nav-wizard li.active {
-  color: #3a87ad;
-  background: var(--color-secondaire);
+ 	color: #777;
+  background: #f9f9f9;
 }
 ul.nav-wizard li.active:after {
-  border-left: 16px solid var(--color-secondaire);
+  border-left: 16px solid #f9f9f9;
 }
 ul.nav-wizard li.active a,
 ul.nav-wizard li.active a:active,
 ul.nav-wizard li.active a:visited,
 ul.nav-wizard li.active a:focus {
-  color: #fff;
-  background: var(--color-secondaire);
+  color: #777;
+  background: #f9f9f9;
 }
 ul.nav-wizard .active ~ li {
   color: #999999;
@@ -103,9 +103,27 @@ ul.nav-wizard .active ~ li a:focus {
   color: #999999;
   background: #ededed;
 }
+
+ul.nav-wizard li.stepshowed {
+  color: #3a87ad;
+  background: var(--color-secondaire);
+}
+ul.nav-wizard li.stepshowed:after {
+  border-left: 16px solid var(--color-secondaire);
+}
+ul.nav-wizard li.stepshowed a,
+ul.nav-wizard li.stepshowed a:active,
+ul.nav-wizard li.stepshowed a:visited,
+ul.nav-wizard li.stepshowed a:focus {
+  color: #fff;
+  background: var(--color-secondaire);
+}
+
+
+
 ul.nav-wizard.nav-wizard-backnav li:hover {
   color: #000;
-  background: #f6fbfd;
+  background: var(--color-secondaire);
 }
 ul.nav-wizard.nav-wizard-backnav li:hover:after {
   border-left: 16px solid #f6fbfd;

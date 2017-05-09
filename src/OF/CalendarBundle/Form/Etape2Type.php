@@ -18,7 +18,6 @@ class Etape2Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('title', TextType::class)
         ->add('otherInfos', CollectionType::class, array(
         // each entry in the array will be an "email" field
         'entry_type'   => TextType::class,

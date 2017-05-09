@@ -12,14 +12,14 @@
 	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '2'})}}">Logistique</a>
 	    </li>
 	    
-	    <li class="{% if (steptoshow== 4)%}stepshowed{% endif %} {% if (event.step|abs > 4) %}complete{% elseif (event.step|abs == 4)%}active{% else %}disabled{% endif %}">
-	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '4'})}}">Récapitulatif EDF</a>
+	    <li class="{% if (steptoshow== 3)%}stepshowed{% endif %} {% if (event.step|abs > 3) %}complete{% elseif (event.step|abs == 3)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '3'})}}">Récapitulatif EDF</a>
 	    </li>
-	   	<li class="{% if (steptoshow== 5)%}stepshowed{% endif %} {% if (event.step|abs > 5) %}complete{% elseif (event.step|abs == 5)%}active{% else %}disabled{% endif %}">
-	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '5'})}}">Proposition Visite</a>
+	   	<li class="{% if (steptoshow== 4)%}stepshowed{% endif %} {% if (event.step|abs > 4) %}complete{% elseif (event.step|abs == 4)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '4'})}}">Proposition Visite</a>
 	    </li>
-	    <li class="{% if (steptoshow== 6)%}stepshowed{% endif %} {% if (event.step|abs > 6) %}complete{% elseif (event.step|abs == 6)%}active{% else %}disabled{% endif %}">
-	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '6'})}}">Déroulé</a>
+	    <li class="{% if (steptoshow== 5)%}stepshowed{% endif %} {% if (event.step|abs > 5) %}complete{% elseif (event.step|abs == 5)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '5'})}}">Déroulé</a>
 	    </li>
 	</ul>
 </div>
@@ -35,6 +35,8 @@
 		{% include("@OFCalendar/Visite/etapes/etape2.html.twig") %}
 	{% elseif (steptoshow == 3)%}
 		{% include("@OFCalendar/Visite/etapes/etape3.html.twig") %}
+	{% elseif (steptoshow == 4)%}
+		{% include("@OFCalendar/Visite/etapes/etape4.html.twig") %}
 	{% else %}
 		{% include("@OFCalendar/Visite/etapes/etape0.html.twig") %}
 	{% endif %}
@@ -56,7 +58,7 @@
 				$('#visitecontent').fadeOut(1000);  
     			$eventStep +=1;
     			$.ajax({
-				   url: Routing.generate('of_calendar_view_visite',{id: $idEvent, etape:$eventStep + 1}),
+				   url: Routing.generate('of_calendar_view_visite',{id: $idEvent, etape:$eventStep}),
 				   type:'GET',
 				   success: function(data){
 
