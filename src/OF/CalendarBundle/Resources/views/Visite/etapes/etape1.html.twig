@@ -16,7 +16,13 @@
         Valider l'étape : <button type="button" id="valid" class="btn btn-primary">Valider</button>
         Mettre en Validation : <button type="button" id="validreq" class="btn btn-primary">Valider</button>
       {% endif %}
-      {{ form(form) }}
-
+      <div class="col-md-4">Client : {{ form_widget(form.client) }}</div>
+      <div class="col-md-4">Type de Client  :{{ form_widget(form.typeClient) }}</div>
+      <div class="col-md-4">Nombre de participants  :{{ form_widget(form.nombreParticipants) }}</div>
+      <div class="col-md-6">Theme : {{ form_widget(form.theme) }}</div>
+      <div class="col-md-6">Langue : {{ form_widget(form.langue) }}</div>
+      <div class="col-md-12">Langue : {{ form_widget(form.objectif) }}</div>
+      <div class="col-md-12">Langue : {{ form_widget(form.description) }}</div><br />
+      {{form(form)}}
     </div>
 </div>

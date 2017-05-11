@@ -50,8 +50,10 @@
 		connectToSortable: "#sortable",
 		helper: "clone",
 		revert: "invalid",
-		stop: function(){
-			$(this).removeAttr("style");
+		start  : function(event, ui){
+ 		},
+		stop: function(event, ui){
+			$(ui.helper).removeAttr("style"); // ui helper permet d'accéder à l'élement draggé.
 		}
     });
 
