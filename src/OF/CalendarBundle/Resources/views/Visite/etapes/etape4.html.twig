@@ -32,22 +32,51 @@
 		 		Ordre de visite
 		 	</div>
 		 	<div class="panel-body">
-				<ul id="sortable">
-					<br />
-				</ul>
+   {{ form_start(form) }}
+ <ul id="elements-fields-list"  data-prototype="<div class='panel panel-default'><div class='panel-header'></div><div class='panel-body'>  <div class='element'><div class='col-md-6'>{{  form_widget(form.elementsVisites.vars.prototype.titre)|e }}</div><div class='col-md-6'>{{  form_widget(form.elementsVisites.vars.prototype.duree.hour, {'attr' : {'class' : 'hourInput'}})|e }}<div class='minuteInput'>{{ form_widget(form.elementsVisites.vars.prototype.duree.minute, {'attr' : {'class' : 'minuteInput'}})|e  }}</div></div></div></div> </div>">
+
+   {% for elementVisite in form.elementsVisites %}
+   	
+   		<div class='panel panel-default'>
+   		<div class='panel-body'>
+   			<div class='element'>
+   				<div class='col-md-6'>
+           		    {{ form_widget(elementVisite.titre) }}
+           		</div>
+           		<div class='col-md-6'>
+            		{{ form_widget(elementVisite.duree.hour, {'attr' : {'class' : 'hourInput'}}) }}
+            		{{ form_widget(elementVisite.duree.minute, {'attr' : {'class': 'minuteInput'}} ) }}
+            	</div>
+        	</div>
+        </div>
+      </div>
+    {% endfor %}
+</ul>
+     <a href="#" id="add_field" class="btn btn-default">Ajouter un champ</a>
+    {{ form_end(form) }}
+
+
+
 		 
 		 	</div>
 		</div>
 	</div>
 </div>
  <script>
-  $( function() {
-    $( "#sortable" ).sortable({
-      revert: true
+  $(document).ready(function() {
+  	// On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+    var $container = $('#elements-fields-list');
+
+    $( "#elements-fields-list" ).sortable({
+      revert: true,
+      stop: function(){
+
+			updateIndex($container); // on met à jour l'ordre
+      }
     });
 
     $( "#draggable" ).draggable({
-		connectToSortable: "#sortable",
+		connectToSortable: "#elements-fields-list",
 		helper: "clone",
 		revert: "invalid",
 		start  : function(event, ui){
@@ -58,11 +87,112 @@
     });
 
     $( "ul, li" ).disableSelection();
-  } );
-    $( function() {
-    	$('.panel-group').on("click", "#collapsingpanel",  function(){
-    		$(this).find("#collapse").collapse('toggle');
-    	});
-    });
 
-  </script>
+	$('.panel-group').on("click", "#collapsingpanel",  function(){
+		$(this).find("#collapse").collapse('toggle');
+	});
+	
+
+  
+        // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+   	var index = $container.find(':input').length;
+    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+    $('#add_field').click(function(e) {
+      addCategory($container);
+      e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+      return false;
+    });
+    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+
+    if (index == 0) {
+      addCategory($container);
+    } else {
+      // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
+
+      $container.find('.element').each(function() {
+
+        addDeleteLink($(this));
+
+      });
+
+    }
+
+    function updateIndex($container){
+    	var $compteur  = 0; // nouveau compteur pour mettre dans le bon ordre
+    	$container.find('.element').each(function() {
+    		$(this).find('.titreInput').attr('name', 'of_calendarbundle_event[elementsVisites]['+ $compteur + '][titre]' );
+    		$(this).find('.titreInput').attr('id', 'of_calendarbundle_event_elementsVisites_'+ $compteur + '_titre' );
+    		$(this).find('.dureeInput').attr('id', 'of_calendarbundle_event_elementsVisites_'+ $compteur + '_duree' );
+    		$(this).find('.hourInput').attr('id', 'of_calendarbundle_event_elementsVisites_'+ $compteur + '_duree_hour' );   
+    		$(this).find('.hourInput').attr('name', 'of_calendarbundle_event[elementsVisites]['+ $compteur + '][duree][hour]' );
+    		$(this).find('.minuteInput').attr('id', 'of_calendarbundle_event_elementsVisites_'+ $compteur + '_duree_minute' );   
+    		$(this).find('.minuteInput').attr('name', 'of_calendarbundle_event[elementsVisites]['+ $compteur + '][duree][minute]' );
+
+
+        	$compteur += 1;
+      });
+
+    }
+    // La fonction qui ajoute un formulaire CategoryType
+
+    function addCategory($container) {
+
+      // Dans le contenu de l'attribut « data-prototype », on remplace :
+
+      // - le texte "__name__label__" qu'il contient par le label du champ
+
+      // - le texte "__name__" qu'il contient par le numéro du champ
+
+      var template = $container.attr('data-prototype')
+
+        .replace(/__name__label__/g, 'Catégorie n°' + (index+1))
+
+        .replace(/__name__/g,        index)
+
+      ;
+
+
+      // On crée un objet jquery qui contient ce template
+
+      var $prototype = $(template);
+
+
+      // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+
+      addDeleteLink($prototype);
+
+      // On ajoute le prototype modifié à la fin de la balise <div>
+      $container.append($prototype);
+      // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+      index++;
+
+    }
+
+
+    // La fonction qui ajoute un lien de suppression d'une catégorie
+
+    function addDeleteLink($prototype) {
+
+      // Création du lien
+
+      var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+
+
+      // Ajout du lien
+
+      $prototype.append($deleteLink);
+
+
+      // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
+
+      $deleteLink.click(function(e) {
+        $prototype.remove();
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+        return false;
+      });
+
+    }
+
+  });
+
+</script>

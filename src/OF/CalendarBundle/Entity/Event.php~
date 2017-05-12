@@ -149,6 +149,13 @@ class Event
 
   private $applications; // Notez le « s », une annonce est liée à plusieurs candidatures
 
+  /**
+
+   * @ORM\OneToMany(targetEntity="OF\CalendarBundle\Entity\ElementVisite", mappedBy="visite", cascade={"remove", "persist"})
+
+   */
+
+  private $elementsVisites; // Notez le « s », une annonce est liée à plusieurs candidatures
 
 
     
@@ -160,6 +167,7 @@ class Event
         $this->endDatetime = new \DateTime();
         $this->step = 0;
         $this->otherInfos = array();
+        $this->elementsVisites = array();
         $this->nbUserMax = 2;
 
     }
@@ -768,5 +776,39 @@ class Event
     public function getTypeclient()
     {
         return $this->typeClient;
+    }
+
+    /**
+     * Add elementsVisite
+     *
+     * @param \OF\CalendarBundle\Entity\ElementVisite $elementsVisite
+     *
+     * @return Event
+     */
+    public function addElementsVisite(\OF\CalendarBundle\Entity\ElementVisite $elementsVisite)
+    {
+        $this->elementsVisites[] = $elementsVisite;
+
+        return $this;
+    }
+
+    /**
+     * Remove elementsVisite
+     *
+     * @param \OF\CalendarBundle\Entity\ElementVisite $elementsVisite
+     */
+    public function removeElementsVisite(\OF\CalendarBundle\Entity\ElementVisite $elementsVisite)
+    {
+        $this->elementsVisites->removeElement($elementsVisite);
+    }
+
+    /**
+     * Get elementsVisites
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getElementsVisites()
+    {
+        return $this->elementsVisites;
     }
 }

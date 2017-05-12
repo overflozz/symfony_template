@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use OF\CalendarBundle\Form\EventType;
 use OF\CalendarBundle\Form\Etape1Type;
 use OF\CalendarBundle\Form\Etape2Type;
+use OF\CalendarBundle\Form\Etape4Type;
 use OF\CalendarBundle\Entity\Event;
 use OF\CalendarBundle\Entity\EventUser;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -41,6 +42,9 @@ class VisiteController extends Controller
 		if($etape == 2 ){
 			$form   = $this->get('form.factory')->create(Etape2Type::class, $event);
 		}
+		if($etape == 4 ){
+			$form   = $this->get('form.factory')->create(Etape4Type::class, $event);
+		}
 
 	    if($form == null){
 
@@ -51,6 +55,9 @@ class VisiteController extends Controller
 	      $em = $this->getDoctrine()->getManager();
 	      
 	      $em->persist($event);
+	      foreach($event->getElementsVisites() as $elementvisite){
+	      	$elementvisite->setVisite($event); // car l'id de la visite associée ne se met pas à jour tout seul ( bug )
+	      }
 
 	      $em->flush();
 

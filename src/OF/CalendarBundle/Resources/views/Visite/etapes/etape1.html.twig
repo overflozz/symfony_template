@@ -23,7 +23,8 @@
       <div class="col-md-6">Theme : {{ form_widget(form.theme) }}</div>
       <div class="col-md-6">Langue : {{ form_widget(form.langue) }}</div>
       <div class="col-md-12">Objectif : {{ form_widget(form.objectif) }}</div>
-      <div class="col-md-12">Description : {{ form_widget(form.description) }}</div><br />
+      <div class="col-md-12">Description : {{ form_widget(form.description) }}</div>
+      <div class="col-md-12" style="margin: 0 auto; text-align:center"><br />{{ form_widget(form.save, {'label': 'Enregistrer', 'attr' : {'class' : 'btn btn-primary'}}) }}</div><br />
       {{form(form)}}
     </div>
 </div>

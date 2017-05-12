@@ -6,13 +6,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-class Etape1Type extends AbstractType
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+class ElementVisiteType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -20,15 +18,8 @@ class Etape1Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('client', TextType::class)
-        ->add('typeClient', TextType::class)
-        ->add('theme', TextType::class)
-        ->add('langue', TextType::class)
-        ->add('description', TextareaType::class)
-        ->add('objectif', TextType::class)
-        ->add('nombreParticipants', IntegerType::class)
-        ->add('save',SubmitType::class);
-        
+        ->add('titre', TextType::class, array('attr'  => array('class' => 'titreInput', 'placeholder' => 'Titre'))) // les classes pour le js
+        ->add('duree', TimeType::class,array('attr'  => array('class' => 'dureeInput' , 'placeholder' => 'Durée')));
     }
     
     /**
@@ -37,7 +28,7 @@ class Etape1Type extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'OF\CalendarBundle\Entity\Event'
+            'data_class' => 'OF\CalendarBundle\Entity\ElementVisite'
         ));
     }
 
@@ -46,7 +37,7 @@ class Etape1Type extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'of_calendarbundle_event';
+        return 'of_calendarbundle_elementvisite';
     }
 
 
