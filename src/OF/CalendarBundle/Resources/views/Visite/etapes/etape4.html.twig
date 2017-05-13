@@ -22,7 +22,7 @@
 		 		Ordre de visite
 		 	</div>
 		 	<div class="panel-body">
-   {{ form_start(form) }}
+   {{ form_start(form, {'attr' : {'class' : 'ajaxForm'}})  }}
  <ul id="elements-fields-list"  style=" padding-left: 0;" data-prototype="
  <div id='collapsingpanel' class='panel panel-default element' style='margin:auto; width:auto; margin-bottom : 10px;'>
 	      	<div class='panel-heading' style='height: 50px;'>
@@ -76,7 +76,7 @@
 		</div>
 
     {% endfor %}
-</ul>
+</ul>{{ form_widget(form.save, {'label': 'Enregistrer', 'attr' : {'class' : 'btn btn-primary', 'role' : 'valid'}}) }}
      <a href="#" id="add_field" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span></a>
     {{ form_end(form) }}
 
@@ -182,7 +182,7 @@
     	var $titre;
     	var $heure  = parseInt({{event.startDatetime|date("H", "Europe/Paris")}}) ;
     	var $minute = parseInt({{event.startDatetime|date("i", "Europe/Paris")}});
-	   	var $replacment='<li><div class="dotElementVisite pull-left" style="margin-left:-6px;"></div>Début à {{event.startDatetime|date("H:i", "Europe/Paris")}}</li>';
+	   	var $replacment='<li><div class="dotElementVisite pull-left" style="margin-left:-6px;"></div> <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b></li>';
 
     	$container.find('.element').each(function() {
     		$titre = $(this).find('.titreInput').val();
@@ -191,11 +191,11 @@
     		$heure = $heure + ($minute-$minute%60)/60;
     		$minute = $minute%60;
     		$heure = $heure + parseInt($(this).find('.hourInput :selected').attr('value'));
-        $replacment+= ('<div class="elementPreview"><div class="titreElementVisite">'+ $titre + '</div><br /><li><div class="dotElementVisite pull-left"></div>' +''+ $heure);
+        $replacment+= ('<div class="elementPreview"><div class="titreElementVisite">'+ $titre + '</div><br /><li><div class="dotElementVisite pull-left"></div> ' +'<b>'+ $heure);
         if($minute<10){ // pour rajouter le 0 devant la minute.
-          $replacment+= ('h0'+ $minute +' </li></div>');
+          $replacment+= ('h0'+ $minute +' </b></li></div>');
         }else{
-          $replacment+= ('h'+ $minute +' </li></div>');
+          $replacment+= ('h'+ $minute +' </b></li></div>');
         }
     	});
     	$('#preview').hide().html($replacment).fadeIn(1000);

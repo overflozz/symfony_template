@@ -1,4 +1,4 @@
-<div style="margin: 0 auto; width: 220px; text-align:center; border-bottom: 2px solid var(--color-secondaire);padding-bottom:5px"><b>Récapitulatif de la visite {{ event.id }}</b></div><br />
+<html><body><div style="margin: 0 auto; width: 220px; text-align:center; border-bottom: 2px solid var(--color-secondaire);padding-bottom:5px"><b>Récapitulatif de la visite {{ event.id }}</b></div><br />
 <div style="margin: 0 auto; width: 500px; text-align:center; margin-top : -20px; ">Le <b>{{event.startDatetime|date("d/m/Y", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b></div><br />
 
 	<div class="row">
@@ -16,17 +16,6 @@
 					<b> Langue </b> : {{ event.langue }}  <br />
 				</div>
 			</div>
-			<div class="panel panel-default">
-					<div class="panel-heading">
-						Logistique Complémentaire
-					</div>
-					<div class="panel-body">
-						{% for logistique in event.otherInfos %}
-							{{ logistique }} <br />
-						{% endfor %}
-					</div>
-			</div>
-
 			<div class="panel panel-default">
 					<div class="panel-heading">
 						Description
@@ -57,8 +46,6 @@
 					{% endif %}
 
 				</div>
-
-
 		
 			</div>
 			<div class="panel panel-default">
@@ -93,4 +80,4 @@
 			
 
 	</div>
-</div>
+</div></body></html>

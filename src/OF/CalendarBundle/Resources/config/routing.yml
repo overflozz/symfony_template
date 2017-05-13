@@ -21,16 +21,21 @@ of_calendar_supprUserEvent:
     methods: [post]
 
 of_calendar_validerEtapeEvent:
-    path:     /visite/{id}/valider
+    path:     /visite/{id}/valider/{etape}
     defaults:
         _controller: OFCalendarBundle:Visite:validerEtape
     methods: [post]
 
 of_calendar_demandeEtapeEvent:
-    path:     /visite/{id}/validreq
+    path:     /visite/{id}/validreq/{etape}
     defaults:
         _controller: OFCalendarBundle:Visite:miseenvalidationEtape
     methods: [post]
+    
+of_calendar_evnoyerMail:
+    path:     /visite/{id}/sendMail/{etape}
+    defaults:
+        _controller: OFCalendarBundle:Visite:envoyerMail
 
 of_calendar_view_visite:
     path:     /visite/{id}/{etape}

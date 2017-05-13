@@ -1,7 +1,7 @@
 @import "compass/css3";
 :root{
     --color-fond-clair:#fff;
-	--colorbackground :#ecf0f1;
+	--colorbackground :#f1f1f1;
 	--color-secondaire:#4a8bee;
 	--color-secondaire-hover:#4681da;
 	--color-menu-fond-hover:#f7f7f7;
@@ -225,5 +225,16 @@ body{
 	height : 1px;
 	margin: 0 auto;
 	background-color:#ecf0f1;
-	margin:10px;
+
 }
+
+/* modification panel */
+.panel-default .panel-heading{
+	border-radius:0px;
+	background-color:#fff;
+	margin-left:10px;
+	margin-right:10px;
+font-weight:600;}
+
+.panel-default{
+	border-radius:0px;}

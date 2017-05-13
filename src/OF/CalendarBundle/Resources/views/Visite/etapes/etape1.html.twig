@@ -3,20 +3,8 @@
       Formulaire de Visite
     </div>
     <div class="panel-body">
-      {% if event.step >= steptoshow %}
-        <div class="alert alert-success">
-          <strong>Validée. </strong> Cette étape a déjà été validée.
-        </div>
-      {% elseif event.step|abs == steptoshow and event.step <0 %}
-        <div class="alert alert-warning">
-          <strong>En cours de validation.</strong> Une demande de validation a déjà été envoyée.
-        </div>
-        Valider l'étape : <button type="button" id="valid" class="btn btn-primary">Valider</button>
-      {% else %}
-        Valider l'étape : <button type="button" id="valid" class="btn btn-primary">Valider</button>
-        Mettre en Validation : <button type="button" id="validreq" class="btn btn-primary">Valider</button>
-      {% endif %}
-      {{ form_start(form) }}
+      
+      {{ form_start(form, {'attr' : {'class' : 'ajaxForm'}}) }}
       <div class="col-md-4">Client : {{ form_widget(form.client) }}</div>
       <div class="col-md-4">Type de Client  :{{ form_widget(form.typeClient) }}</div>
       <div class="col-md-4">Nombre de participants  :{{ form_widget(form.nombreParticipants) }}</div>
@@ -24,7 +12,8 @@
       <div class="col-md-6">Langue : {{ form_widget(form.langue) }}</div>
       <div class="col-md-12">Objectif : {{ form_widget(form.objectif) }}</div>
       <div class="col-md-12">Description : {{ form_widget(form.description) }}</div>
-      <div class="col-md-12" style="margin: 0 auto; text-align:center"><br />{{ form_widget(form.save, {'label': 'Enregistrer', 'attr' : {'class' : 'btn btn-primary'}}) }}</div><br />
+      <div class="col-md-12" style="margin: 0 auto; text-align:center"><br />{{ form_widget(form.save, {'label': 'Enregistrer', 'attr' : {'class' : 'btn btn-primary', 'role' : 'valid'}}) }}</div><br />
+
       {{form(form)}}
     </div>
 </div>

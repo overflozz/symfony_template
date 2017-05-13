@@ -5,16 +5,20 @@
   <div class="panel-body">
      
 
-    {{ form(form) }} <a href="#" id="add_field" class="btn btn-default">Ajouter un champ</a>
+    {{ form_start(form, {'attr' : {'class' : 'ajaxForm'}}) }} 
+    <div  id="formLogistique" data-prototype="<div class='element'><br />{{  form_widget(form.otherInfos.vars.prototype)|e }}</div>">
+    {% for info in form.otherInfos %}
+      <div class="element"><br />
+        {{ form_widget(info) }}
+      </div>
+    {% endfor %}
+  </div>
+  <br />
+    {{ form_widget(form.save, {'label': 'Enregistrer', 'attr' : {'class' : 'btn btn-primary', 'role' : 'validreq'}}) }}
+    {{ form_end(form) }} 
+    <a href="#" id="add_field" class="btn btn-default"><span class="glyphicon glyphicon-plus" style="color:#fff;"></a>
   </div>
 </div>
-
-Valider l'étape : <button type="button" id="valid" class="btn btn-primary">Primary</button>
-
-
-
-Mettre en validation l'étape : <button type="button" id="validreq" class="btn btn-primary">Primary</button>
-
 
 
 
@@ -24,7 +28,7 @@ Mettre en validation l'étape : <button type="button" id="validreq" class="btn b
 
   $(document).ready(function() {
     // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
-    var $container = $('div#of_calendarbundle_event_otherInfos');
+    var $container = $('#formLogistique');
         // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
    	var index = $container.find(':input').length;
     // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
@@ -40,7 +44,7 @@ Mettre en validation l'étape : <button type="button" id="validreq" class="btn b
     } else {
       // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
 
-      $container.children('div').each(function() {
+      $container.find('.element').each(function() {
 
         addDeleteLink($(this));
 
@@ -61,17 +65,12 @@ Mettre en validation l'étape : <button type="button" id="validreq" class="btn b
 
       var template = $container.attr('data-prototype')
 
-        .replace(/__name__label__/g, 'Catégorie n°' + (index+1))
-
-        .replace(/__name__/g,        index)
-
-      ;
+        .replace(/__name__/g,        index)      ;
 
 
       // On crée un objet jquery qui contient ce template
 
       var $prototype = $(template);
-
 
       // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
 
@@ -80,7 +79,7 @@ Mettre en validation l'étape : <button type="button" id="validreq" class="btn b
 
       // On ajoute le prototype modifié à la fin de la balise <div>
 
-      $container.append($prototype);
+      $container.append($prototype);  
 
 
       // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro

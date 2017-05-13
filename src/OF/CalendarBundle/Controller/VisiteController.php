@@ -157,19 +157,22 @@ class VisiteController extends Controller
 
 	}
 
-	public function validerEtapeAction($id, Request $req){
+	public function validerEtapeAction($id, $etape, Request $req){
+
 		$em = $this->getDoctrine()->getManager();
 		$repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
-		if ($req->isXMLHttpRequest()){
+		if ($req->isXMLHttpRequest()  ){
 			$event = $repositoryEvent->findOneBy(array('id' => $id));
-			if($event->getStep() < 0){// il y a eu une demande de validation
-				$event->setStep(-($event->getStep()) + 1);
+			if (abs($event->getStep()) == $etape){
+				if($event->getStep() < 0){// il y a eu une demande de validation
+					$event->setStep(-($event->getStep()) + 1);
 
-			}else{
-				$event->setStep(($event->getStep()) + 1);
+				}else{
+					$event->setStep(($event->getStep()) + 1);
+				}
+				$em->persist($event);
+				$em->flush();
 			}
-			$em->persist($event);
-			$em->flush();
 
 
 	   	return new Response("Validé.", 200 );
@@ -177,20 +180,63 @@ class VisiteController extends Controller
 		return new Response("pas validé.", 400 );
 
 	}
-	public function miseenvalidationEtapeAction($id, Request $req){
+	public function miseenvalidationEtapeAction($id, $etape, Request $req){
 		$em = $this->getDoctrine()->getManager();
 		$repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
 		if ($req->isXMLHttpRequest()){
 			$event = $repositoryEvent->findOneBy(array('id' => $id));
-			if($event->getStep() > 0){// il y a eu une demande de validation
-				$event->setStep(-($event->getStep()));
-				$em->persist($event);
-				$em->flush();
+			if (abs($event->getStep()) == $etape){
+				if($event->getStep() > 0){// il y a eu une demande de validation
+					$event->setStep(-($event->getStep()));
+					$em->persist($event);
+					$em->flush();
+				}
 			}
 
 			return new Response("demande effectuée.", 200 );
 		}
 		return new Response("demande non effectuée.", 200 );
+
+	}
+	public function envoyerMailAction($id, $etape){
+
+    	$repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
+    	$repositoryEventUser = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:EventUser');
+		$event = $repositoryEvent->findOneBy(array('id' => $id));	
+
+
+		if($this->getUser() != NULL){
+			$userParticipe = $event->getUsers()->contains($this->getUser());
+		}else{
+			$userParticipe = false;
+		}
+		$applications = $event->getApplications();
+
+
+	    $message = \Swift_Message::newInstance()
+	        ->setSubject('Recapitulatif')
+	        ->setFrom('overflozz@gmail.com')
+	        ->setTo('overflozz@gmail.com')
+	        ->setBody(
+	            $this->renderView('OFCalendarBundle:Visite:Emails/recap1.html.twig',
+	                array('event' => $event, 'Participants' => $applications, 'userParticipe' => $userParticipe, 'steptoshow' => $etape)
+	            ),
+	            'text/html'
+	        )
+	        /*
+	         * If you also want to include a plaintext version of the message
+	        ->addPart(
+	            $this->renderView(
+	                'Emails/registration.txt.twig',
+	                array('name' => $name)
+	            ),
+	            'text/plain'
+	        )
+	        */
+	    ;
+	    $this->get('mailer')->send($message);
+
+	   	return $this->render('OFCalendarBundle:Visite:Emails/recap1.html.twig',array('event' => $event, 'Participants' => $applications, 'userParticipe' => $userParticipe, 'steptoshow' => $etape));
 
 	}
 }
