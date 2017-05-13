@@ -18,7 +18,7 @@ class ElementVisiteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('titre', TextType::class, array('attr'  => array('class' => 'titreInput', 'placeholder' => 'Titre'))) // les classes pour le js
+        ->add('titre', TextType::class, array('attr'  => array('class' => 'titreInput', 'placeholder' => 'Activité'))) // les classes pour le js
         ->add('duree', TimeType::class,array('attr'  => array('class' => 'dureeInput' , 'placeholder' => 'Durée')));
     }
     
