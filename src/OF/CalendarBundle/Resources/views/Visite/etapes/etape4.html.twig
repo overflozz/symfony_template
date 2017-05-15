@@ -93,15 +93,16 @@
     var $container = $('#elements-fields-list');
     updatePreview($container);
     // on update au début et quand une valeur est changée dans les conf des différents éléments.
-    $(".hourInput").change(function(){
+
+    $("#choixVisite").on("change", ".titreInput",function(){
 
         updatePreview($container);
     });
-    $(".minuteInput").change(function(){
+    $("#choixVisite").on("change", ".minuteInput",function(){
 
         updatePreview($container);
     });
-    $(".titreInput").change(function(){
+    $("#choixVisite").on("change", ".hourInput",function(){
 
         updatePreview($container);
     });
