@@ -1,0 +1,58 @@
+
+{% extends "OFCalendarBundle::Admin/layout.html.twig" %}
+
+
+{% block body %}    
+<div class="col-md-8"> 
+	<div class="panel panel-default">
+		<div class="panel-heading">Utilisateurs</div>   
+		<div class="panel-body">
+			<table class="table table-striped">
+			<thead>
+			  <tr>
+			  	<th>Nom</th>
+			  	<th>Prénom</th>
+			    <th>Username</th>
+			    <th>Email</th>
+			    <th>Actions</th>
+			  </tr>
+			</thead>
+			<tbody>
+			{% for user in listeUsers %}
+			  <tr>
+			  	<td>{{ user.nom }}</td>
+			  	<td>{{ user.prenom }}</td>
+			    <td>{{ user.username }}</td>
+			    <td>{{ user.email }}</td>
+			    <td><a href="{{ path("of_calendar_Modifusers", {'id' : user.id} ) }}">Modifier</a> <a href=""  data-toggle="modal" data-target=".supprUser{{ user.id }}">Supprimer</a></td>
+
+				<div class="modal fade supprUser{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+				  <div class="modal-dialog modal-lg" role="document">
+				    <div class="modal-content">
+				    	<div class="modal-header">
+       						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+       						<h4 class="modal-title" id="gridSystemModalLabel">Confirmation</h4>
+       					</div>
+       					<div class="modal-body">
+				     		Voulez-vous vraiment supprimer le compte de <b>{{ user.nom }} {{ user.prenom }}</b> ? <br />
+				     		<a href="{{ path("of_calendar_Supprusers", {'id' : user.id} ) }} ">Oui</a>
+				  		</div>
+				    </div>
+				  </div>
+				</div>
+		
+
+
+
+			  </tr>	
+			{% endfor %}    
+			</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+		
+
+{% endblock %}
+

@@ -2,6 +2,26 @@ of_calendar_homepage:
     path:     /calendar
     defaults: { _controller: OFCalendarBundle:Calendar:show }
 
+of_calendar_usersadmin:
+    path:     /adminpanel/users
+    defaults:
+        _controller: OFCalendarBundle:Admin:usersAdmin
+
+of_calendar_Supprusers:
+    path:     /adminpanel/supprUsers/{id}
+    defaults:
+        _controller: OFCalendarBundle:Admin:supprUserAdmin
+
+of_calendar_Modifusers:
+    path:     /adminpanel/modifUsers/{id}
+    defaults:
+        _controller: OFCalendarBundle:Admin:modifUserAdmin
+
+of_calendar_admin:
+    path:     /adminpanel
+    defaults:
+        _controller: OFCalendarBundle:Admin:homeAdmin
+
 of_calendar_ajoutUserEvent:
     path:     /visite/{id}/ajoutUser
     defaults:

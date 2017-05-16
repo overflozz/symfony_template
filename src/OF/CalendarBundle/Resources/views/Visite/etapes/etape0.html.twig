@@ -70,7 +70,7 @@
 						<span class="glyphicon glyphicon-bullhorn" style="border-radius:50%; background-color:#2ecc71;padding : 3px; font-size:12px; color:#fff;"></span> <b>Conférenciers</b> :  
 						<ul>
 							{% for participant in Participants %}
-								<li>{{participant.user.username}}</li>
+								<li>{{participant.user.prenom}} {{participant.user.nom}}</li>
 							{% endfor %}
 							{% for i in 0..(event.nbUserMax - Participants|length) %}
 								<li>

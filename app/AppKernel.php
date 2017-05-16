@@ -20,7 +20,11 @@ class AppKernel extends Kernel
 			new FOS\UserBundle\FOSUserBundle(),
             new ADesigns\CalendarBundle\ADesignsCalendarBundle(),
             new OF\CalendarBundle\OFCalendarBundle(),
-             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+
+          
+
+
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 class ElementVisiteType extends AbstractType
 {
     /**
@@ -18,7 +19,10 @@ class ElementVisiteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('titre', TextType::class, array('attr'  => array('class' => 'titreInput', 'placeholder' => 'Activité'))) // les classes pour le js
+        ->add('titre', ChoiceType::class,array('choices'  => array(
+        'Showroom' => 'Showroom',
+        'Conférence' => 'Conférence',
+        'Cocktail' => 'Cocktail'), 'attr'  => array('class' => 'titreInput', 'placeholder' => 'Activité'))) // les classes pour le js
         ->add('duree', TimeType::class,array('attr'  => array('class' => 'dureeInput' , 'placeholder' => 'Durée')));
     }
     

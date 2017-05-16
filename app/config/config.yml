@@ -92,4 +92,4 @@ swiftmailer:
     username:   %mailer_user%
     password:   %mailer_password%
     port:       %mailer_port%
-    encryption: %mailer_encrypt%
+    encryption: %mailer_encrypt%# app/config/config.yml

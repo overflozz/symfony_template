@@ -8,7 +8,7 @@
 		<b><span class="glyphicon glyphicon-bullhorn" style="border-radius:50%; background-color:#2ecc71;padding : 3px; font-size:12px; color:#fff;"></span> Conférenciers : </b>
 		<ul>
 			{% for participant in Participants %}
-				<li>{{participant.user.username}}{% if participant.user == app.user%} <button id="suppr_conferencier" type="button" class="btn btn-outline-danger"><span class='glyphicon glyphicon-remove'></span> Supprimer</button>{% endif %}</li>
+				<li>{{participant.user.prenom}} {{participant.user.nom}}  {% if participant.user == app.user%} <button id="suppr_conferencier" type="button" class="btn btn-outline-danger"><span class='glyphicon glyphicon-remove'></span> Supprimer</button>{% endif %}</li>
 			{% endfor %}
 			{% for i in 1..(event.nbUserMax - Participants|length) %}
 				<li>
@@ -61,7 +61,7 @@
 				$("#viewModal").removeClass("hidden").hide().fadeIn(1000);
 
 				$('#loading-image').fadeOut(1000);
-				$div.html("{{ app.user.username}} <button id='suppr_conferencier'  class='btn btn-outline-danger' type='button' ><span class='glyphicon glyphicon-remove'></span> Supprimer</button>");
+				$div.html("{{ app.user.prenom}} {{ app.user.nom}}<button id='suppr_conferencier'  class='btn btn-outline-danger' type='button' ><span class='glyphicon glyphicon-remove'></span> Supprimer</button>");
 			});
 		});
 		$('.contentModal').on("click", "#suppr_conferencier",function(){

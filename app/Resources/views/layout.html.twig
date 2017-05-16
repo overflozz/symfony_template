@@ -52,6 +52,14 @@
                         <li>
                             <a class="page-scroll" id="calendar" href="{{path('of_calendar_homepage')}}">EDF Visites</a>
                         </li>
+                        <li>
+                            <a class="page-scroll" id="calendar" href="{{path('of_calendar_homepage')}}">FAQ</a>
+                        </li>
+                        {% if is_granted('ROLE_ADMIN') %} 
+
+                            <li><a href="{{ path('of_calendar_admin') }}">Administration</a></li>
+                        {% endif %}
+
 
                     </ul>
                     <!-- Lorsque le menu est affiché sur ordinateur ( on autorise le right float + menu deroulant) -->
@@ -62,6 +70,9 @@
                             <li class="">
                                 <a class="dropdown-toggle" id="username_dropdown" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><img class="img-circle pull-left" src="{{ asset(app.user.getWebProfilePicturePath) }}" style="height : 30px; width:30px; margin-top:-5px; margin-right:5px;" alt=""> {{app.user.username}} <span class="caret"></span></a>
                                 <ul class="dropdown-menu pull-right" id="logged_dropdown">
+                                 
+
+
                                     <li><a href="{{ path('fos_user_profile_show') }}">Mon Profil</a></li>
                                     <li><a href="{{ path('fos_user_security_logout') }}">Deconnexion</a></li>
                                 </ul>
