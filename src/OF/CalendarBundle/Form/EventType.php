@@ -9,6 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 class EventType extends AbstractType
 {
     /**
@@ -16,8 +18,16 @@ class EventType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
         ->add('title', TextType::class)
+        ->add('respoQuali', EntityType::class, array(
+                'class' => 'OFUserBundle:User',
+                'choice_label' => function($user){
+                    return ''.$user->getPrenom().' '.$user->getNom();
+                }
+            ))
+
         ->add('startDate', DateType::class, array('widget' => 'single_text','format' => 'yyyy-MM-dd HH:mm:ss'))
         ->add('heureDebut', TimeType::class)
         ->add('heureFin', TimeType::class)

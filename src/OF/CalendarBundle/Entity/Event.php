@@ -27,10 +27,22 @@ class Event
      * @ORM\Column(type="string",length=512, nullable=true)
      */
     protected $title;
+
+    /**
+
+    * @ORM\OneToOne(targetEntity="OF\UserBundle\Entity\User", cascade={"persist"})
+    * @ORM\JoinColumn(nullable=false)
+
+    */
+
+    private $respoQuali;
+
+
     /**
      * 
-     * @ORM\Column(type="string",length=512, nullable="true", nullable=true)
+     * @ORM\Column(type="string",length=512, nullable=true)
      */
+
     protected $client;
     /**
      * 
@@ -810,5 +822,31 @@ class Event
     public function getElementsVisites()
     {
         return $this->elementsVisites;
+    }
+
+
+
+    /**
+     * Set respoQuali
+     *
+     * @param \OF\UserBundle\Entity\User $respoQuali
+     *
+     * @return Event
+     */
+    public function setRespoQuali(\OF\UserBundle\Entity\User $respoQuali)
+    {
+        $this->respoQuali = $respoQuali;
+
+        return $this;
+    }
+
+    /**
+     * Get respoQuali
+     *
+     * @return \OF\UserBundle\Entity\User
+     */
+    public function getRespoQuali()
+    {
+        return $this->respoQuali;
     }
 }

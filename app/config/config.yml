@@ -86,6 +86,9 @@ fos_user:
     profile:
         form:
             type: OF\UserBundle\Form\Type\ProfileFormType
+    registration:
+        form:
+            type: OF\UserBundle\Form\Type\RegistrationFormType
 swiftmailer:
     transport:  %mailer_transport%
     host:       %mailer_host%

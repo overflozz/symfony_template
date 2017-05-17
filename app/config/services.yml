@@ -10,5 +10,9 @@ services:
     OF.UserBundle.profile.form.type:
         class: OF\UserBundle\Form\Type\ProfileFormType
         tags:
-            - { name: form.type, alias: OF.UserBundle.profiletype}
+            - { name: form.type, alias: of_UserBundle_profiletype}
+    OF.UserBundle.registration.form.type:
+        class: OF\UserBundle\Form\Type\RegistrationFormType
+        tags:
+            - { name: form.type, alias: of_UserBundle_registration}
 

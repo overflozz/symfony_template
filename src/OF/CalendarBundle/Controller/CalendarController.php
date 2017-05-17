@@ -13,6 +13,8 @@ class CalendarController extends Controller
 
 	    $event = new Event();
 	    // on génère le form pour le placer dans le add button.
+
+
 	    $form   = $this->get('form.factory')->create(EventType::class, $event);
 
 		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
