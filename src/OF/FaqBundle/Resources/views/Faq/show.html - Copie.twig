@@ -1,0 +1,63 @@
+{% extends "OFFaqBundle::layout.html.twig" %} 
+{% block stylesheets %}
+	{{ parent()}}
+	<link rel="stylesheet" href="{{ asset('css/visites/visites.css') }}">
+{% endblock %}
+
+
+
+{% block body %}
+
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
+<div class="col-md-8">
+Liste : 
+{% for question in listeQuestions %}
+<div class="panel panel-default">
+	<div class="panel-heading">{{ question.title }}</div>
+	<div class="panel-content">{{ question.content }}</div> <a href="{{path('of_faq_Suppr', {'id' : question.id})}}" >Supprimer</a>	
+	{% if question.answer is not null %}
+		résolue
+	{% endif %}
+</div>
+	
+{% endfor %}
+</div>
+	<button type="button" id="ajouterEventBouton" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalAdd"><span class="glyphicon glyphicon-plus"></span></button>
+
+	<!-- Modal -->
+	<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Ajouter une visite</h4>
+		      </div>
+		      <div class="modal-body">
+		        {{form(form)}}
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+		    </div>
+		  </div>
+		</div>
+	</div>
+
+
+
+{% else %}
+	<div class="alert alert-danger">
+	<div class="col-md-8 col-md-offset-2">      
+	  	<strong> Page inaccessible.</strong> Vous n'êtes pas conférencier pour cette visite.
+	<div>
+	</div>
+{% endif %}
+
+
+{% endblock %}
+
+
+
+{% block javascript %}
+	{{ parent()}}
+
+{% endblock %}

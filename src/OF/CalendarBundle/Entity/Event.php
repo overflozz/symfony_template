@@ -27,10 +27,12 @@ class Event
      * @ORM\Column(type="string",length=512, nullable=true)
      */
     protected $title;
+ 
+
 
     /**
 
-    * @ORM\OneToOne(targetEntity="OF\UserBundle\Entity\User", cascade={"persist"})
+    * @ORM\ManyToOne(targetEntity="OF\UserBundle\Entity\User", cascade={"persist"})
     * @ORM\JoinColumn(nullable=false)
 
     */

@@ -30,7 +30,7 @@ class Event
 
     /**
 
-    * @ORM\OneToOne(targetEntity="OF\UserBundle\Entity\User", cascade={"persist"})
+    * @ORM\ManyToOne(targetEntity="OF\UserBundle\Entity\User", cascade={"persist"})
     * @ORM\JoinColumn(nullable=false)
 
     */
@@ -825,4 +825,28 @@ class Event
     }
 
 
+
+    /**
+     * Set respoQuali
+     *
+     * @param \OF\UserBundle\Entity\User $respoQuali
+     *
+     * @return Event
+     */
+    public function setRespoQuali(\OF\UserBundle\Entity\User $respoQuali)
+    {
+        $this->respoQuali = $respoQuali;
+
+        return $this;
+    }
+
+    /**
+     * Get respoQuali
+     *
+     * @return \OF\UserBundle\Entity\User
+     */
+    public function getRespoQuali()
+    {
+        return $this->respoQuali;
+    }
 }

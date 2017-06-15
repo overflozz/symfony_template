@@ -1,0 +1,11 @@
+of_faq_homepage:
+    path:     /faq/
+    defaults: { _controller: OFFaqBundle:Faq:Show}
+of_faq_Suppr:
+    path:     /faq/suppr/{id}
+    defaults:
+        _controller: OFFaqBundle:Faq:supprFaq
+of_show_question:
+    path:     /faq/faqQuestion/{id}
+    defaults:
+        _controller: OFFaqBundle:Faq:showQuestion

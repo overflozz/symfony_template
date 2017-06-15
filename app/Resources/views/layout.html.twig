@@ -5,13 +5,19 @@
     <title>{% block title %}Centre de Candidature{% endblock %}</title>
     {% block stylesheets %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-<script
-              src="https://code.jquery.com/jquery-3.2.1.min.js"
-              integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-              crossorigin="anonymous"></script>
-  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="  crossorigin="anonymous"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
+    <!--   offline 
+    <link rel="stylesheet" href="{{asset('offline/https _maxcdn.bootstrapcdn.com_bootstrap_3.3.7_css_bootstrap.min.css')}}" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="{{ asset('offline/https _code.jquery.com_jquery-3.2.1.min.js') }}"  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="  crossorigin="anonymous"></script>
+    <script src="{{ asset('offline/http _code.jquery.com_ui_1.12.1_jquery-ui.js') }}"></script>
+    
+<script src="{{ asset('offline/bootstrap.min.js')}}" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    -->
 
     {% endblock %}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -53,7 +59,7 @@
                             <a class="page-scroll" id="calendar" href="{{path('of_calendar_homepage')}}"><span class="glyphicon glyphicon-calendar"></span> EDF Visites</a>
                         </li>
                         <li>
-                            <a class="page-scroll" id="calendar" href="{{path('of_calendar_homepage')}}"><span class="glyphicon glyphicon-question-sign"></span> FAQ</a>
+                            <a class="page-scroll" id="faq" href="{{path('of_faq_homepage')}}"><span class="glyphicon glyphicon-question-sign"></span> FAQ</a>
                         </li>
                         {% if is_granted('ROLE_ADMIN') %} 
 
@@ -68,12 +74,12 @@
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
                             
                             <li class="">
-                                <a class="dropdown-toggle" id="username_dropdown" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><img class="img-circle pull-left" src="{{ asset(app.user.getWebProfilePicturePath) }}" style="height : 30px; width:30px; margin-top:-5px; margin-right:5px;" alt=""> {{app.user.username}} <span class="caret"></span></a>
+                                <a class="dropdown-toggle" id="username_dropdown" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><img class="img-circle pull-left" src="{{ asset(app.user.getWebProfilePicturePath) }}" style="height : 30px; width:30px; margin-top:-5px; margin-right:5px;" alt=""> {{app.user.prenom}} {{app.user.nom}} <span class="caret"></span></a>
                                 <ul class="dropdown-menu pull-right" id="logged_dropdown">
                                  
 
 
-                                    <li><a href="{{ path('fos_user_profile_show') }}"><span class="glyphicon glyphicon-user"></span> Mon Profil</a></li>
+                                    <li><a href="{{ path('fos_user_profile_show') }}"><span class="glyphicon glyphicon-user"></span> Mon Profil</a></li>          <li><a href="{{ path('fos_user_profile_edit')}}"><span class="glyphicon glyphicon-cog"></span> Réglages Profil</a></li>
                                     <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-remove"></span> Deconnexion</a></li>
                                 </ul>
                             </li>
@@ -126,6 +132,7 @@
     <img src="{{ asset('images/ajax-loader.gif')}}" id= "loading-image"></img>
 </div>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 <script>

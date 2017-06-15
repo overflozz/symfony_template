@@ -1,0 +1,54 @@
+
+{% extends "::layout.html.twig" %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('css/candidature.css') }}">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
+{% endblock %}
+
+{% block mainContent %}
+
+	<div id="visitecontent" class="main-content">
+		<br />
+
+
+	    <div class="row">   
+
+	        <div class="col-md-2 col-xs-12 col-sm-12 pull-left" id="sidebar">
+	        	{% block sidebar %}
+	        	{% endblock %}
+
+	        </div>
+         
+	            {% block body %}
+
+
+	            {% endblock %} 
+
+	    </div>
+	</div>
+
+{% endblock %}
+
+
+
+{% block javascript %}
+
+
+	{{ parent()}}
+	    <script>
+	{% block script_menu_active %}
+		$link_active = "#faq";
+	{% endblock %}
+
+    	$( ".datepicker" ).datepicker({
+		  dateFormat: "yy-mm-dd 00:00:00"
+		});
+    	$( '.datepicker' ).datepicker("option", "dateFormat", "yy-mm-dd 00:00:00");
+
+           
+      		
+   			
+	</script>
+{% endblock %}

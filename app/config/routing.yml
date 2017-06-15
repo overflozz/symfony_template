@@ -1,3 +1,7 @@
+of_faq:
+    resource: "@OFFaqBundle/Resources/config/routing.yml"
+    prefix:   /
+
 of_calendar:
     resource: "@OFCalendarBundle/Resources/config/routing.yml"
     prefix:   /

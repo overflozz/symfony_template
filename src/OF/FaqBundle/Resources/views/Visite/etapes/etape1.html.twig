@@ -1,0 +1,19 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+      Formulaire de Visite
+    </div>
+    <div class="panel-body">
+      
+      {{ form_start(form, {'attr' : {'class' : 'ajaxForm'}}) }}
+      <div class="col-md-4">Client : {{ form_widget(form.client) }}</div>
+      <div class="col-md-4">Type de Client  :{{ form_widget(form.typeClient) }}</div>
+      <div class="col-md-4">Nombre de participants  :{{ form_widget(form.nombreParticipants) }}</div>
+      <div class="col-md-6">Theme : {{ form_widget(form.theme) }}</div>
+      <div class="col-md-6">Langue : {{ form_widget(form.langue) }}</div>
+      <div class="col-md-12">Objectif : {{ form_widget(form.objectif) }}</div>
+      <div class="col-md-12">Description : {{ form_widget(form.description) }}</div>
+      <div class="col-md-12" style="margin: 0 auto; text-align:center"><br />{{ form_widget(form.save, {'label': 'Enregistrer', 'attr' : {'class' : 'btn btn-primary', 'role' : 'valid'}}) }}</div><br />
+
+      {{form(form)}}
+    </div>
+</div>
