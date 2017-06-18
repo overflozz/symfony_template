@@ -9,25 +9,30 @@
 {% block body %}
 
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
+
 <div class="col-md-8">
-Liste : 
-{% for question in listeQuestions %}
-<div class="panel panel-default">
-	<div class="panel-heading">{{ question.title }}</div>
+	<a class="boutoncategory" cat="All">Tout</a>
+	<a class="boutoncategory" cat="Visite">Déroulement de la visite</a>
+	<a class="boutoncategory" cat="Technique">Technique</a>
+	<div class="listeQuestions">
+	{% for question in listeQuestions %}
+	<div class="panel panel-default" cat="{{ question.category }}">
+		<div class="panel-heading">{{ question.title }}</div>
 
 
-	<div class="panel-content">{{ question.content }}</div>
-
-	<a href="{{path('of_show_question', {'id' : question.id})}}" >Voir</a>	 
-	{% if is_granted('ROLE_ADMIN') %} <a href="{{path('of_faq_Suppr', {'id' : question.id})}}" >Supprimer</a>	{% endif %}
-	{% if question.answer is not null %}
-		résolue
-	{% else %}
-		non résolue
-	{% endif %}
-</div>
-	
-{% endfor %}
+		<div class="panel-content">{{ question.content }}</div>
+		catégorie : {{ question.category }}
+		<a href="{{path('of_show_question', {'id' : question.id})}}" >Voir</a>	 
+		{% if is_granted('ROLE_ADMIN') %} <a href="{{path('of_faq_Suppr', {'id' : question.id})}}" >Supprimer</a>	{% endif %}
+		{% if question.answer is not null %}
+			résolue
+		{% else %}
+			non résolue
+		{% endif %}
+	</div>
+		
+	{% endfor %}
+	</div>
 </div>
 	<button type="button" id="ajouterEventBouton" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalAdd"><span class="glyphicon glyphicon-plus"></span></button>
 
@@ -66,5 +71,20 @@ Liste :
 
 {% block javascript %}
 	{{ parent()}}
+	<script>
+	 $(function() {
+
+	 	$('.boutoncategory').click(function(){
+	 		var cat = $(this).attr('cat');
+	 		$('.listeQuestions').children('.panel').each(function(){
+	 			if ($(this).attr('cat') == cat || cat == "All"){
+	 				$(this).show();
+	 			}else{
+	 				$(this).hide();
+	 			}
+	 		});
+	 	});
+	 });
+	</script>
 
 {% endblock %}

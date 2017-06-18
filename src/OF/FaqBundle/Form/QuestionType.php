@@ -22,6 +22,13 @@ class QuestionType extends AbstractType
         $builder
         ->add('title', TextType::class)
         ->add('content', TextType::class)
+        ->add('category', ChoiceType::class, array(
+        'choices'  => array(
+            'Technique' => "Technique",
+            'Déroulement visite' => "Visite",
+            'Déroulement de la procédure' => "Procedure",
+            'Autre' => "Autre",
+    )))
         ->add('save',  SubmitType::class);
     }
     

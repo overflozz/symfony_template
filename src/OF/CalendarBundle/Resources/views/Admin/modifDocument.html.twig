@@ -1,0 +1,16 @@
+
+{% extends "OFCalendarBundle::Admin/layout.html.twig" %}
+
+
+{% block body %}
+<div class="col-md-8"> 
+	<div class="panel panel-default">
+		<div class="panel-heading">Administration de <b>{{ document.title }}</b></div>   
+		<div class="panel-body">   
+			{{ form(form)}}
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+

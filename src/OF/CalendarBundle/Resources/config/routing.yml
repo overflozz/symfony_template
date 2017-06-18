@@ -2,6 +2,17 @@ of_calendar_homepage:
     path:     /calendar
     defaults: { _controller: OFCalendarBundle:Calendar:show }
 
+
+
+of_calendar_admin:
+    path:     /adminpanel
+    defaults:
+        _controller: OFCalendarBundle:Admin:homeAdmin
+
+
+
+
+
 of_calendar_usersadmin:
     path:     /adminpanel/users
     defaults:
@@ -16,29 +27,74 @@ of_calendar_Modifusers:
     path:     /adminpanel/modifUsers/{id}
     defaults:
         _controller: OFCalendarBundle:Admin:modifUserAdmin
-
-of_calendar_admin:
-    path:     /adminpanel
-    defaults:
-        _controller: OFCalendarBundle:Admin:homeAdmin
-
 of_calendar_ajoutUserEvent:
     path:     /visite/{id}/ajoutUser
     defaults:
         _controller: OFCalendarBundle:Visite:ajoutUser
     methods: [post]
 
-of_calendar_showModalEvent:
-    path:     /calendar/show
-    defaults:
-        _controller: OFCalendarBundle:Visite:viewModal
-    methods: [post]
 
 of_calendar_supprUserEvent:
     path:     /visite/{id}/supprUser
     defaults:
         _controller: OFCalendarBundle:Visite:supprUser
     methods: [post]
+
+
+
+
+
+
+
+of_calendar_clientsadmin:
+    path:     /adminpanel/clients
+    defaults:
+        _controller: OFCalendarBundle:Admin:clientsAdmin
+
+of_calendar_Supprclients:
+    path:     /adminpanel/supprClients/{id}
+    defaults:
+        _controller: OFCalendarBundle:Admin:supprClientAdmin
+
+of_calendar_Modifclients:
+    path:     /adminpanel/modifClients/{id}
+    defaults:
+        _controller: OFCalendarBundle:Admin:modifClientAdmin
+of_calendar_ajoutClientEvent:
+    path:     /visite/{id}/ajoutClient
+    defaults:
+        _controller: OFCalendarBundle:Visite:ajoutClient
+    methods: [post]
+
+
+
+
+of_calendar_documentsadmin:
+    path:     /adminpanel/documents
+    defaults:
+        _controller: OFCalendarBundle:Admin:documentsAdmin
+
+of_calendar_Supprdocuments:
+    path:     /adminpanel/supprDocuments/{id}
+    defaults:
+        _controller: OFCalendarBundle:Admin:supprDocumentAdmin
+
+of_calendar_Modifdocuments:
+    path:     /adminpanel/modifDocuments/{id}
+    defaults:
+        _controller: OFCalendarBundle:Admin:modifDocumentAdmin
+
+of_calendar_voirDocuments:
+    path:     /voirDocuments
+    defaults:
+        _controller: OFCalendarBundle:Document:view
+
+
+
+
+
+
+
 
 of_calendar_validerEtapeEvent:
     path:     /visite/{id}/valider/{etape}
@@ -65,3 +121,8 @@ of_calendar_view_visite:
     options:
         expose: true
 
+of_calendar_showModalEvent:
+    path:     /calendar/show
+    defaults:
+        _controller: OFCalendarBundle:Visite:viewModal
+    methods: [post]

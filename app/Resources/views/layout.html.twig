@@ -61,6 +61,12 @@
                         <li>
                             <a class="page-scroll" id="faq" href="{{path('of_faq_homepage')}}"><span class="glyphicon glyphicon-question-sign"></span> FAQ</a>
                         </li>
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
+                        <li>
+                            <a class="page-scroll" id="document" href="{{path('of_calendar_voirDocuments')}}"><span class="glyphicon glyphicon-file"></span> Documents </a>
+
+                        </li>
+                        {% endif %}
                         {% if is_granted('ROLE_ADMIN') %} 
 
                             <li><a href="{{ path('of_calendar_admin') }}"><span class="glyphicon glyphicon-edit"></span> Administration</a></li>

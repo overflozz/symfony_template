@@ -1,0 +1,14 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+      Questionnaire de satisfaction
+    </div>
+    <div class="panel-body">
+      
+      {{ form_start(form, {'attr' : {'class' : 'ajaxForm'}}) }}
+      <div class="col-md-12">Question 1  :{{ form_widget(form.resultat1) }}</div>
+
+      <div class="col-md-12">Question 2  :{{ form_widget(form.resultat2) }}</div>
+      <div class="col-md-12" style="margin: 0 auto; text-align:center"><br />{{ form_widget(form.save, {'label': 'Enregistrer', 'attr' : {'class' : 'btn btn-primary', 'role' : 'valid'}}) }}</div><br />
+	{{ form_widget(form._token) }} 
+    </div>
+</div>

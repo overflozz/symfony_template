@@ -9,15 +9,17 @@ use OF\CalendarBundle\Form\EventType;
 use OF\CalendarBundle\Form\Etape1Type;
 use OF\CalendarBundle\Form\Etape2Type;
 use OF\CalendarBundle\Form\Etape4Type;
+use OF\CalendarBundle\Form\questionnaireType;
 use OF\CalendarBundle\Entity\Event;
 use OF\CalendarBundle\Entity\EventUser;
+use OF\CalendarBundle\Entity\Satisfaction;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use OF\UserBundle\Entity\User;
 class VisiteController extends Controller
 {
     public function viewAction($id, $etape, Request $request)
     {	
-
+    	$em = $this->getDoctrine()->getManager();
     	$form = null;
     	$repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
     	$repositoryEventUser = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:EventUser');
@@ -45,6 +47,23 @@ class VisiteController extends Controller
 		if($etape == 4 ){
 			$form   = $this->get('form.factory')->create(Etape4Type::class, $event);
 		}
+		if($etape == 5 ){
+			if ($event->getSatisfactiongenere() == False){
+	      		$satisfaction = new Satisfaction();
+				$satisfaction->setVisite($event);
+				$event->addenquete($satisfaction);
+				$event->setSatisfactiongenere(True);
+
+				$em->persist($satisfaction);
+				$em->persist($event);
+				$em->flush();
+	      	}else{
+	      		$satisfaction = $event->getEnquetes()[0];
+	      	}
+			
+			$form   = $this->get('form.factory')->create(questionnaireType::class, $satisfaction);
+		}
+
 
 	    if($form == null){
 
@@ -52,10 +71,13 @@ class VisiteController extends Controller
 	    }
 
     	if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-	      $em = $this->getDoctrine()->getManager();
-	      
+	      if ($etape==5)
+	      {
+	      	$em->persist($satisfaction);
+	      }
 	      $em->persist($event);
-	      foreach($event->getElementsVisites() as $elementvisite){
+	      foreach($event->getElementsVisites() as $elementvisite)
+	      {
 	      	$elementvisite->setVisite($event); // car l'id de la visite associée ne se met pas à jour tout seul ( bug )
 	      }
 

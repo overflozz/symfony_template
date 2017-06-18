@@ -3,15 +3,14 @@
 
 
 {% block body %}    
-	<button type="button" id="ajouterEventBouton" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalAdd"><span class="glyphicon glyphicon-plus"></span></button>
-
+<button type="button" id="ajouterEventBouton" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalAdd"><span class="glyphicon glyphicon-plus"></span></button>
 	<!-- Modal -->
 	<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Ajouter une visite</h4>
+		        <h4 class="modal-title" id="myModalLabel">Ajouter un Document</h4>
 		      </div>
 		      <div class="modal-body">
 		        {{form(form)}}
@@ -23,30 +22,32 @@
 		</div>
 	</div>
 
+
 <div class="col-md-8"> 
 	<div class="panel panel-default">
-		<div class="panel-heading">Utilisateurs</div>   
+		<div class="panel-heading">Documents</div>   
 		<div class="panel-body">
 			<table class="table table-striped">
 			<thead>
 			  <tr>
-			  	<th>Nom</th>
-			  	<th>Prénom</th>
-			    <th>Username</th>
-			    <th>Email</th>
-			    <th>Actions</th>
+			  	<th>Titre</th>
+			  	<th>Catégorie</th>
+			  	<th>Fichier</th>
+			  	<th>Chemin Fichier</th>
+			  	<th>Actions</th>
 			  </tr>
 			</thead>
 			<tbody>
-			{% for user in listeUsers %}
+			{% for document in listeDocuments %}
 			  <tr>
-			  	<td>{{ user.nom }}</td>
-			  	<td>{{ user.prenom }}</td>
-			    <td>{{ user.username }}</td>
-			    <td>{{ user.email }}</td>
-			    <td><a href="{{ path("of_calendar_Modifusers", {'id' : user.id} ) }}">Modifier</a> <a href=""  data-toggle="modal" data-target=".supprUser{{ user.id }}">Supprimer</a></td>
+			  	<td>{{ document.title }}</td>
+			  	<td>{{ document.category }}</td>
+			  	<td>{{ document.url }}</td>
+				<td>{{ document.getUploadDir}}/{{document.url}}</td>
+			    <td><a href="{{ asset(document.getUploadDir ~ '/' ~ document.url)}}">Télécharger</a>
+			    <a href="{{ path("of_calendar_Modifdocuments", {'id' : document.id} ) }}">Modifier</a> <a href=""  data-toggle="modal" data-target=".supprDocument{{ document.id }}">Supprimer</a></td>
 
-				<div class="modal fade supprUser{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+				<div class="modal fade supprDocument{{ document.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 				  <div class="modal-dialog modal-lg" role="document">
 				    <div class="modal-content">
 				    	<div class="modal-header">
@@ -54,13 +55,14 @@
        						<h4 class="modal-title" id="gridSystemModalLabel">Confirmation</h4>
        					</div>
        					<div class="modal-body">
-				     		Voulez-vous vraiment supprimer le compte de <b>{{ user.nom }} {{ user.prenom }}</b> ? <br />
-				     		<a href="{{ path("of_calendar_Supprusers", {'id' : user.id} ) }} ">Oui</a>
+				     		Voulez-vous vraiment supprimer l'enregistrement de <b>{{ document.title }}</b> ? <br />
+				     		<a href="{{ path("of_calendar_Supprdocuments", {'id' : document.id} ) }} ">Oui</a>
 				  		</div>
 				    </div>
 				  </div>
 				</div>
-		
+				
+
 
 
 

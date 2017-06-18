@@ -24,12 +24,12 @@
 		<div class="row">
 			<div class="col-md-6 pull-left">
 				<b>Langue</b> : {{ event.langue }}<br />
-				<b>Client</b> : {{ event.client }} <br />
+				<b>Client</b> : {{ event.client.entreprise }} <br />
 
 			</div>
 			<div class="col-md-6  pull-right">
 				<b>Nombre de visiteurs</b> : {{ event.nombreParticipants }} <br />
-				<b>Type de public</b> : {{ event.typeclient }} <br />
+				<b>Type de public</b> : {{ event.client.type }} <br />
 			</div>
 		</div>
 </div>

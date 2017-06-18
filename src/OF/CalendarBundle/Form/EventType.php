@@ -27,6 +27,12 @@ class EventType extends AbstractType
                     return ''.$user->getPrenom().' '.$user->getNom();
                 }
             ))
+        ->add('client', EntityType::class, array(
+                'class' => 'OFCalendarBundle:Client',
+                'choice_label' => function($client){
+                    return ''.$client->getEntreprise().' ( respo : '.$client->getResponsable().' )';
+                }
+        ))
 
         ->add('startDate', DateType::class, array('widget' => 'single_text','format' => 'yyyy-MM-dd HH:mm:ss'))
         ->add('heureDebut', TimeType::class)

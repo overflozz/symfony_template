@@ -17,6 +17,7 @@ Liste :
 	<div class="panel-content">{{ question.content }}</div> <a href="{{path('of_faq_Suppr', {'id' : question.id})}}" >Supprimer</a>	
 	{% if question.answer is not null %}
 	Réponse : {{question.answer}}
+	Catégorie : {{ question.category }}
 	{% endif %}
 	{% if is_granted('ROLE_ADMIN') %}
 		{{ form(form)}}

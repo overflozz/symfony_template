@@ -59,7 +59,7 @@ class FaqController extends Controller
     		 throw $this->createNotFoundException('Cette question est introuvable.');
     	}
     	//on créé un form pour enregistrer la réponse :
-    	$form   =  $this->createFormBuilder($question)->add('answer', TextType::class)->add('save', SubmitType::class)->getForm();
+    	$form   =  $this->createFormBuilder($question)->add('entreprise', TextType::class)->add('responsable', TextType::class)->add('responsable', TextType::class)->add('save', SubmitType::class)->getForm();
 
  		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 	      $em = $this->getDoctrine()->getManager();
@@ -67,7 +67,7 @@ class FaqController extends Controller
 
 	      $em->flush();
 
-	      $request->getSession()->getFlashBag()->add('notice', 'Question ajoutée.');
+	      $request->getSession()->getFlashBag()->add('notice', 'Question modifiée.');
 
 	    }
         return $this->render('OFFaqBundle:Faq:showQuestion.html.twig', array('question' => $question,'form' => $form->createView()));

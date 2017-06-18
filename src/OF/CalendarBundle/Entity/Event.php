@@ -38,14 +38,16 @@ class Event
     */
 
     private $respoQuali;
-
-
     /**
-     * 
-     * @ORM\Column(type="string",length=512, nullable=true)
-     */
 
-    protected $client;
+    * @ORM\ManyToOne(targetEntity="OF\CalendarBundle\Entity\Client", cascade={"persist"})
+    * @ORM\JoinColumn(nullable=false)
+
+    */
+
+    private $client;
+
+
     /**
      * 
      * @ORM\Column(type="string",length=512, nullable=true)
@@ -155,6 +157,15 @@ class Event
      */
 
     protected $heureFin;
+
+  /**
+
+   * @ORM\OneToMany(targetEntity="OF\CalendarBundle\Entity\Satisfaction", mappedBy="visite")
+
+   */
+
+  private $enquetes; // Notez le « s », une annonce est liée à plusieurs candidatures
+
   /**
 
    * @ORM\OneToMany(targetEntity="OF\CalendarBundle\Entity\EventUser", mappedBy="event")
@@ -171,6 +182,11 @@ class Event
 
   private $elementsVisites; // Notez le « s », une annonce est liée à plusieurs candidatures
 
+    /**
+     * @ORM\Column(name="satisfactiongenere", type="boolean")
+     */
+
+    protected $satisfactiongenere;
 
     
     public function __construct()
@@ -180,9 +196,11 @@ class Event
         $this->startDatetime = new \DateTime();
         $this->endDatetime = new \DateTime();
         $this->step = 0;
-        $this->otherInfos = array();
+        $this->enquetes = array();
+        $this->elementsVisites = array();
         $this->elementsVisites = array();
         $this->nbUserMax = 2;
+        $this->satisfactiongenere = False;
 
     }
 
@@ -850,5 +868,63 @@ class Event
     public function getRespoQuali()
     {
         return $this->respoQuali;
+    }
+
+    /**
+     * Add enquete
+     *
+     * @param \OF\CalendarBundle\Entity\Satisfaction $enquete
+     *
+     * @return Event
+     */
+    public function addEnquete(\OF\CalendarBundle\Entity\Satisfaction $enquete)
+    {
+        $this->enquetes[] = $enquete;
+
+        return $this;
+    }
+
+    /**
+     * Remove enquete
+     *
+     * @param \OF\CalendarBundle\Entity\Satisfaction $enquete
+     */
+    public function removeEnquete(\OF\CalendarBundle\Entity\Satisfaction $enquete)
+    {
+        $this->enquetes->removeElement($enquete);
+    }
+
+    /**
+     * Get enquetes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEnquetes()
+    {
+        return $this->enquetes;
+    }
+
+    /**
+     * Set satisfactiongenere
+     *
+     * @param boolean $satisfactiongenere
+     *
+     * @return Event
+     */
+    public function setSatisfactiongenere($satisfactiongenere)
+    {
+        $this->satisfactiongenere = $satisfactiongenere;
+
+        return $this;
+    }
+
+    /**
+     * Get satisfactiongenere
+     *
+     * @return boolean
+     */
+    public function getSatisfactiongenere()
+    {
+        return $this->satisfactiongenere;
     }
 }

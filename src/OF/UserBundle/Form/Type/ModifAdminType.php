@@ -19,7 +19,6 @@ class ModifAdminType extends AbstractType
         $builder
         ->add('nom', TextType::class)
         ->add('prenom',TextType::class)
-        ->add('username',TextType::class)
         ->add('email')
         ->add('save', SubmitType::class);
     }

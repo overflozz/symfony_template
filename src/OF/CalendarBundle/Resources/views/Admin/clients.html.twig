@@ -3,8 +3,7 @@
 
 
 {% block body %}    
-	<button type="button" id="ajouterEventBouton" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalAdd"><span class="glyphicon glyphicon-plus"></span></button>
-
+<button type="button" id="ajouterEventBouton" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalAdd"><span class="glyphicon glyphicon-plus"></span></button>
 	<!-- Modal -->
 	<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
@@ -23,30 +22,33 @@
 		</div>
 	</div>
 
+
 <div class="col-md-8"> 
 	<div class="panel panel-default">
-		<div class="panel-heading">Utilisateurs</div>   
+		<div class="panel-heading">Clients</div>   
 		<div class="panel-body">
 			<table class="table table-striped">
 			<thead>
 			  <tr>
-			  	<th>Nom</th>
-			  	<th>Prénom</th>
-			    <th>Username</th>
-			    <th>Email</th>
+			  	<th>Entreprise</th>
+			  	<th>Responsable</th>
+			  	<th>Type</th>
+			    <th>Adresse Mail</th>
+			    <th>Téléphone</th>
 			    <th>Actions</th>
 			  </tr>
 			</thead>
 			<tbody>
-			{% for user in listeUsers %}
+			{% for client in listeClients %}
 			  <tr>
-			  	<td>{{ user.nom }}</td>
-			  	<td>{{ user.prenom }}</td>
-			    <td>{{ user.username }}</td>
-			    <td>{{ user.email }}</td>
-			    <td><a href="{{ path("of_calendar_Modifusers", {'id' : user.id} ) }}">Modifier</a> <a href=""  data-toggle="modal" data-target=".supprUser{{ user.id }}">Supprimer</a></td>
+			  	<td>{{ client.entreprise }}</td>
+			  	<td>{{ client.nom }} {{ client.prenom }}</td>
+			  	<td>{{ client.type }}</td>
+			    <td>{{ client.adresseMail }}</td>
+			    <td>{{ client.telephone }}</td>
+			    <td><a href="{{ path("of_calendar_Modifclients", {'id' : client.id} ) }}">Modifier</a> <a href=""  data-toggle="modal" data-target=".supprClient{{ client.id }}">Supprimer</a></td>
 
-				<div class="modal fade supprUser{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+				<div class="modal fade supprClient{{ client.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 				  <div class="modal-dialog modal-lg" role="document">
 				    <div class="modal-content">
 				    	<div class="modal-header">
@@ -54,13 +56,14 @@
        						<h4 class="modal-title" id="gridSystemModalLabel">Confirmation</h4>
        					</div>
        					<div class="modal-body">
-				     		Voulez-vous vraiment supprimer le compte de <b>{{ user.nom }} {{ user.prenom }}</b> ? <br />
-				     		<a href="{{ path("of_calendar_Supprusers", {'id' : user.id} ) }} ">Oui</a>
+				     		Voulez-vous vraiment supprimer l'enregistrement de <b>{{ client.entreprise }}</b> ? <br />
+				     		<a href="{{ path("of_calendar_Supprclients", {'id' : client.id} ) }} ">Oui</a>
 				  		</div>
 				    </div>
 				  </div>
 				</div>
-		
+				
+
 
 
 

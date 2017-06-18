@@ -1,0 +1,69 @@
+{% extends "OFCalendarBundle::layout.html.twig" %} 
+{% block stylesheets %}
+	{{ parent()}}
+	<link rel="stylesheet" href="{{ asset('css/visites/visites.css') }}">
+{% endblock %}
+
+
+
+{% block body %}
+<div class="col-md-8">
+	{% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
+		<div class="row">
+		{% set cat = '' %}
+		{% for document in listeDocuments %}
+
+			{% if document.category != cat %}
+				</div>
+				{% set cat = document.category %}
+				<div class="row">
+				<h3>{{ cat }}</h3><br />
+			{% endif %}
+
+			<a href="{{ asset(document.getUploadDir ~ '/' ~ document.url)}}">
+				<div class="col-sm-2" style="text-align:center">
+					<span class="glyphicon glyphicon-file" style="font-size:60px;"></span><br />
+					{{ document.title }}
+
+				</div>
+			</a>
+			
+		{% endfor %}
+		</div>
+	{% else %}
+		<div class="alert alert-danger">
+		<div class="col-md-8 col-md-offset-2">      
+		  	<strong> Page inaccessible.</strong> Connectez-vous pour accéder à cet espace.
+		<div>
+		</div>
+	{% endif %}
+
+</div>
+{% endblock %}
+
+
+
+{% block javascript %}
+	{{ parent()}}
+	<script>
+	 $(function() {
+
+	 	$('.boutoncategory').click(function(){
+	 		var cat = $(this).attr('cat');
+	 		$('.listeQuestions').children('.panel').each(function(){
+	 			if ($(this).attr('cat') == cat || cat == "All"){
+	 				$(this).show();
+	 			}else{
+	 				$(this).hide();
+	 			}
+	 		});
+	 	});
+	 });
+	</script>
+	{% block script_menu_active %}
+		{{ parent()}}
+		$link_active = "#document";
+		
+	{% endblock %}
+
+{% endblock %}
