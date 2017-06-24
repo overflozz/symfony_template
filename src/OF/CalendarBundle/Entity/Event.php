@@ -160,11 +160,11 @@ class Event
 
   /**
 
-   * @ORM\OneToMany(targetEntity="OF\CalendarBundle\Entity\Satisfaction", mappedBy="visite")
+   * @ORM\OneToMany(targetEntity="OF\CalendarBundle\Entity\Satisfaction", mappedBy="visite", cascade={"remove", "persist"})
 
    */
 
-  private $enquetes; // Notez le « s », une annonce est liée à plusieurs candidatures
+  protected $enquetes; // Notez le « s », une annonce est liée à plusieurs candidatures
 
   /**
 
@@ -172,7 +172,7 @@ class Event
 
    */
 
-  private $applications; // Notez le « s », une annonce est liée à plusieurs candidatures
+  protected $applications; // Notez le « s », une annonce est liée à plusieurs candidatures
 
   /**
 
@@ -180,7 +180,7 @@ class Event
 
    */
 
-  private $elementsVisites; // Notez le « s », une annonce est liée à plusieurs candidatures
+  protected $elementsVisites; // Notez le « s », une annonce est liée à plusieurs candidatures
 
     /**
      * @ORM\Column(name="satisfactiongenere", type="boolean")
@@ -198,13 +198,13 @@ class Event
         $this->step = 0;
         $this->enquetes = array();
         $this->elementsVisites = array();
-        $this->elementsVisites = array();
         $this->nbUserMax = 2;
-        $this->satisfactiongenere = False;
+        $this->satisfactiongenere = false;
 
     }
 
     public function updateValues(){
+        
         $this->startDatetime = \DateTime::createFromFormat('Y-m-d H:i:s', $this->startDate->format('Y-m-d')." ".$this->heureDebut->format('H:i:s'));
         $this->endDatetime = \DateTime::createFromFormat('Y-m-d H:i:s', $this->startDate->format('Y-m-d')." ".$this->heureFin->format('H:i:s'));
         $this->bgColor = '#FFFFFF';

@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 class EventType extends AbstractType
 {
@@ -20,7 +22,6 @@ class EventType extends AbstractType
     {
 
         $builder
-        ->add('title', TextType::class)
         ->add('respoQuali', EntityType::class, array(
                 'class' => 'OFUserBundle:User',
                 'choice_label' => function($user){
@@ -33,10 +34,16 @@ class EventType extends AbstractType
                     return ''.$client->getEntreprise().' ( respo : '.$client->getResponsable().' )';
                 }
         ))
-
+        ->add('nombreParticipants', IntegerType::class)
         ->add('startDate', DateType::class, array('widget' => 'single_text','format' => 'yyyy-MM-dd HH:mm:ss'))
         ->add('heureDebut', TimeType::class)
         ->add('heureFin', TimeType::class)
+        ->add('langue', ChoiceType::class,array('choices'  => array(
+        'Français' => 'Français',
+        'Anglais' => 'Anglais')))
+        ->add('theme', TextType::class)
+        ->add('description', TextareaType::class)
+        ->add('objectif', TextType::class)
         ->add('save',  SubmitType::class);
     }
     

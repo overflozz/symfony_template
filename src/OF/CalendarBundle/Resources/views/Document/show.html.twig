@@ -42,6 +42,11 @@
 {% endblock %}
 
 
+	{% block script_menu_active %}
+		{{ parent()}}
+		$link_active = "#document";
+		
+	{% endblock %}
 
 {% block javascript %}
 	{{ parent()}}
@@ -60,10 +65,5 @@
 	 	});
 	 });
 	</script>
-	{% block script_menu_active %}
-		{{ parent()}}
-		$link_active = "#document";
-		
-	{% endblock %}
 
 {% endblock %}

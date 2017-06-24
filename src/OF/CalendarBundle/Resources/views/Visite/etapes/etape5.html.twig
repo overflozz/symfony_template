@@ -1,14 +1,145 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-      Questionnaire de satisfaction
-    </div>
-    <div class="panel-body">
-      
-      {{ form_start(form, {'attr' : {'class' : 'ajaxForm'}}) }}
-      <div class="col-md-12">Question 1  :{{ form_widget(form.resultat1) }}</div>
+<div class="col-md-12">
+ <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">Déroulé en temps réel : 
+          </div>
+          <div class="panel-body">
+          <ul id="preview" style="padding-left: 0;list-style:none;">
+          {% set heure = event.startDatetime|date("H", "Europe/Paris") %}
+          {% set minute = event.startDatetime|date("i", "Europe/Paris") %}
+          <li minute="{{minute}}" heure="{{heure}}"><div class="dotElementVisite pull-left" style="margin-left:-7px;"></div> <b>{{ heure }}:{{ minute }}</b><div class="elementPreview"></li>
+            {% for element in event.elementsVisites %}
+              {% set heure = heure + element.duree|date("H", "Europe/Paris") %}
+              {% set minute = minute + element.duree|date("i", "Europe/Paris") %}
+              {% if (minute//60 > 0)%}
+                {% set heure  = heure + 1%}
+                {% set minute = minute - (minute//60) * 60 %}
+              {% endif %}
+              <li minute="{{minute}}" heure="{{heure}}"> <div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> {{element.titre}} </div><br /><div class="dotElementVisite pull-left" style=""></div><b>{{heure}}:{% if minute < 10 %}0{% endif %}{{minute}}</b></li>
+              
+            {% endfor %}
+            <li minute="{{minute}}" heure="{{heure}}"><div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> Fin</div><br /><div class="dotElementVisite pull-left" style=""></div><b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b> </li>
+          </ul>
+          
 
-      <div class="col-md-12">Question 2  :{{ form_widget(form.resultat2) }}</div>
-      <div class="col-md-12" style="margin: 0 auto; text-align:center"><br />{{ form_widget(form.save, {'label': 'Enregistrer', 'attr' : {'class' : 'btn btn-primary', 'role' : 'valid'}}) }}</div><br />
-	{{ form_widget(form._token) }} 
+
+          </div>
+         </div>
+
+      </div>
+
+    <div class="col-md-8 panel panel-default">
+    <br />
+        <div id="before">
+          <div class="col-md-8 col-md-offset-2" >
+             <span class="glyphicon glyphicon-bell" style="font-size:40px"; ></span><br>
+             <span style="font-size:20px;">
+             La visite n'a pas encore commencé. <br />
+             Elle aura lieu le <b>{{event.startDatetime|date("d/m/Y", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b>. <br /> N'hésitez par à <a href="{{ path('of_calendar_voirDocuments') }}">relire les documents importants</a>.
+             </span><br /><br /><br />
+            </div>
+          
+            <div class="panel panel-default col-md-4">
+
+              <div class="panel-heading"> 
+                <span class="glyphicon glyphicon-certificate"></span> Satisfaction
+              </div>
+              <div class="panel-body">
+                <a href="{{ path('of_calendar_voirQuestionnaire', {'id' : event.id })}}">Générer les questionnaires</a><br />
+                Le responsable qualité est <b>{{ event.respoQuali.nom }} {{ event.respoQuali.prenom }}</b>.
+              </div>
+            </div>
+          </div>
+          <div id="today">
+            <div class="row"><div style="text-align:center" class="col-md-8 col-md-offset-2">
+               <span class="glyphicon glyphicon-bell" style="font-size:40px"; ></span><br />
+               <span style="font-size:20px;">
+               La visite est aujourd'hui. <br />
+               Elle a lieu de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b>. <br /> N'hésitez par à <a href="{{ path('of_calendar_voirDocuments') }}">relire les documents importants</a>.</span>
+               <br /><br /><br />
+              </div>
+            </div>
+            <div class="row">
+              <div class="panel panel-default col-md-4">
+
+                <div class="panel-heading"> 
+                  <span class="glyphicon glyphicon-certificate"></span> Satisfaction
+                </div>
+                <div class="panel-body">
+                  <a href="{{ path('of_calendar_voirQuestionnaire', {'id' : event.id })}}">Générer les questionnaires</a><br />
+                  Le responsable qualité est <b>{{ event.respoQuali.nom }} {{ event.respoQuali.prenom }}</b>.
+                </div>
+              </div>
+              <div class="panel panel-default col-md-4">
+
+                <div class="panel-heading"> 
+                  <span class="glyphicon glyphicon-file"></span> Documents
+                </div>
+                <div class="panel-body">
+                  <a href="{{ path('of_calendar_voirDocuments')}}">Lire les documents</a><br />
+                  
+                </div>
+              </div>
+              <div class="panel panel-default col-md-4">
+
+                <div class="panel-heading"> 
+                  <span class="glyphicon glyphicon-paperclip"></span> FAQ
+                </div>
+                <div class="panel-body">Une question vous a été posée ? N'hésitez pas à 
+                  <a href="{{ path('of_faq_homepage')}}">consulter la FAQ</a>.<br />
+                  
+                </div>
+              </div>
+            </div>
+          </div>
     </div>
+
+   
+
+
+
 </div>
+
+<br />
+
+<script>
+
+
+
+$('#today').hide();
+$('#after').hide();
+$('#before').hide();
+var d = new Date();
+var hour = d.getHours();
+var minute = d.getMinutes();
+var month = d.getMonth()+1;
+var day = d.getDate();
+
+var output =  (day<10 ? '0' : '') + day + '/' + (month<10 ? '0' : '') + month + '/' +  d.getFullYear();
+if (output == '{{event.startDatetime|date("d/m/Y", "Europe/Paris")}}'){
+  $('#today').show();
+}else if(d.getFullYear()> {{event.startDatetime|date("Y", "Europe/Paris")}} || d.getFullYear()== {{event.startDatetime|date("Y", "Europe/Paris")}} && month > {{event.startDatetime|date("m", "Europe/Paris")}} || d.getFullYear()== {{event.startDatetime|date("Y", "Europe/Paris")}} && month == {{event.startDatetime|date("m", "Europe/Paris")}} && day > {{event.startDatetime|date("d", "Europe/Paris")}}){
+  $('#after').show();
+}else{
+   $('#before').show();
+}
+
+updatePreview();
+window.setInterval(function(){
+  updatePreview();
+}, 5000);
+
+
+
+function updatePreview(){
+var d = new Date();
+var hour = d.getHours();
+var minute = d.getMinutes();
+  $('ul#preview').children('li').each(function(){
+    if ($(this).attr('heure')<hour || $(this).attr('heure')==hour && $(this).attr('minute') < minute){
+      $(this).addClass('past');
+      $(this).find('.statut').html('<span class="glyphicon glyphicon-ok"></span>')
+  }
+  })
+}
+</script>

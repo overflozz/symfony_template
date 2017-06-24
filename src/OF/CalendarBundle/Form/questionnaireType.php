@@ -14,6 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use OF\CalendarBundle\Form\questionSatisfType;
 
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+
 
 class questionnaireType extends AbstractType
 {
@@ -27,28 +29,42 @@ class questionnaireType extends AbstractType
         'Satisfaisant' =>3,
         'Assez satisfaisant' => 2,
         'Assez insatisfaisant' => 1,
-        'Insatisfaisant' => 0)))
+        'Insatisfaisant' => 0),
+        'expanded' => True,
+        'multiple' => False,
+        'label' => ' Que pensez-vous de la congolexicomatisation des lois du marché ?'))
         ->add('resultat2', ChoiceType::class,array('choices'  => array(
         'Satisfaisant' => 3,
         'Assez satisfaisant' => 2,
         'Assez insatisfaisant' => 1,
-        'Insatisfaisant' => 0)))
+        'Insatisfaisant' => 0),
+        'expanded' => True,
+        'multiple' => False,
+        'label' => ' Question ahzbfiazbfaizef ?'))
         ->add('resultat3', ChoiceType::class,array('choices'  => array(
         'Satisfaisant' => 3,
         'Assez satisfaisant' => 2,
         'Assez insatisfaisant' => 1,
-        'Insatisfaisant' => 0)))
+        'Insatisfaisant' => 0),
+        'expanded' => True,
+        'multiple' => False,
+        'label' => ' Question ahzbfiazbfaizef ?'))
         ->add('resultat4', ChoiceType::class,array('choices'  => array(
         'Satisfaisant' => 3,
         'Assez satisfaisant' => 2,
         'Assez insatisfaisant' => 1,
-        'Insatisfaisant' => 0)))
+        'Insatisfaisant' => 0),
+        'expanded' => True,
+        'multiple' => False,
+        'label' => ' Question ahzbfiazbfaizef ?'))
         ->add('resultat5', ChoiceType::class,array('choices'  => array(
         'Satisfaisant' => 3,
         'Assez satisfaisant' => 2,
         'Assez insatisfaisant' => 1,
-        'Insatisfaisant' => 0)))
-        ->add('save',SubmitType::class);
+        'Insatisfaisant' => 0),
+        'expanded' => True,
+        'multiple' => False,
+        'label' => ' Question ahzbfiazbfaizef ?'));
         
     }
     

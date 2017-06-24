@@ -5,6 +5,7 @@ namespace OF\CalendarBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use OF\CalendarBundle\Form\ajoutquestionnaireType;
 use OF\CalendarBundle\Form\EventType;
 use OF\CalendarBundle\Form\Etape1Type;
 use OF\CalendarBundle\Form\Etape2Type;
@@ -26,7 +27,7 @@ class VisiteController extends Controller
 
 		$event = $repositoryEvent->findOneBy(array('id' => $id));
 		if ($event == null){
-			throw new NotFoundHttpException("Page not found");
+			throw new NotFoundHttpException("Visite non trouvée");
 		}
 		if(abs($event->getStep())< $etape){ // il veut voir la prochaine etape sans avoir valider les anciennes
 			$etape  = $event->getStep();
@@ -260,5 +261,51 @@ class VisiteController extends Controller
 
 	   	return $this->render('OFCalendarBundle:Visite:Emails/recap1.html.twig',array('event' => $event, 'Participants' => $applications, 'userParticipe' => $userParticipe, 'steptoshow' => $etape));
 
+	}
+
+
+
+	// Pôle qualité:
+	public function showQualiteVisitesAction(Request $req){
+		$visitequalite = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findBy(array('respoQuali' => $this->getUser()));
+
+		return $this->render('OFCalendarBundle:Visite:Quali/show.html.twig',array('listeVisites' => $visitequalite));
+	}
+	public function showQualiteVisiteAction($id, Request $req){
+
+		$visitequalite = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findOneBy(array('id' => $id));
+		if($visitequalite->getRespoQuali() != $this->getUser()){
+			
+			throw new NotFoundHttpException("Vous n'êtes pas reponsable qualité !");
+
+		}
+
+		$form   = $this->get('form.factory')->create(ajoutquestionnaireType::class, $visitequalite);
+		if ($req->isMethod('POST') && $form->handleRequest($req)->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+
+		foreach($visitequalite->getEnquetes() as $enquete)
+	      {
+
+
+
+	      	$enquete->setVisite($visitequalite); // car l'id de la visite associée ne se met pas à jour tout seul ( bug )
+
+			$em->persist($enquete);
+	      }
+			$em->persist($visitequalite);
+			$em->flush();
+
+		}
+
+		return $this->render('OFCalendarBundle:Visite:Quali/showVisite.html.twig',array('form' => $form->createView(), 'visite' => $visitequalite));
+	}
+
+	public function showQuestionnaireHTMLAction($id){
+
+		$visitequalite = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findOneBy(array('id' => $id));
+		$enquete = new Satisfaction();
+		$form   = $this->get('form.factory')->create(questionnaireType::class, $enquete);
+		return $this->render('OFCalendarBundle:Visite:Quali/Questionnaire.html.twig',array('form' => $form->createView(), 'visite' => $visitequalite));
 	}
 }

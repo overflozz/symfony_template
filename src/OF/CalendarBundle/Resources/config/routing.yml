@@ -126,3 +126,21 @@ of_calendar_showModalEvent:
     defaults:
         _controller: OFCalendarBundle:Visite:viewModal
     methods: [post]
+
+
+of_calendar_qualipanel:
+    path:     /quali
+    defaults:
+        _controller: OFCalendarBundle:Visite:showQualiteVisites
+
+of_calendar_view_qualitevisite:
+    path:     /quali/visite/{id}
+    defaults:
+        _controller: OFCalendarBundle:Visite:showQualiteVisite
+    options:
+        expose: true
+
+of_calendar_voirQuestionnaire:
+    path:     /questionnaire/{id}
+    defaults:
+        _controller: OFCalendarBundle:Visite:showQuestionnaireHTML

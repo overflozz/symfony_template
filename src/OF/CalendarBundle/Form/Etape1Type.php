@@ -19,13 +19,7 @@ class Etape1Type extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-        ->add('theme', TextType::class)
-        ->add('langue', TextType::class)
-        ->add('description', TextareaType::class)
-        ->add('objectif', TextType::class)
-        ->add('nombreParticipants', IntegerType::class)
-        ->add('save',SubmitType::class);
+       
         
     }
     
