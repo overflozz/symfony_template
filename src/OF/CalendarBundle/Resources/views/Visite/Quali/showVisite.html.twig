@@ -1,0 +1,275 @@
+{% extends "OFCalendarBundle::Visite/Quali/layout.html.twig" %} 
+
+{% block body %}
+	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+<div class="panel panel-default col-md-8">
+	<div class="panel-heading">
+		 Etude Qualite sur Visite n° {{ visite.id }}
+	</div>
+	<div class="panel-group">
+
+			   
+
+			{{ form_start(form, {'attr' : {'class' : 'ajaxForm'}})  }}
+			<ul id="elements-fields-list"  style=" padding-left: 0;" data-prototype="
+
+			<div id='collapsingpanel' class='panel panel-default element' style='margin:auto; width:auto; margin-bottom : 10px;'>
+				<div class='panel-heading' style='height: 50px;'>
+				    <div class='panel-title  col-md-12'>
+				    	<span class=' glyphicon glyphicon-resize-vertical pull-left' style='opacity:0.5;'></span>
+				    	Cliquer pour dérouler
+				    </div>
+				</div>
+				<div id='collapse' class='panel-default collapse'>
+				    <div class='panel-body'>
+							
+						<div class='col-md-12' style='padding:0px;'> 
+							<div class='col-md-6'>
+								{{ form_label(form.enquetes.vars.prototype.resultat1)|e}}
+								{{  form_widget(form.enquetes.vars.prototype.resultat1)|e }}
+							</div>
+							<div class='col-md-6'>
+								{{ form_label(form.enquetes.vars.prototype.resultat2)|e}}
+								{{  form_widget(form.enquetes.vars.prototype.resultat2)|e }}
+								
+							</div>
+							<div class='col-md-6'>
+								{{ form_label(form.enquetes.vars.prototype.resultat3)|e}}
+								{{  form_widget(form.enquetes.vars.prototype.resultat3)|e }}
+							</div>
+							<div class='col-md-6'>
+								{{ form_label(form.enquetes.vars.prototype.resultat4)|e}}
+								{{  form_widget(form.enquetes.vars.prototype.resultat4)|e }}
+							</div>
+							<div class='col-md-6'>
+								{{ form_label(form.enquetes.vars.prototype.resultat5)|e}}
+								{{  form_widget(form.enquetes.vars.prototype.resultat5)|e }}
+							</div>
+							
+						</div>
+							
+					</div>
+				    <div class='panel-footer' style='height: 50px;'></div>
+				</div>
+			</div>"
+
+			>
+
+   {% for enquete in form.enquetes %}
+
+   		<div id="collapsingpanel" class="element panel panel-default " style="margin:auto; width:auto; margin-bottom : 10px;">
+	      	<div class="panel-heading" style='height: 50px;'>
+	        	<div class="panel-title col-md-12"><span class="glyphicon glyphicon-resize-vertical pull-left" style="opacity:0.5;"></span>Cliquer pour dérouler</div>
+
+	     	</div>
+	      	<div id="collapse" class="panel-default collapse">
+	        	<div class="panel-body">
+					
+					<div class='col-md-12' style="padding:0px;"> 
+							<row>
+								<div class='col-md-6'>
+
+									{{ form_label(enquete.resultat1)}}
+									{{  form_widget(enquete.resultat1) }}
+								</div>
+								<div class='col-md-6'>
+									{{ form_label(enquete.resultat2)}}
+									{{  form_widget(enquete.resultat2) }}
+								</div>
+							</row>
+							<row>
+								<div class='col-md-6'>
+									{{ form_label(enquete.resultat3)}}
+									{{  form_widget(enquete.resultat3) }}
+								</div>
+								<div class='col-md-6'>
+									{{ form_label(enquete.resultat4)}}
+									{{  form_widget(enquete.resultat4) }}
+								</div>
+							</row>
+							<div class='col-md-6'>
+								{{ form_label(enquete.resultat5)}}
+								{{  form_widget(enquete.resultat5) }}
+							</div>
+							<div class='col-md-6'>
+								{{ form_label(enquete.resultat6)}}
+								{{  form_widget(enquete.resultat6) }}
+							</div>
+							<div class='col-md-6'>
+								{{ form_label(enquete.resultat7)}}
+								{{  form_widget(enquete.resultat7) }}
+							</div>
+					</div>
+					
+		        </div>
+	        	<div class="panel-footer" style='height: 50px;'></div>
+	      	</div>
+		</div>
+
+    {% endfor %}
+
+</ul>
+
+
+{{ form_widget(form.save, {'label': 'Enregistrer'}) }}
+     <a href="#" id="add_enquete" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span></a>
+    {{ form_end(form) }}
+
+
+					</ul>
+
+
+
+
+
+
+			</div>
+			<div class="col-xs-12">
+			
+{{ form_widget(form.save)}}
+	</div>
+</div>
+	{% endif %}
+
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script type="text/javascript">
+
+
+
+
+	$('.panel-group').on("click", "#collapsingpanel .panel-heading",  function(){
+		$(this).parent().find("#collapse").collapse('toggle');
+	});
+
+
+  $(document).ready(function() {
+
+    // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+
+    var $container = $('ul#elements-fields-list');
+	
+
+	inputsOpening($container);
+
+    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+
+    var index = $container.find('.element').length;
+
+    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+
+    $('#add_enquete').click(function(e) {
+
+      addCategory($container);
+
+
+      e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+
+      return false;
+
+    });
+
+
+    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+
+    if (index == 0) {
+
+      addCategory($container);
+
+    } else {
+
+      // S'il existe déjà des enquetes, on ajoute un lien de suppression pour chacune d'entre elles
+
+      $container.find('#collapsingpanel').each(function() {
+
+        addDeleteLink($(this));
+
+      });
+
+    }
+
+    function inputsOpening(container){
+	    var inputs = container.find('input');
+
+		//si les inputs sont vides on ouvre le truc
+		[].forEach.call(inputs, function(input) {
+		  input.addEventListener('invalid',function(e){
+		    $(input).closest("#collapsingpanel").find("#collapse").collapse("show");
+		  });
+		});
+    }
+
+    // La fonction qui ajoute un formulaire CategoryType
+
+    function addCategory($container) {
+
+      // Dans le contenu de l'attribut « data-prototype », on remplace :
+
+      // - le texte "__name__label__" qu'il contient par le label du champ
+
+      // - le texte "__name__" qu'il contient par le numéro du champ
+
+
+     var template = $container.attr('data-prototype');
+
+	//var template = $container.attr('data-prototype');
+
+      template = template.replace(/__name__label__/g, '').replace(/__name__/g,        index);
+
+
+      // On crée un objet jquery qui contient ce template
+
+      var $prototype = $(template);
+
+      // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+
+      addDeleteLink($prototype);
+
+
+      // On ajoute le prototype modifié à la fin de la balise <div>
+
+      $container.append($prototype);
+
+      inputsOpening($container);
+      // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+
+      index++;
+
+    }
+
+
+    // La fonction qui ajoute un lien de suppression d'une catégorie
+
+    function addDeleteLink($prototype) {
+
+      // Création du lien
+
+      var $deleteLink = $('<a href="#" class="btn btn-danger pull-right">Supprimer</a>');
+
+
+      // Ajout du lien
+      $prototype.find('.panel-title').append($deleteLink);
+
+
+      // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
+
+      $deleteLink.click(function(e) {
+
+        $prototype.remove();
+
+
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+
+        return false;
+
+      });
+
+    }
+
+  });
+
+
+</script>
+{% endblock %}

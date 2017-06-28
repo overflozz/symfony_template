@@ -4,36 +4,34 @@
 
 <form action="{{ path("fos_user_security_check") }}"  method="post">
         {% if error %}
-             <div class="alert alert-danger col-md-4 col-md-offset-4 disapear" fadeOutDuration="20000">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+             <div class="alert alert-danger col-md-12 disapear" fadeOutDuration="20000">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
-    <div id="loginbloc">
+    <div id="loginbloc" style="">
        
-        <br />
         {% if csrf_token %}
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
         {% endif %}
 
         <div class="input-group">
-            <div class="input-group-addon">@</div>
-            <input class="form-control" type="text" id="inlineFormInputGroup" name="_username" value="{{ last_username }}" placeholder="Username" required="required" />
+            <input class="form-control col-xs-12 " type="text" id="inlineFormInputGroup" name="_username" value="{{ last_username }}" placeholder="Username" required="required" />
             
         </div>
-        <br />
         <div class="input-group">
-            <div class="input-group-addon"><span class="glyphicon glyphicon-tag"></span></div>
-            <input class="form-control" type="password" id="inlineFormInputGroup" name="_password" placeholder="Password" required="required" />
+            <input class="form-control col-xs-12" type="password" id="inlineFormInputGroup" name="_password" placeholder="Password" required="required" />
         </div>
 
+  <div class="row">
         <div  class="form-group" style="margin-top:20px;">
-            <input type="checkbox" class="form-check" id="remember_me" name="_remember_me" value="on" style="float:left; margin-right:5px;"/>  <span style="color:#7f8c8d;">Remember me</span>
+            <input type="checkbox" id="remember_mea" name="_remember_me" value="on" style="float:left; margin-right:10px;"/>  <span style="color:#7f8c8d;"></span> <label for="remember_mea">Remember Me</label>
+
             <a href="{{path("fos_user_resetting_request")}}" class="pull-right">Mot de passe oublié ?</a><br />
         </div>
-
+</div>
     </div>
 
-    <input type="submit" class="col-xs-12 btn-lg buttonLogin" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+    <input type="submit" class="col-xs-12 btn btn-primary btn waves-effect waves-light" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
 </form>
 
-<span  style="text-align:center;">Not a member yet ? <a href="{{path("fos_user_registration_register") }}" > Sign up now ! </a></span>
+<span  style="text-align:center; color:#95a5a6">Not a member yet ? <a href="{{path("fos_user_registration_register") }}" class="pull-right"> Sign up now ! </a></span>
 
 

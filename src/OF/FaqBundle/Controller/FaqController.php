@@ -37,7 +37,7 @@ class FaqController extends Controller
 
 	      return $this->redirectToRoute('of_faq_homepage');
 	    }
-	    $listeQuestions = $this->getDoctrine()->getManager()->getRepository('OFFaqBundle:Question')->createQueryBuilder('alias')->getQuery()->getResult();
+	    $listeQuestions = $this->getDoctrine()->getManager()->getRepository('OFFaqBundle:Question')->createQueryBuilder('alias')->add('orderBy', 'alias.id DESC')->getQuery()->getResult();
 	    
         return $this->render('OFFaqBundle:Faq:show.html.twig', array('form' => $form->createView(), 'listeQuestions' => $listeQuestions));
     }
@@ -59,7 +59,7 @@ class FaqController extends Controller
     		 throw $this->createNotFoundException('Cette question est introuvable.');
     	}
     	//on créé un form pour enregistrer la réponse :
-    	$form   =  $this->createFormBuilder($question)->add('entreprise', TextType::class)->add('responsable', TextType::class)->add('responsable', TextType::class)->add('save', SubmitType::class)->getForm();
+    	$form   =  $this->createFormBuilder($question)->add('answer', TextareaType::class)->add('save', SubmitType::class)->getForm();
 
  		if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 	      $em = $this->getDoctrine()->getManager();

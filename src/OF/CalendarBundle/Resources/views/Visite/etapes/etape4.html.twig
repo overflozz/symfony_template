@@ -1,269 +1,165 @@
-
-<div class="panel-group" id="choixVisite">
-	<div class="col-xs-3 pull-left ">
-		<div class="panel panel-default">
-		 	<div class="panel-heading">Aperçu : 
-		 	</div>
-		 	<div class="panel-body">
-
-		 	<ul id="preview" style="padding-left: 0;list-style:none;">
-
-		  	</ul>
-
-
-		 	</div>
-		 </div>
-
-	</div>
-
-	<div class="col-xs-9 pull-right" >
-		<div class="panel panel-default">
-		 	<div class="panel-heading">
-		 		Ordre de visite
-		 	</div>
-		 	<div class="panel-body">
-   {{ form_start(form, {'attr' : {'class' : 'ajaxForm'}})  }}
- <ul id="elements-fields-list"  style=" padding-left: 0;" data-prototype="
- <div id='collapsingpanel' class='panel panel-default element' style='margin:auto; width:auto; margin-bottom : 10px;'>
-	      	<div class='panel-heading' style='height: 50px;'>
-	        	<div class='panel-title  col-md-12'><span class='glyphicon glyphicon-move pull-left' style='margin-top:7px; margin-left:-7px;opacity:0.5;''></span><div class='pull-right' style='width: 95%;line-height:45px;'>{{  form_widget(form.elementsVisites.vars.prototype.titre)|e }}</div></div>
-	     	</div>
-	      	<div id='collapse' class='panel-default collapse'>
-	        	<div class='panel-body'>
-				
-						<div class='col-md-12' style='padding:0px;''> 
-							<div class='col-md-2 pull-left'>
-								Durée
-							</div>
-							<div class='col-md-5'>
-								{{  form_widget(form.elementsVisites.vars.prototype.duree.hour, {'attr' : {'class' : 'hourInput'}})|e }}
-							</div>
-							<div class='col-md-5'>
-								{{ form_widget(form.elementsVisites.vars.prototype.duree.minute, {'attr' : {'class' : 'minuteInput'}})|e  }}
-							</div>
-						</div>
-				
-		        </div>
-	        	<div class='panel-footer' style='height: 50px;'></div>
-	      	</div>
-		</div>">
-
-   {% for elementVisite in form.elementsVisites %}
-
-   		<div id="collapsingpanel" class="element panel panel-default " style="margin:auto; width:auto; margin-bottom : 10px;">
-	      	<div class="panel-heading" style='height: 50px;'>
-	        	<div class="panel-title col-md-12"><span class="glyphicon glyphicon-move pull-left" style="margin-top:7px; margin-left:-7px;opacity:0.5;"></span><div class="pull-right" style="width: 95%;line-height:45px;">{{ form_widget(elementVisite.titre) }}</div></div>
-
-	     	</div>
-	      	<div id="collapse" class="panel-default collapse">
-	        	<div class="panel-body">
-					
-					<div class='col-md-12' style="padding:0px;"> 
-						<div class='col-md-2 pull-left'>
-							Durée :
-						</div>
-						<div class='col-md-5'>
-							{{ form_widget(elementVisite.duree.hour, {'attr' : {'class' : 'hourInput'}}) }}
-						</div>
-						<div class='col-md-5'>
-							{{ form_widget(elementVisite.duree.minute, {'attr' : {'class': 'minuteInput'}} ) }}
-						</div>
-					</div>
-					
-		        </div>
-	        	<div class="panel-footer" style='height: 50px;'></div>
-	      	</div>
-		</div>
-
-    {% endfor %}
-</ul>
-{{ form_widget(form.save, {'label': 'Enregistrer', 'attr' : {'class' : 'btn btn-primary', 'role' : 'valid'}}) }}
-     <a href="#" id="add_field" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span></a>
-    {{ form_end(form) }}
+<div class="col-md-12">
+ <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">Déroulé en temps réel : 
+          </div>
+          <div class="panel-body">
+          <ul id="preview" style="padding-left: 0;list-style:none;">
+          {% set heure = event.startDatetime|date("H", "Europe/Paris") %}
+          {% set minute = event.startDatetime|date("i", "Europe/Paris") %}
+          <li minute="{{minute}}" heure="{{heure}}"><div class="dotElementVisite pull-left" style="margin-left:-7px;"></div> <b>{{ heure }}:{{ minute }}</b><div class="elementPreview"></li>
+            {% for element in event.elementsVisites %}
+              {% set heure = heure + element.duree|date("H", "Europe/Paris") %}
+              {% set minute = minute + element.duree|date("i", "Europe/Paris") %}
+              {% if (minute//60 > 0)%}
+                {% set heure  = heure + 1%}
+                {% set minute = minute - (minute//60) * 60 %}
+              {% endif %}
+              <li minute="{{minute}}" heure="{{heure}}"> <div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> {{element.titre}} </div><br /><div class="dotElementVisite pull-left" style=""></div><b>{{heure}}:{% if minute < 10 %}0{% endif %}{{minute}}</b></li>
+              
+            {% endfor %}
+            <li minute="{{minute}}" heure="{{heure}}"><div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> Fin</div><br /><div class="dotElementVisite pull-left" style=""></div><b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b> </li>
+          </ul>
+          
 
 
+          </div>
+         </div>
 
-		 
-		 	</div>
-		</div>
-	</div>
+      </div>
+
+  <div class="col-md-8 panel panel-default">
+    <br />
+    <div id="before">
+      
+        <div class="row"><div style="text-align:center" >
+         <span class="glyphicon glyphicon-bell" style="font-size:40px"; ></span><br>
+         <span style="font-size:20px;">
+         La visite n'a pas encore commencé. <br />
+         Elle aura lieu le <b>{{event.startDatetime|date("d/m/Y", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b>. <br /> N'hésitez par à <a href="{{ path('of_calendar_voirDocuments') }}">relire les documents importants</a>.
+         </span><br /><br /><br />
+        </div>
+      </div>
+        <div class="row">
+
+          <div class="col-md-4 col-xs-12">
+           <a class="btn btn-primary btn-lg col-xs-12"  style=" padding-top:10px;height:100px; line-height:20px;" href="{{ path('of_calendar_voirQuestionnaire', {'id' : event.id })}}">
+              <span class="glyphicon glyphicon-certificate" style="font-size:40px;"></span><br />
+             Générer les <br />enquetes<br />
+          </a>
+          </div>
+          <div class="col-md-4 col-xs-12">
+          <a class="btn btn-primary btn-lg col-xs-12"  style=" padding-top:10px;height:100px; line-height:20px;" href="{{ path('of_calendar_voirDocVisite', {'id' : event.id})}}">
+              <span class="glyphicon glyphicon-file" style="font-size:40px;"></span><br />
+             Générer le <br /> récapitulatif<br />
+          </a>
+          </div>
+          <div class="col-md-4 col-xs-12">
+           <a class="btn btn-primary btn-lg col-xs-12"  style=" padding-top:10px;height:100px; line-height:20px;" href="{{ path('of_faq_homepage')}}">
+              <span class="glyphicon glyphicon-paperclip" style="font-size:40px;"></span><br />
+             Accéder à la<br /> Foire Aux Questions<br />
+          </a>
+        
+        </div>
+        
+      </div><br />
+    </div>
+    <div id="today">
+      <div class="row"><div style="text-align:center" >
+         <span class="glyphicon glyphicon-bell" style="font-size:40px"; ></span><br />
+         <span style="font-size:20px;">
+         La visite est aujourd'hui. <br />
+         Elle a lieu de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b>. <br /> N'hésitez par à <a href="{{ path('of_calendar_voirDocuments') }}">relire les documents importants</a>.</span>
+         <br /><br /><br />
+        </div>
+      </div>
+      <div class="row">
+
+        <div class="col-md-4 col-xs-12">
+         <a class="btn btn-primary btn-lg col-xs-12 "  style=" padding-top:10px;height:100px; line-height:20px;" href="{{ path('of_calendar_voirQuestionnaire', {'id' : event.id })}}">
+            <span class="glyphicon glyphicon-certificate" style="font-size:40px;"></span><br />
+           Générer les <br />enquetes<br />
+        </a>
+        </div>
+        <div class="col-md-4 col-xs-12">
+        <a class="btn btn-primary btn-lg col-xs-12"  style=" padding-top:10px;height:100px; line-height:20px;" href="{{ path('of_calendar_voirDocVisite', {'id' : event.id})}}">
+            <span class="glyphicon glyphicon-file" style="font-size:40px;"></span><br />
+           Générer le <br /> récapitulatif<br />
+        </a>
+        </div>
+        <div class="col-md-4 col-xs-12">
+         <a class="btn btn-primary btn-lg col-xs-12"  style=" padding-top:10px;height:100px; line-height:20px;" href="{{ path('of_faq_homepage')}}">
+            <span class="glyphicon glyphicon-paperclip" style="font-size:40px;"></span><br />
+           Accéder à la<br /> Foire Aux Questions<br />
+        </a>
+
+         </div>
+      </div>
+      <br />
+    </div>
+    <div id="after">
+      <div class="row"><div style="text-align:center" >
+         <span class="glyphicon glyphicon-ok" style="font-size:40px"; ></span><br />
+         <span style="font-size:20px;">
+         La visite est terminée. <br />
+         Elle a eu lieu le <b>{{event.startDatetime|date("d/m/Y", "Europe/Paris")}} de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b>.</span>
+         <br /><br /><br />
+        </div>
+      </div>
+   
+      <br />
+    </div>
+
+    </div>
+
+   
+
+
+
 </div>
- <script>
-  $(document).ready(function() {
-  	// On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
-    var $container = $('#elements-fields-list');
-    updatePreview($container);
-    // on update au début et quand une valeur est changée dans les conf des différents éléments.
 
-    $("#choixVisite").on("change", ".titreInput",function(){
+<br />
 
-        updatePreview($container);
-    });
-    $("#choixVisite").on("change", ".minuteInput",function(){
-
-        updatePreview($container);
-    });
-    $("#choixVisite").on("change", ".hourInput",function(){
-
-        updatePreview($container);
-    });
+<script>
 
 
 
+$('#today').hide();
+$('#after').hide();
+$('#before').hide();
+var d = new Date();
+var hour = d.getHours();
+var minute = d.getMinutes();
+var month = d.getMonth()+1;
+var day = d.getDate();
+var today = false;
 
-    $( "#elements-fields-list" ).sortable({
-      revert: true,
-      stop: function(){
+var output =  (day<10 ? '0' : '') + day + '/' + (month<10 ? '0' : '') + month + '/' +  d.getFullYear();
+if (output == '{{event.startDatetime|date("d/m/Y", "Europe/Paris")}}'){
+  $('#today').show();
+  today = true;
+}else if(d.getFullYear()> {{event.startDatetime|date("Y", "Europe/Paris")}} || d.getFullYear()== {{event.startDatetime|date("Y", "Europe/Paris")}} && month > {{event.startDatetime|date("m", "Europe/Paris")}} || d.getFullYear()== {{event.startDatetime|date("Y", "Europe/Paris")}} && month == {{event.startDatetime|date("m", "Europe/Paris")}} && day > {{event.startDatetime|date("d", "Europe/Paris")}}){
+  $('#after').show();
+}else{
+   $('#before').show();
+}
 
-			updateIndex($container); // on met à jour l'ordre
-			updatePreview($container);
-      }
-    });
-
-    $( "#draggable" ).draggable({
-		connectToSortable: "#elements-fields-list",
-		helper: "clone",
-		revert: "invalid",
-		start  : function(event, ui){
- 		},
-		stop: function(event, ui){
-			$(ui.helper).removeAttr("style"); // ui helper permet d'accéder à l'élement draggé.
-		}
-    });
-
-    $( "ul, li" ).disableSelection();
-
-	$('.panel-group').on("click", "#collapsingpanel .panel-heading",  function(){
-		$(this).parent().find("#collapse").collapse('toggle');
-	});
-	
-
-  
-        // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-   	var index = $container.find(':input').length;
-    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-    $('#add_field').click(function(e) {
-      addCategory($container);
-      updatePreview($container);
-      e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-      return false;
-    });
-    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
-
-    if (index == 0) {
-      addCategory($container);
-    } else {
-      // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
-
-      $container.find('.element').each(function() {
-
-        addDeleteLink($(this));
-
-      });
-
-    }
-
-    function updateIndex($container){
-    	var $compteur  = 0; // nouveau compteur pour mettre dans le bon ordre
-    	$container.find('.element').each(function() {
-    		$(this).find('.titreInput').attr('name', 'of_calendarbundle_event[elementsVisites]['+ $compteur + '][titre]' );
-    		$(this).find('.titreInput').attr('id', 'of_calendarbundle_event_elementsVisites_'+ $compteur + '_titre' );
-    		$(this).find('.dureeInput').attr('id', 'of_calendarbundle_event_elementsVisites_'+ $compteur + '_duree' );
-    		$(this).find('.hourInput').attr('id', 'of_calendarbundle_event_elementsVisites_'+ $compteur + '_duree_hour' );   
-    		$(this).find('.hourInput').attr('name', 'of_calendarbundle_event[elementsVisites]['+ $compteur + '][duree][hour]' );
-    		$(this).find('.minuteInput').attr('id', 'of_calendarbundle_event_elementsVisites_'+ $compteur + '_duree_minute' );   
-    		$(this).find('.minuteInput').attr('name', 'of_calendarbundle_event[elementsVisites]['+ $compteur + '][duree][minute]' );
+updatePreview();
+window.setInterval(function(){
+  updatePreview();
+}, 5000);
 
 
-        	$compteur += 1;
-      });
 
-    }
-
-    function updatePreview($container){
-    	var $titre;
-    	var $heure  = parseInt({{event.startDatetime|date("H", "Europe/Paris")}}) ;
-    	var $minute = parseInt({{event.startDatetime|date("i", "Europe/Paris")}});
-	   	var $replacment='<li><div class="dotElementVisite pull-left" style="margin-left:-6px;"></div> <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b></li>';
-
-    	$container.find('.element').each(function() {
-    		$titre = $(this).find('.titreInput').val();
-    		$minute = $minute + parseInt($(this).find('.minuteInput :selected').attr('value'));
-    		// Ensuite on effectue un ajout d'heure et application de modulo si minutes > 60
-    		$heure = $heure + ($minute-$minute%60)/60;
-    		$minute = $minute%60;
-    		$heure = $heure + parseInt($(this).find('.hourInput :selected').attr('value'));
-        $replacment+= ('<div class="elementPreview"><div class="titreElementVisite">'+ $titre + '</div><br /><li><div class="dotElementVisite pull-left"></div> ' +'<b>'+ $heure);
-        if($minute<10){ // pour rajouter le 0 devant la minute.
-          $replacment+= ('h0'+ $minute +' </b></li></div>');
-        }else{
-          $replacment+= ('h'+ $minute +' </b></li></div>');
-        }
-    	});
-    	$('#preview').hide().html($replacment).fadeIn(1000);
-
-
-    }
-    // La fonction qui ajoute un formulaire CategoryType
-
-    function addCategory($container) {
-
-      // Dans le contenu de l'attribut « data-prototype », on remplace :
-
-      // - le texte "__name__label__" qu'il contient par le label du champ
-
-      // - le texte "__name__" qu'il contient par le numéro du champ
-
-      var template = $container.attr('data-prototype')
-
-        .replace(/__name__label__/g, 'Catégorie n°' + (index+1))
-
-        .replace(/__name__/g,        index)
-
-      ;
-
-
-      // On crée un objet jquery qui contient ce template
-
-      var $prototype = $(template);
-
-
-      // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
-
-      addDeleteLink($prototype);
-
-      // On ajoute le prototype modifié à la fin de la balise <div>
-      $container.append($prototype);
-      // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
-      index++;
-
-    }
-
-
-    // La fonction qui ajoute un lien de suppression d'une catégorie
-
-    function addDeleteLink($prototype) {
-
-      // Création du lien
-
-      var $deleteLink = $('<a href="#" class="btn btn-danger col-xs-12">Supprimer</a>');
-
-
-      // Ajout du lien
-
-      $prototype.find('.panel-footer').append($deleteLink);
-
-
-      // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
-
-      $deleteLink.click(function(e) {
-        $prototype.remove();
-        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-        return false;
-      });
-
-    }
-
-  });
-
+function updatePreview(){
+var d = new Date();
+var hour = d.getHours();
+var minute = d.getMinutes();
+  $('ul#preview').children('li').each(function(){
+    if (today && $(this).attr('heure')<hour || $(this).attr('heure')==hour && $(this).attr('minute') < minute){
+      $(this).addClass('past');
+      $(this).find('.statut').html('<span class="glyphicon glyphicon-ok"></span>')
+  }
+  })
+}
 </script>

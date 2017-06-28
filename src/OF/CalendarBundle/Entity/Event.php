@@ -195,7 +195,7 @@ class Event
         $this->startDate = new \DateTime();
         $this->startDatetime = new \DateTime();
         $this->endDatetime = new \DateTime();
-        $this->step = 0;
+        $this->step = 1;
         $this->enquetes = array();
         $this->elementsVisites = array();
         $this->nbUserMax = 2;
@@ -209,7 +209,36 @@ class Event
         $this->endDatetime = \DateTime::createFromFormat('Y-m-d H:i:s', $this->startDate->format('Y-m-d')." ".$this->heureFin->format('H:i:s'));
         $this->bgColor = '#FFFFFF';
     }
+    public function getNotes(){
+        // Le résultat est un tableau de tableau contenant à chaque case les nombre de réponses données pour chaque question.
+        $result = array();
+        $somme = 0;
+        $compteur = 0;
+        $resultat1 = array(0,0,0,0);
+        $resultat2 = array(0,0,0,0);
+        $resultat3 = array(0,0,0,0);
+        $resultat4 = array(0,0,0,0);
+        $resultat5 = array(0,0,0,0);
+        $resultat6 = array(0,0,0,0);
+        $resultat7 = array(0,0,0,0);
+        foreach ($this->enquetes as $enquete) {
+            $resultenquete = 1;
+            $resultat1[''.$enquete->getResultat1()] = $resultat1[$enquete->getResultat1()] + 1; 
+            $resultat2[''.$enquete->getResultat2()] = $resultat2[$enquete->getResultat2()] + 1; 
+            $resultat3[''.$enquete->getResultat3()] = $resultat3[$enquete->getResultat3()] + 1; 
+            $resultat4[''.$enquete->getResultat4()] = $resultat4[$enquete->getResultat4()] + 1; 
+            $resultat5[''.$enquete->getResultat5()] = $resultat5[$enquete->getResultat5()] + 1; 
+            $resultat6[''.$enquete->getResultat6()] = $resultat6[''.$enquete->getResultat6()] + 1; 
 
+        }
+        array_push($result, $resultat1);
+        array_push($result, $resultat2);
+        array_push($result, $resultat3);
+        array_push($result, $resultat4);
+        array_push($result, $resultat5);
+        array_push($result, $resultat6);
+        return $result;
+    }
     /**
      * Convert calendar event details to an array
      * 

@@ -89,7 +89,18 @@ class AdminController extends Controller
 
         $form   = $this->createFormBuilder($client)
         ->add('entreprise', TextType::class)
-        ->add('type', TextType::class)
+        ->add('type', ChoiceType::class, array(
+        'choices'  => array(
+            'Entités et Directions du groupe EDF et filiales' => "Entités et Directions du groupe EDF et filiales",
+            'Clients et partenaires industriels et académiques' => "Clients et partenaires industriels et académiques",
+            'Etudiants de grandes écoles ou d’universités' => 'Etudiants de grandes écoles ou d’universités',
+            'Actionnaires, investisseurs' => 'Actionnaires et investisseurs',
+            'PME et ETI' => 'PME et ETI',
+            'Institutionnels et élus ' => 'Institutionnels et élus ',
+            'Grand public' => 'Grand public',
+            'Public scolaire ' =>'Public scolaire'
+
+        ))) 
          ->add('civilite', ChoiceType::class, array(
         'choices'  => array(
             'Mr.' => "Mr.",

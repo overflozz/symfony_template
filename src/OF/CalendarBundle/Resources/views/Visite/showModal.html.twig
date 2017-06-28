@@ -1,25 +1,43 @@
-<div class="container-fluid">
-	<div class="headermodal">
-		Visite {{ event.id }} 	<button type="button" id="closeModal" class="btn btn-default pull-right " data-dismiss="modal"><span class="glyphicon glyphicon-remove "></span></button>
-	</div>
-	<div class="contentModal"> 
-		Le <b>{{event.startDatetime|date("d/m/Y", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b>
+
+		<div class="col-md-12"><h5 class="pull-left">   Visite {{ event.id }}</h3> 	<button type="button" id="closeModal" class="btn red lighten-1 pull-right modal-close" style="color:#fff; margin-top : 10px;" data-dismiss="modal"><span class="glyphicon glyphicon-remove "></span></button></div>
+	<br />
 		<div class="divider"></div>
+	
+				
+			<div class="col-md-12">
+		
+		<div style="text-align:center">Le <b>{{event.startDatetime|date("d/m/Y", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b></div>
+		<br /><br/>
+
+		<div class="divider"></div>
+		<div class="row">
+			<div class="col-md-6 col-xs-12 pull-left">
+
 		<b><span class="glyphicon glyphicon-bullhorn" style="border-radius:50%; background-color:#2ecc71;padding : 3px; font-size:12px; color:#fff;"></span> Conférenciers : </b>
-		<ul>
-			{% for participant in Participants %}
-				<li>{{participant.user.prenom}} {{participant.user.nom}}  {% if participant.user == app.user%} <button id="suppr_conferencier" type="button" class="btn btn-outline-danger"><span class='glyphicon glyphicon-remove'></span> Supprimer</button>{% endif %}</li>
-			{% endfor %}
-			{% for i in 1..(event.nbUserMax - Participants|length) %}
-				<li>
-					N/A
-					{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userParticipe == false and i==1 %}
-						<button id="ajout_conferencier" class="btn btn-outline-primary" type="button"><span class='glyphicon glyphicon-plus'></span> S'ajouter</button>
-					{% endif %}
-				</li>
-			{% endfor %}
-		</ul>
-		<span class="glyphicon glyphicon-thumbs-up" style="border-radius:50%; background-color:#f1c40f;padding : 3px; font-size:12px; color:#fff;"></span>  <b>Reponsable Qualité</b> : {{event.respoQuali.prenom }} {{event.respoQuali.nom }}<br />
+		
+				<ul>
+				{% for participant in Participants %}
+					<li> {{participant.user.prenom}} {{participant.user.nom}}  {% if participant.user == app.user%} <button id="suppr_conferencier" type="button" class="btn red lighten-1" style="color:#fff"><span class='glyphicon glyphicon-remove'></span> Supprimer</button>{% endif %}</li>
+				{% endfor %}
+				{% for i in 1..(event.nbUserMax - Participants|length) %}
+					<li>
+						N/A
+						{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userParticipe == false and i==1 %}
+							<button id="ajout_conferencier" class="btn btn-primary" type="button"><span class='glyphicon glyphicon-plus'></span> S'ajouter</button>
+						{% endif %}
+					</li>
+				{% endfor %}
+				</ul>
+			</div>
+
+		<div class="col-md-6 col-xs-12 pull-right">
+			<span class="glyphicon glyphicon-thumbs-up" style="border-radius:50%; background-color:#f1c40f;padding : 3px; font-size:12px; color:#fff;"></span>  <b>Reponsable Qualité</b> : 
+			<ul>
+				<li> {{event.respoQuali.prenom }} {{event.respoQuali.nom }}</li>
+			</ul>
+		</div>
+		<br /><br />
+		</div>
 		<div class="divider"></div>
 		<div class="row">
 			<div class="col-md-6 pull-left">
@@ -32,22 +50,22 @@
 				<b>Type de public</b> : {{ event.client.type }} <br />
 			</div>
 		</div>
-</div>
+	
+		<br />
+		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userParticipe == true %}
+			<a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : event.step})}}" type="button" id="viewModal" class="btn btn-primary col-xs-12" ><span class="glyphicon glyphicon-eye-open"></span> Voir</a>
+		{% else  %}
+			<a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : event.step})}}" type="button" id="viewModal" class="btn btn-primary col-xs-12 hidden" ><span class="glyphicon glyphicon-eye-open"></span> Voir</a>
+		{% endif %}
 
-<div class="row-fluid">
-	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userParticipe == true %}
-		<a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : event.step})}}" type="button" id="viewModal" class="btn btn-default col-xs-12" ><span class="glyphicon glyphicon-eye-open"></span> Voir</a>
-	{% else  %}
-		<a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : event.step})}}" type="button" id="viewModal" class="btn btn-default col-xs-12 hidden" ><span class="glyphicon glyphicon-eye-open"></span> Voir</a>
-	{% endif %}
-</div>
-</div>
+	</div>
+		
 <script>
 
 	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 	$(document).ready(function(){
 
-		$('.contentModal').on("click", "#ajout_conferencier",function(){
+		$('.modal-content').on("click", "#ajout_conferencier",function(){
 			var $div = $("#ajout_conferencier").parent();
 			$div.html('');
 			$('#loading-image').clone().appendTo($div);
@@ -61,10 +79,10 @@
 				$("#viewModal").removeClass("hidden").hide().fadeIn(1000);
 
 				$('#loading-image').fadeOut(1000);
-				$div.html("{{ app.user.prenom}} {{ app.user.nom}}<button id='suppr_conferencier'  class='btn btn-outline-danger' type='button' ><span class='glyphicon glyphicon-remove'></span> Supprimer</button>");
+				$div.html("{{ app.user.prenom}} {{ app.user.nom}}<button id='suppr_conferencier'  class='btn red lighten-1' type='button' ><span class='glyphicon glyphicon-remove'></span> Supprimer</button>");
 			});
 		});
-		$('.contentModal').on("click", "#suppr_conferencier",function(){
+		$('.modal-content').on("click", "#suppr_conferencier",function(){
 			var $div = $("#suppr_conferencier").parent();
 			$div.html('');
 			$('#loading-image').clone().appendTo($div);
@@ -79,7 +97,7 @@
 				
 				$('#loading-image').fadeOut(500);
 
-				$div.html("N/A <button id='ajout_conferencier' class='btn btn-outline-primary' type='button' ><span class='glyphicon glyphicon-plus'></span> S'ajouter</button>");
+				$div.html("N/A <button id='ajout_conferencier' class='btn btn-primary' type='button' ><span class='glyphicon glyphicon-plus'></span> S'ajouter</button>");
 			});
 		});
 	});

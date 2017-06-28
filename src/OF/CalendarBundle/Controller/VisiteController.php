@@ -9,7 +9,6 @@ use OF\CalendarBundle\Form\ajoutquestionnaireType;
 use OF\CalendarBundle\Form\EventType;
 use OF\CalendarBundle\Form\Etape1Type;
 use OF\CalendarBundle\Form\Etape2Type;
-use OF\CalendarBundle\Form\Etape4Type;
 use OF\CalendarBundle\Form\questionnaireType;
 use OF\CalendarBundle\Entity\Event;
 use OF\CalendarBundle\Entity\EventUser;
@@ -46,9 +45,6 @@ class VisiteController extends Controller
 			$form   = $this->get('form.factory')->create(Etape2Type::class, $event);
 		}
 		if($etape == 4 ){
-			$form   = $this->get('form.factory')->create(Etape4Type::class, $event);
-		}
-		if($etape == 5 ){
 			if ($event->getSatisfactiongenere() == False){
 	      		$satisfaction = new Satisfaction();
 				$satisfaction->setVisite($event);
@@ -72,7 +68,7 @@ class VisiteController extends Controller
 	    }
 
     	if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-	      if ($etape==5)
+	      if ($etape==4)
 	      {
 	      	$em->persist($satisfaction);
 	      }
@@ -286,9 +282,6 @@ class VisiteController extends Controller
 
 		foreach($visitequalite->getEnquetes() as $enquete)
 	      {
-
-
-
 	      	$enquete->setVisite($visitequalite); // car l'id de la visite associée ne se met pas à jour tout seul ( bug )
 
 			$em->persist($enquete);
@@ -307,5 +300,11 @@ class VisiteController extends Controller
 		$enquete = new Satisfaction();
 		$form   = $this->get('form.factory')->create(questionnaireType::class, $enquete);
 		return $this->render('OFCalendarBundle:Visite:Quali/Questionnaire.html.twig',array('form' => $form->createView(), 'visite' => $visitequalite));
+	}
+
+	public function showrecapHTMLAction($id){
+
+		$visitequalite = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findOneBy(array('id' => $id));
+		return $this->render('OFCalendarBundle:Visite:recap.html.twig',array('event' => $visitequalite));
 	}
 }

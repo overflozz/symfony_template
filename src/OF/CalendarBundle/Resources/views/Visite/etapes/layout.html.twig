@@ -1,30 +1,58 @@
-<div class="background-nav-wizard col-md-12">
-	<ul class="nav nav-wizard col-md-10 col-md-offset-2">
+<div class="background-nav-wizard col-xs-12 hidden-xs">
+	<ul class="nav nav-wizard col-md-10 col-md-offset-2 col-xs-12 hidden-xs">
 	    <li class="{% if (steptoshow == 0)%}stepshowed{% endif %} {% if (event.step|abs > 0) %}complete{% elseif (event.step|abs == 0)%}active{% else %}disabled{% endif %}">
 	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '0'})}}">Descriptif</a>
 	    </li>
 	    
-	    <li class="{% if (steptoshow== 1)%}stepshowed{% endif %} {% if (event.step|abs > 1) %}complete{% elseif (event.step|abs == 1)%}active{% else %}disabled{% endif %}"><!-- complete -->
-	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '1'})}}" ><span class="glyphicon glyphicon-file"></span> Formulaire de Visite</a>
+	    
+	    <li class="{% if (steptoshow== 1)%}stepshowed{% endif %} {% if (event.step|abs > 1) %}complete{% elseif (event.step|abs == 1)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '1'})}}"><span class="glyphicon glyphicon-inbox"></span> Logistique</a>
 	    </li>
 	    
 	    <li class="{% if (steptoshow== 2)%}stepshowed{% endif %} {% if (event.step|abs > 2) %}complete{% elseif (event.step|abs == 2)%}active{% else %}disabled{% endif %}">
-	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '2'})}}"><span class="glyphicon glyphicon-inbox"></span> Logistique</a>
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '2'})}}"><span class="glyphicon glyphicon-list-alt"></span> Proposition Visite</a>
 	    </li>
-	    
-	    <li class="{% if (steptoshow== 3)%}stepshowed{% endif %} {% if (event.step|abs > 3) %}complete{% elseif (event.step|abs == 3)%}active{% else %}disabled{% endif %}">
-	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '3'})}}"><span class="glyphicon glyphicon-list-alt"></Span> Récapitulatif EDF</a>
+	   	<li class="{% if (steptoshow== 3)%}stepshowed{% endif %} {% if (event.step|abs > 3) %}complete{% elseif (event.step|abs == 3)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '3'})}}"><span class="glyphicon glyphicon-envelope"></span>Récapitulatif EDF</a>
 	    </li>
-	   	<li class="{% if (steptoshow== 4)%}stepshowed{% endif %} {% if (event.step|abs > 4) %}complete{% elseif (event.step|abs == 4)%}active{% else %}disabled{% endif %}">
-	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '4'})}}"><span class="glyphicon glyphicon-envelope"></span> Proposition Visite</a>
+	    <li class="{% if (steptoshow== 4)%}stepshowed{% endif %} {% if (event.step|abs > 4) %}complete{% elseif (event.step|abs == 4)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '4'})}}"><span class="glyphicon glyphicon-time"></span> Déroulé</a>
 	    </li>
-	    <li class="{% if (steptoshow== 5)%}stepshowed{% endif %} {% if (event.step|abs > 5) %}complete{% elseif (event.step|abs == 5)%}active{% else %}disabled{% endif %}">
-	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '5'})}}"><span class="glyphicon glyphicon-time"></span> Déroulé</a>
+	   	<li class="{% if (steptoshow== 5)%}stepshowed{% endif %} {% if (event.step|abs > 5) %}complete{% elseif (event.step|abs == 5)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '5'})}}"><span class="glyphicon glyphicon-time"></span> Bilan</a>
 	    </li>
 	</ul>
 </div>
-
-<div class="col-lg-8 col-lg-offset-2">      
+<div class=" col-xs-12 ">
+<div class="panel panel-default visible-xs-block">
+<div class="panel-body">
+<ul >
+	    <li class="{% if (steptoshow == 0)%}stepshowed{% endif %} {% if (event.step|abs > 0) %}complete{% elseif (event.step|abs == 0)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '0'})}}">Descriptif</a>
+	    </li>
+	    
+	    
+	    <li class="{% if (steptoshow== 1)%}stepshowed{% endif %} {% if (event.step|abs > 1) %}complete{% elseif (event.step|abs == 1)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '1'})}}"><span class="glyphicon glyphicon-inbox"></span> Logistique</a>
+	    </li>
+	    
+	    <li class="{% if (steptoshow== 2)%}stepshowed{% endif %} {% if (event.step|abs > 2) %}complete{% elseif (event.step|abs == 2)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '2'})}}"><span class="glyphicon glyphicon-list-alt"></span> Proposition Visite</a>
+	    </li>
+	   	<li class="{% if (steptoshow== 3)%}stepshowed{% endif %} {% if (event.step|abs > 3) %}complete{% elseif (event.step|abs == 3)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '3'})}}"><span class="glyphicon glyphicon-envelope"></span>Récapitulatif EDF</a>
+	    </li>
+	    <li class="{% if (steptoshow== 4)%}stepshowed{% endif %} {% if (event.step|abs > 4) %}complete{% elseif (event.step|abs == 4)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '4'})}}"><span class="glyphicon glyphicon-time"></span> Déroulé</a>
+	    </li>
+	   	<li class="{% if (steptoshow== 5)%}stepshowed{% endif %} {% if (event.step|abs > 5) %}complete{% elseif (event.step|abs == 5)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '5'})}}"><span class="glyphicon glyphicon-time"></span> Bilan</a>
+	    </li>
+	</ul>
+	</div>
+	</div>
+	</div>
+<div class="col-md-8 col-md-offset-2 col-xs-12">      
 	<br />
 	{% if steptoshow != 0 %}
 		{% if event.step|abs > steptoshow %}

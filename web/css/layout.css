@@ -14,7 +14,25 @@
 	--color-warning-secondaire :#d35400;
 }
 
+@media (max-width: 767px) {
+    /* CSS goes here */
+    .navbar-collapse {
+    	background:#fff;
+    }
+    .navbar-collapse li{
+    	background:#fff;
+    	width : 100%;
+    }
+    .row ul.nav-wizard li{
+		width : 100%;
 
+	
+    }
+}
+.row ul.nav-wizard{
+	z-index:1000;
+	display:block;
+}
 
 body{
 	background-color:var(--colorbackground);
@@ -156,10 +174,15 @@ body{
 }
 
 .buttonPrimary{
-	
+	background-color : var(--color-secondaire);
 	color : #fafafa;
 	border :none;
 	border-radius: 0px 0px 0px 0px;
+	
+}
+.btn-primary{
+	background-color : var(--color-secondaire);
+	color : #fafafa;
 	
 }
 .btn-outline-danger:hover{
@@ -244,3 +267,8 @@ font-weight:600;}
 .hero-widget var { display: block; height: 64px; font-size: 64px; line-height: 64px; font-style: normal; }
 .hero-widget label { font-size: 17px; }
 .hero-widget .options { margin-top: 10px; }
+
+/*FAQ */
+.solved{
+	border: 1px solid var(--color-success);
+}

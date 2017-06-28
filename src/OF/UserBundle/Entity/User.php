@@ -53,6 +53,21 @@ class User extends BaseUser
 
      */
     protected $prenom;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+
+     */
+    protected $telephone;
+        /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+
+     */
+    protected $rib;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+
+     */
+    protected $langue;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -331,5 +346,77 @@ class User extends BaseUser
     public function getPrenom()
     {
         return $this->prenom;
+    }
+
+    /**
+     * Set telephone
+     *
+     * @param string $telephone
+     *
+     * @return User
+     */
+    public function setTelephone($telephone)
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    /**
+     * Get telephone
+     *
+     * @return string
+     */
+    public function getTelephone()
+    {
+        return $this->telephone;
+    }
+
+    /**
+     * Set rib
+     *
+     * @param string $rib
+     *
+     * @return User
+     */
+    public function setRib($rib)
+    {
+        $this->rib = $rib;
+
+        return $this;
+    }
+
+    /**
+     * Get rib
+     *
+     * @return string
+     */
+    public function getRib()
+    {
+        return $this->rib;
+    }
+
+    /**
+     * Set langue
+     *
+     * @param string $langue
+     *
+     * @return User
+     */
+    public function setLangue($langue)
+    {
+        $this->langue = $langue;
+
+        return $this;
+    }
+
+    /**
+     * Get langue
+     *
+     * @return string
+     */
+    public function getLangue()
+    {
+        return $this->langue;
     }
 }

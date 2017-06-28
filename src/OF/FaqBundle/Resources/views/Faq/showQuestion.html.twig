@@ -10,50 +10,35 @@
 
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
 <div class="col-md-8">
-Liste : 
-
+<a href="{{path('of_faq_homepage')}}" ><span class="glyphicon glyphicon-chevron-left"></span> Retourner à la liste des questions</a>
 <div class="panel panel-default">
-	<div class="panel-heading">{{ question.title }}</div>
-	<div class="panel-content">{{ question.content }}</div> <a href="{{path('of_faq_Suppr', {'id' : question.id})}}" >Supprimer</a>	
+	<div class="panel-heading">{{ question.title }}	 {% if is_granted('ROLE_ADMIN') %}<a href="{{path('of_faq_Suppr', {'id' : question.id})}}" class="pull-right">Supprimer</a>	</div>{% endif %}
+	<div class="panel-body">{{ question.content }}<br />
+
 	{% if question.answer is not null %}
-	Réponse : {{question.answer}}
-	Catégorie : {{ question.category }}
-	{% endif %}
+	<br />
+	<div class="alert alert-success" role="alert"><b> Réponse : </b> <br />{{question.answer}}</div>
+	
+	{% endif %}<br />
+	<b>Catégorie</b> : {{ question.category }}
 	{% if is_granted('ROLE_ADMIN') %}
 		{{ form(form)}}
 	{% endif %}
+
+	</div>
 </div>
 	
 
 </div>
-	<button type="button" id="ajouterEventBouton" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalAdd"><span class="glyphicon glyphicon-plus"></span></button>
 
-	<!-- Modal -->
-	<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Ajouter une visite</h4>
-		      </div>
-		      <div class="modal-body">
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-		    </div>
-		  </div>
+
+	{% else %}
+		<div class="alert alert-danger">
+		<div class="col-md-8 col-md-offset-2">      
+		  	<strong> Page inaccessible.</strong> Vous n'êtes pas conférencier pour cette visite.
+		<div>
 		</div>
-	</div>
-
-
-
-{% else %}
-	<div class="alert alert-danger">
-	<div class="col-md-8 col-md-offset-2">      
-	  	<strong> Page inaccessible.</strong> Vous n'êtes pas conférencier pour cette visite.
-	<div>
-	</div>
-{% endif %}
+	{% endif %}
 
 
 {% endblock %}

@@ -16,14 +16,10 @@
 	<!-- Modal -->
 
 	{% include 'OFCalendarBundle:Calendar:addevent.html.twig' %}
-	<div id="modalShow" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog"  id="modalVisiteShow" role="document">
-			<div class="modal-body">
+			<div id="modalShow" class="modal-content modal col-md-4" style="height:450px;">
 				
 			
 			</div>
-		</div>
-	</div>
 </div>
 {% endblock %}
 {% block javascript %}
@@ -41,8 +37,8 @@ $('.main-content').on("click", "#modalVisitetrigger", function(){
                     data:{"idVisite" : $(this).attr("idVisite")}
 
                 }).done(function($reponse){
-                	$('#modalShow .modal-body').html($reponse);
-                	$('#modalShow ').modal("show");
+                	$('#modalShow').html($reponse);
+                	$('#modalShow').modal("open");
                 });
                 
             });

@@ -47,6 +47,8 @@ html .fc,
 	border-radius:50%;
 	background-color:var(--color-secondaire);;
 	right:30px;
+	height:100px;
+	width:100px;
 	bottom:30px;
 	z-index:100;
 	border:none;
@@ -115,7 +117,7 @@ html .fc,
 .applying:hover{
 	background-color: var(--color-secondaire-hover);
 }
-.open{
+.dispo{
 	background-color:#9fa3a6;
 
 }

@@ -71,7 +71,7 @@ class CalendarEventListener
 		    else if (count($companyEvent->getApplications()) >= $companyEvent->getNbUserMax()){
 		    	$eventEntity->setCssClass('locked');
 		    }else{
-		    	$eventEntity->setCssClass('open');
+		    	$eventEntity->setCssClass('dispo');
 		    }
 		    //finally, add the event to the CalendarEvent for displaying on the calendar
 		    $calendarEvent->addEvent($eventEntity);

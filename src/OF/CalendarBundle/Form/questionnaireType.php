@@ -32,7 +32,7 @@ class questionnaireType extends AbstractType
         'Insatisfaisant' => 0),
         'expanded' => True,
         'multiple' => False,
-        'label' => ' Que pensez-vous de la congolexicomatisation des lois du marché ?'))
+        'label' => 'Attitude et professionnalisme des conférenciers'))
         ->add('resultat2', ChoiceType::class,array('choices'  => array(
         'Satisfaisant' => 3,
         'Assez satisfaisant' => 2,
@@ -40,7 +40,7 @@ class questionnaireType extends AbstractType
         'Insatisfaisant' => 0),
         'expanded' => True,
         'multiple' => False,
-        'label' => ' Question ahzbfiazbfaizef ?'))
+        'label' => 'Pédagogie des conférenciers'))
         ->add('resultat3', ChoiceType::class,array('choices'  => array(
         'Satisfaisant' => 3,
         'Assez satisfaisant' => 2,
@@ -48,7 +48,7 @@ class questionnaireType extends AbstractType
         'Insatisfaisant' => 0),
         'expanded' => True,
         'multiple' => False,
-        'label' => ' Question ahzbfiazbfaizef ?'))
+        'label' => 'Connaissances des conférenciers'))
         ->add('resultat4', ChoiceType::class,array('choices'  => array(
         'Satisfaisant' => 3,
         'Assez satisfaisant' => 2,
@@ -56,7 +56,7 @@ class questionnaireType extends AbstractType
         'Insatisfaisant' => 0),
         'expanded' => True,
         'multiple' => False,
-        'label' => ' Question ahzbfiazbfaizef ?'))
+        'label' => 'Charisme des conférenciers'))
         ->add('resultat5', ChoiceType::class,array('choices'  => array(
         'Satisfaisant' => 3,
         'Assez satisfaisant' => 2,
@@ -64,8 +64,23 @@ class questionnaireType extends AbstractType
         'Insatisfaisant' => 0),
         'expanded' => True,
         'multiple' => False,
-        'label' => ' Question ahzbfiazbfaizef ?'));
-        
+        'label' => 'Organisation logistique de la visite'))
+        ->add('resultat6', ChoiceType::class,array('choices'  => array(
+        'Satisfaisant' => 3,
+        'Assez satisfaisant' => 2,
+        'Assez insatisfaisant' => 1,
+        'Insatisfaisant' => 0),
+        'expanded' => True,
+        'multiple' => False,
+        'label' => 'Durée de la visite'))
+        ->add('resultat7', ChoiceType::class,array('choices'  => array(
+        'Satisfaisant' => 3,
+        'Assez satisfaisant' => 2,
+        'Assez insatisfaisant' => 1,
+        'Insatisfaisant' => 0),
+        'expanded' => True,
+        'multiple' => False,
+        'label' => 'Appréciation globale'));
     }
     
     /**

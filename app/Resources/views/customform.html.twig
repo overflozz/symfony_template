@@ -1,0 +1,8 @@
+{% block field_row %}
+    <div class="input-field">
+        
+        <label for="{{ form.vars.id }} " >{{ form_label(form) }}</label>
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    </div>
+{% endblock field_row %}

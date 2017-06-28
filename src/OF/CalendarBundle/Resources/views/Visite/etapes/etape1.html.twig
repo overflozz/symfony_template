@@ -1,8 +1,131 @@
 <div class="panel panel-default">
-    <div class="panel-heading">
-      Formulaire de Visite
-    </div>
-    <div class="panel-body">
+  <div class="panel-heading">
+    Logistique Complémentaire
+  </div>
+  <div class="panel-body">
+     
 
+    {{ form_start(form, {'attr' : {'class' : 'ajaxForm'}}) }} 
+    <div  id="formLogistique" data-prototype="<div class='element col-xs-12 pull-left'><br /><div class='col-xs-10'>{{  form_widget(form.otherInfos.vars.prototype)|e }}</div></div>">
+    {% for info in form.otherInfos %}
+      <div class="element col-xs-12">
+        <br />
+        <div class='col-xs-10'>
+        {{ form_widget(info) }}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <br />
+<div class='element col-xs-12 pull-left'>
+<br />
+  <div class='col-xs-10'>
+    {{ form_widget(form.save, {'label': 'Enregistrer', 'attr' : {'class' : 'btn btn-primary', 'role' : 'valid'}}) }}
+    {{ form_end(form) }} 
     </div>
+    </div>
+<a id="add_field" class="btn-floating btn-large waves-effect waves-light btn-primary btn pull-right"><i class="material-icons">add</i></a>
+  </div>
 </div>
+
+
+
+  {# Voici le script en question : #}
+
+<script type="text/javascript">
+
+  $(document).ready(function() {
+    // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+    var $container = $('#formLogistique');
+        // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+   	var index = $container.find(':input').length;
+    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+    $('#add_field').click(function(e) {
+      addCategory($container);
+      e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+      return false;
+    });
+    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+
+    if (index == 0) {
+      addCategory($container);
+    } else {
+      // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
+
+      $container.find('.element').each(function() {
+
+        addDeleteLink($(this));
+
+      });
+
+    }
+
+
+    // La fonction qui ajoute un formulaire CategoryType
+
+    function addCategory($container) {
+
+      // Dans le contenu de l'attribut « data-prototype », on remplace :
+
+      // - le texte "__name__label__" qu'il contient par le label du champ
+
+      // - le texte "__name__" qu'il contient par le numéro du champ
+
+      var template = $container.attr('data-prototype')
+
+        .replace(/__name__/g,        index)      ;
+
+
+      // On crée un objet jquery qui contient ce template
+
+      var $prototype = $(template);
+
+      // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+
+      addDeleteLink($prototype);
+
+
+      // On ajoute le prototype modifié à la fin de la balise <div>
+
+      $container.append($prototype);  
+
+
+      // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+
+      index++;
+
+    }
+
+
+    // La fonction qui ajoute un lien de suppression d'une catégorie
+
+    function addDeleteLink($prototype) {
+
+      // Création du lien
+
+      var $deleteLink = $('<div class="col-xs-2 pull-right"><a href="#" class="btn btn-danger red"><span class="  glyphicon glyphicon-remove" style="margin-left:-10px;"></span><span class="hidden-xs">Supprimer</span></a></div>');
+
+
+      // Ajout du lien
+
+      $prototype.append($deleteLink);
+
+
+      // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
+
+      $deleteLink.click(function(e) {
+
+        $prototype.remove();
+
+
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+
+        return false;
+
+      });
+
+    }
+
+  });
+
+</script>

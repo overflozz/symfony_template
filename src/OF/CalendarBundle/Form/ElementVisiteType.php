@@ -20,9 +20,15 @@ class ElementVisiteType extends AbstractType
     {
         $builder
         ->add('titre', ChoiceType::class,array('choices'  => array(
-        'Showroom' => 'Showroom',
-        'Conférence' => 'Conférence',
-        'Cocktail' => 'Cocktail'), 'attr'  => array('class' => 'titreInput', 'placeholder' => 'Activité'))) // les classes pour le js
+        'Extérieurs des bâtiments' => 'Extérieurs des bâtiments',
+        'Iroise' => 'Iroise',
+        'Iroise, Espace de restauration et espace de créativité' => 'Iroise, Espace de restauration et espace de créativité',
+        'Azur, centre de conférences' => 'Azur, centre de conférences',
+        'Rez-de-chaussée Opale, espace exposition' =>'Rez-de-chaussée Opale, espace exposition',
+        'Halle d’essais' => 'Halle d’essais',
+        'Bancs d’essais AMA et THEMIS'=>'Bancs d’essais AMA et THEMIS',
+        'Restauration'=>'Restauration',
+        ), 'attr'  => array('class' => 'titreInput', 'placeholder' => 'Activité'))) // les classes pour le js
         ->add('duree', TimeType::class,array('attr'  => array('class' => 'dureeInput' , 'placeholder' => 'Durée')));
     }
     

@@ -10,56 +10,79 @@
 
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
 
-<div class="col-md-8">
-	<a class="boutoncategory" cat="All">Tout</a>
-	<a class="boutoncategory" cat="Visite">Déroulement de la visite</a>
-	<a class="boutoncategory" cat="Technique">Technique</a>
+<div class="col-md-8 ">
+<button class="btn btn-primary boutoncategory " cat="All">Tout</button>
+	<button class="btn btn-primary boutoncategory" cat="Visite">Déroulement de la visite</button>
+	<button class="btn btn-primary boutoncategory" cat="Technique">Questions Techniques</button>
+	<button class="btn btn-primary boutoncategory" cat="Autre">Questions Diverses</button>
+
+
+	<button type="button" id="ajouterEventBouton" class="btn waves-effect btn-primary pull-right" data-toggle="modal" data-target="#modalAdd" style="
+	right: 30px;
+bottom: 30px;
+z-index: 100;
+border: none;
+position: fixed !important;"><span class="glyphicon glyphicon-pencil"></span><span class="hidden-xs">Poser une question</span></button>
+	<br /><br />
 	<div class="listeQuestions">
 	{% for question in listeQuestions %}
-	<div class="panel panel-default" cat="{{ question.category }}">
-		<div class="panel-heading">{{ question.title }}</div>
-
-
-		<div class="panel-content">{{ question.content }}</div>
-		catégorie : {{ question.category }}
-		<a href="{{path('of_show_question', {'id' : question.id})}}" >Voir</a>	 
-		{% if is_granted('ROLE_ADMIN') %} <a href="{{path('of_faq_Suppr', {'id' : question.id})}}" >Supprimer</a>	{% endif %}
+	<div class="panel panel-default 
 		{% if question.answer is not null %}
-			résolue
+			solved
 		{% else %}
-			non résolue
-		{% endif %}
+			unsolved
+		{% endif %}" cat="{{ question.category }}">
+		<div class="panel-heading"> {% if question.answer is not null %}<span class="glyphicon glyphicon-ok"></span>  {% endif %}{{ question.title }}{% if is_granted('ROLE_ADMIN') %}<a href="{{path('of_faq_Suppr', {'id' : question.id})}}" class="pull-right">Supprimer</a>{% endif %}</div>
+
+
+		<div class="panel-body">{{ question.content }}
+		<br />
+
+		<a class="btn btn-primary" href="{{path('of_show_question', {'id' : question.id})}}" >Voir</a><span class="pull-right"> Catégorie : <b>{{ question.category }}</b></span>
+
+		</div>
 	</div>
 		
 	{% endfor %}
 	</div>
 </div>
-	<button type="button" id="ajouterEventBouton" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalAdd"><span class="glyphicon glyphicon-plus"></span></button>
+
 
 	<!-- Modal -->
-	<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-		    <div class="modal-content">
+	<div class=" col-md-6 col-md-offset-3 modal modal-content" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Ajouter une visite</h4>
+		        <h5 class="modal-title" id="myModalLabel">Poser une question</h5>
 		      </div>
 		      <div class="modal-body">
-		        {{form(form)}}
-		      </div>
+		        {{form_start(form)}}
+		        
+        		<div class="input-field">
+		        	{{form_widget(form.title, {'attr' : {'class' : 'form-control'}})}}
+		        	<label for="{{ form.title.vars.id }} " >Entrez votre question</label>
+				</div>
+				<div class="input-field">
+		        	{{form_widget(form.content, {'attr' : {'class' : "materialize-textarea" }})}}
+		        	<label for="{{ form.content.vars.id }} " >Information Complémentaire</label>
+		        </div>
+		        Catégorie :
+		        <div class="input-field">
+		        {{form_widget(form.category)}}
+		       </div>
+				
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+		       {{form_widget(form.save, {'attr': {'class': 'btn btn-primary pull-left'}})}}
+		      {{form_end(form)}}
+		        <button type="button" class="btn btn-danger red" data-dismiss="modal">Fermer</button>
 		    </div>
 		  </div>
 		</div>
-	</div>
-
-
 
 {% else %}
-	<div class="alert alert-danger">
+	<div class="alert alert-danger red">
 	<div class="col-md-8 col-md-offset-2">      
-	  	<strong> Page inaccessible.</strong> Vous n'êtes pas conférencier pour cette visite.
+	  	<strong> Page inaccessible.</strong> Vous n'êtes pas responsable qualité pour cette visite.
 	<div>
 	</div>
 {% endif %}

@@ -144,3 +144,8 @@ of_calendar_voirQuestionnaire:
     path:     /questionnaire/{id}
     defaults:
         _controller: OFCalendarBundle:Visite:showQuestionnaireHTML
+
+of_calendar_voirDocVisite:
+    path:     /recap/{id}
+    defaults:
+        _controller: OFCalendarBundle:Visite:showrecapHTML
