@@ -45,6 +45,14 @@
 								{{ form_label(form.enquetes.vars.prototype.resultat5)|e}}
 								{{  form_widget(form.enquetes.vars.prototype.resultat5)|e }}
 							</div>
+							<div class='col-md-6'>
+								{{ form_label(form.enquetes.vars.prototype.resultat6)|e}}
+								{{  form_widget(form.enquetes.vars.prototype.resultat6)|e }}
+							</div>
+							<div class='col-md-6'>
+								{{ form_label(form.enquetes.vars.prototype.resultat7)|e}}
+								{{  form_widget(form.enquetes.vars.prototype.resultat7)|e }}
+							</div>
 							
 						</div>
 							
@@ -57,7 +65,7 @@
 
    {% for enquete in form.enquetes %}
 
-   		<div id="collapsingpanel" class="element panel panel-default " style="margin:auto; width:auto; margin-bottom : 10px;">
+   		<div id="collapsingpanel" class= "panel panel-default element" style="margin:auto; width:auto; margin-bottom : 10px;">
 	      	<div class="panel-heading" style='height: 50px;'>
 	        	<div class="panel-title col-md-12"><span class="glyphicon glyphicon-resize-vertical pull-left" style="opacity:0.5;"></span>Cliquer pour dérouler</div>
 
@@ -111,8 +119,8 @@
 </ul>
 
 
-{{ form_widget(form.save, {'label': 'Enregistrer'}) }}
-     <a href="#" id="add_enquete" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span></a>
+{{ form_widget(form.save, {'label': 'Enregistrer', attr:{'class' : 'btn btn-primary waves-effect  waves-light'}}) }}
+     <a href="#" id="add_enquete" class="btn btn-primary   waves-light waves-effect pull-right"><span class="glyphicon glyphicon-plus"></span></a>
     {{ form_end(form) }}
 
 
@@ -182,7 +190,7 @@
 
       // S'il existe déjà des enquetes, on ajoute un lien de suppression pour chacune d'entre elles
 
-      $container.find('#collapsingpanel').each(function() {
+      $container.find('.element').each(function() {
 
         addDeleteLink($(this));
 
@@ -246,7 +254,7 @@
 
       // Création du lien
 
-      var $deleteLink = $('<a href="#" class="btn btn-danger pull-right">Supprimer</a>');
+      var $deleteLink = $('<a href="#" class="btn btn-danger pull-right red waves-effect" style="color:#fff">Supprimer</a>');
 
 
       // Ajout du lien

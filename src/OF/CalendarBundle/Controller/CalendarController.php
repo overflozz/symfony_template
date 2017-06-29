@@ -27,7 +27,6 @@ class CalendarController extends Controller
 
 	      $em->flush();
 
-	      $request->getSession()->getFlashBag()->add('notice', 'Event ajouté.');
 
 	      return $this->redirectToRoute('of_calendar_homepage');
 	    }

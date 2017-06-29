@@ -59,16 +59,13 @@ position: fixed !important;"><span class="glyphicon glyphicon-pencil"></span><sp
 		        {{form_start(form)}}
 		        
         		<div class="input-field">
-		        	{{form_widget(form.title, {'attr' : {'class' : 'form-control'}})}}
-		        	<label for="{{ form.title.vars.id }} " >Entrez votre question</label>
+		        	{{form_row(form.title)}}
 				</div>
 				<div class="input-field">
-		        	{{form_widget(form.content, {'attr' : {'class' : "materialize-textarea" }})}}
-		        	<label for="{{ form.content.vars.id }} " >Information Complémentaire</label>
+		        	{{form_row(form.content)}}
 		        </div>
-		        Catégorie :
 		        <div class="input-field">
-		        {{form_widget(form.category)}}
+		        {{form_row(form.category)}}
 		       </div>
 				
 		      <div class="modal-footer">

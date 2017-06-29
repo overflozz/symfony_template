@@ -3,7 +3,7 @@
 <div class="fos_user_user_show">
 
 <br /><br />
-	<div class="panel panel-default col-md-12">
+	<div class="panel panel-default ">
 
 		<div class="profilepic" style=" display:flex;   justify-content:center; width:100%;  align-items:center;">
 			<img style="border: 5px solid #fff;  width:160px; height:160px; margin: 0 auto; margin-top : -80px; " class="img-circle"  src="{{ asset(user.getWebProfilePicturePath) }}" title="profilePicture">
@@ -14,7 +14,8 @@
 
 		<br />
 		<div class="row">
-			<div class="panel panel-default col-md-6">
+				<div class="col-md-6">
+			<div class="panel panel-default ">
 				<div class="panel-heading">Informations personnelles</div>
 				<div class="panel-body">
 				<b> Adresse mail </b>: {{ user.email }}<br /> 
@@ -22,13 +23,16 @@
 				<b> R.I.B </b> : {{ user.rib }}
 				</div>
 			</div>
-			<div class="panel panel-default col-md-6">
+			</div>
+			<div class="col-md-6">
+			<div class="panel panel-default ">
 				<div class="panel-heading">Informations Conférencier</div>
 				<div class="panel-body">
 				<b> Nombre de conférences données </b>: {{ user.visites|length }}<br /> 
 				<b> Langue </b>: {{ user.langue }}</br />
 				<a href="">Voir toutes les conférences données</a>
 				</div>
+			</div>
 			</div>
 
 	    </div>

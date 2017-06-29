@@ -19,7 +19,7 @@ class ElementVisiteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('titre', ChoiceType::class,array('choices'  => array(
+        ->add('titre', ChoiceType::class,array('label' => 'élément de visite' , 'choices'  => array(
         'Extérieurs des bâtiments' => 'Extérieurs des bâtiments',
         'Iroise' => 'Iroise',
         'Iroise, Espace de restauration et espace de créativité' => 'Iroise, Espace de restauration et espace de créativité',
@@ -28,6 +28,8 @@ class ElementVisiteType extends AbstractType
         'Halle d’essais' => 'Halle d’essais',
         'Bancs d’essais AMA et THEMIS'=>'Bancs d’essais AMA et THEMIS',
         'Restauration'=>'Restauration',
+
+
         ), 'attr'  => array('class' => 'titreInput', 'placeholder' => 'Activité'))) // les classes pour le js
         ->add('duree', TimeType::class,array('attr'  => array('class' => 'dureeInput' , 'placeholder' => 'Durée')));
     }

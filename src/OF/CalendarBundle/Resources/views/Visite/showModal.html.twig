@@ -17,7 +17,7 @@
 		
 				<ul>
 				{% for participant in Participants %}
-					<li> {{participant.user.prenom}} {{participant.user.nom}}  {% if participant.user == app.user%} <button id="suppr_conferencier" type="button" class="btn red lighten-1" style="color:#fff"><span class='glyphicon glyphicon-remove'></span> Supprimer</button>{% endif %}</li>
+					<li> {{participant.user.prenom}} {{participant.user.nom}}  {% if participant.user == app.user%} <button id="suppr_conferencier" type="button" class="btn red lighten-1" style="color:#fff"><span class='glyphicon glyphicon-remove'></span> <span class="hidden-xs"> Supprimer</span></button>{% endif %}</li>
 				{% endfor %}
 				{% for i in 1..(event.nbUserMax - Participants|length) %}
 					<li>
@@ -33,7 +33,7 @@
 		<div class="col-md-6 col-xs-12 pull-right">
 			<span class="glyphicon glyphicon-thumbs-up" style="border-radius:50%; background-color:#f1c40f;padding : 3px; font-size:12px; color:#fff;"></span>  <b>Reponsable Qualité</b> : 
 			<ul>
-				<li> {{event.respoQuali.prenom }} {{event.respoQuali.nom }}</li>
+				<li > {{event.respoQuali.prenom }} {{event.respoQuali.nom }}</li>
 			</ul>
 		</div>
 		<br /><br />
@@ -79,7 +79,8 @@
 				$("#viewModal").removeClass("hidden").hide().fadeIn(1000);
 
 				$('#loading-image').fadeOut(1000);
-				$div.html("{{ app.user.prenom}} {{ app.user.nom}}<button id='suppr_conferencier'  class='btn red lighten-1' type='button' ><span class='glyphicon glyphicon-remove'></span> Supprimer</button>");
+				$div.html("{{ app.user.prenom}} {{ app.user.nom}}<button id='suppr_conferencier'  class='btn red lighten-1' style='color:#fff;' type='button' ><span class='glyphicon glyphicon-remove'></span><span class='hidden-xs'> Supprimer</span></button>");
+					Materialize.toast('Vous êtes maintenant conférencier sur cette visite.', 3000);
 			});
 		});
 		$('.modal-content').on("click", "#suppr_conferencier",function(){
@@ -96,8 +97,9 @@
 				$("#viewModal").fadeOut(1000);
 				
 				$('#loading-image').fadeOut(500);
-
+				Materialize.toast('Vous n\'êtes plus conférencier sur cette visite.', 3000);
 				$div.html("N/A <button id='ajout_conferencier' class='btn btn-primary' type='button' ><span class='glyphicon glyphicon-plus'></span> S'ajouter</button>");
+
 			});
 		});
 	});

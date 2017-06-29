@@ -41,6 +41,7 @@ class AdminController extends Controller
           $user->setUsername( strtolower(substr($user->getNom(),0, 10)).'_'.strtolower(substr($user->getPrenom(),0, 3)));
           $em->persist($user);
           $em->flush();
+          $request->getSession()->getFlashBag()->add('success', 'Le compte de '.$user->getNom().' '.$user->getPrenom().' a bien été ajouté !');
         }
 
 
@@ -55,6 +56,7 @@ class AdminController extends Controller
         if($user != null){
             $em->remove($user);
             $em->flush();
+            $request->getSession()->getFlashBag()->add('success', 'Le compte a été supprimé. ');
         }
     	$listeUsers = $this->getDoctrine()->getManager()->getRepository('OFUserBundle:User')->createQueryBuilder('alias')->getQuery()->getResult();
         return $this->usersAdminAction($request);
@@ -72,6 +74,8 @@ class AdminController extends Controller
           
           $em->persist($user);
           $em->flush();
+
+            $request->getSession()->getFlashBag()->add('success', 'Le compte a bien été modifié. ');
         }
 
         return $this->render('OFCalendarBundle:Admin:modifUser.html.twig', array('form' => $form->createView(), 'user' => $user));
@@ -123,7 +127,7 @@ class AdminController extends Controller
 
           $em->flush();
 
-          $request->getSession()->getFlashBag()->add('notice', 'Client ajoutée.');
+          $request->getSession()->getFlashBag()->add('success', 'Le client a été ajouté.');
 
           return $this->redirectToRoute('of_calendar_clientsadmin');
         }
@@ -138,6 +142,8 @@ class AdminController extends Controller
         if($client != null){
             $em->remove($client);
             $em->flush();
+
+          $request->getSession()->getFlashBag()->add('success', 'Le client a été supprimé.');
         }
         $listeClients = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Client')->createQueryBuilder('alias')->getQuery()->getResult();
         return $this->clientsAdminAction($request);
@@ -171,6 +177,8 @@ class AdminController extends Controller
           
           $em->persist($client);
           $em->flush();
+
+          $request->getSession()->getFlashBag()->add('success', 'Le client a été modifié.');
         }
 
         return $this->render('OFCalendarBundle:Admin:modifClient.html.twig', array('form' => $form->createView(), 'client' => $client));
@@ -195,7 +203,7 @@ class AdminController extends Controller
 
         $em->flush();
 
-        $request->getSession()->getFlashBag()->add('notice', 'Document ajouté.');
+        $request->getSession()->getFlashBag()->add('success', 'Document ajouté.');
 
           return $this->redirectToRoute('of_calendar_documentsadmin');
         }
@@ -210,6 +218,8 @@ class AdminController extends Controller
         if($document != null){
             $em->remove($document);
             $em->flush();
+
+          $request->getSession()->getFlashBag()->add('success', 'Le document a été supprimé.');
         }
         $listeDocuments = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Document')->createQueryBuilder('alias')->getQuery()->getResult();
         return $this->documentsAdminAction($request);
@@ -228,6 +238,8 @@ class AdminController extends Controller
           $document->upload();
           $em->persist($document);
           $em->flush();
+
+          $request->getSession()->getFlashBag()->add('success', 'Le document a été modifié.');
         }
 
         return $this->render('OFCalendarBundle:Admin:modifDocument.html.twig', array('form' => $form->createView(), 'document' => $document));

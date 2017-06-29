@@ -25,9 +25,13 @@
    {{ form_start(form, {'attr' : {'class' : 'ajaxForm'}})  }}
  <ul id="elements-fields-list"  style=" padding-left: 0;" data-prototype="
  <div id='collapsingpanel' class='panel panel-default element' style='margin:auto; width:auto; margin-bottom : 10px;'>
-	      	<div class='panel-heading' style='height: 50px;'>
-	        	<div class='panel-title  col-md-12'><span class='glyphicon glyphicon-move pull-left hidden-xs' style='margin-top:7px; margin-left:-7px;opacity:0.5;''></span><div class='pull-right' style='width: 95%;line-height:45px;'>{{  form_widget(form.elementsVisites.vars.prototype.titre)|e }}</div></div>
-	     	</div>
+	 <div class='panel-heading' style='height: 50px;'>
+	   <div class='panel-title  col-md-12'>
+        <span class='glyphicon glyphicon-move pull-left hidden-xs' style='margin-top:7px; margin-left:-7px;opacity:0.5;''></span>
+        <div class='pull-right' style='width: 95%;line-height:45px;'>{{form_widget(form.elementsVisites.vars.prototype.titre, {'attr' : {'class' : ' titreInput browser-default', 'style' : 'margin-top:-9px;'}})|e }} 
+        </div>
+      </div>
+	   </div>
 	      	<div id='collapse' class='panel-default collapse'>
 	        	<div class='panel-body'>
 				
@@ -52,9 +56,10 @@
 
    		<div id="collapsingpanel" class="element panel panel-default " style="margin:auto; width:auto; margin-bottom : 10px;">
 	      	<div class="panel-heading" style='height: 50px;'>
-	        	<div class="panel-title col-md-12"><span class="glyphicon glyphicon-move pull-left hidden-xs" style="margin-top:7px; margin-left:-7px;opacity:0.5;"></span><div class="pull-right" style="width: 95%;line-height:45px;">{{ form_widget(elementVisite.titre) }}</div></div>
-
-	     	</div>
+	         <div class='panel-title  col-md-12'>
+            <span class="glyphicon glyphicon-move pull-left hidden-xs" style="margin-top:7px; margin-left:-7px;opacity:0.5;"></span><div class="pull-right input-field" style="width: 95%;line-height:45px;">{{ form_widget(elementVisite.titre,  {'attr' : {'class' : 'titreInput browser-default', 'style' : 'margin-top:-22px;'}}) }}
+            </div></div>
+            </div>
 	      	<div id="collapse" class="panel-default collapse">
 	        	<div class="panel-body">
 					

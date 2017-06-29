@@ -80,7 +80,6 @@ class VisiteController extends Controller
 
 	      $em->flush();
 
-	      $request->getSession()->getFlashBag()->add('notice', 'Event ajouté.');
 
 	      return $this->redirectToRoute('of_calendar_view_visite', array('id' => $id, 'etape' => $etape));
 	    }
@@ -131,7 +130,9 @@ class VisiteController extends Controller
 				$eventUser->setRoleUser('conferencier');
 				$em->persist($eventUser);
 				$em->flush();
+
 				return new Response("Enregistré.", 200 );
+
 			}
 
 

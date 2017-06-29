@@ -1,5 +1,5 @@
 {# src/OC/PlatformBundle/Resources/views/Advert/form.html.twig #}
-  <div class="modal modal-content fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal modal-content fade col-md-6" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 
 
   {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
@@ -19,19 +19,19 @@
 
 <div class="form-group">
 
-<div class="col-sm-4">Date :{{ form_widget(form.startDate, {'attr': {'class': 'datepicker', 'placeholder' : ' Cliquez '}}) }} </div>
-<div class="col-sm-4">Heure de début : {{ form_widget(form.heureDebut) }}</div>
+<div class="col-sm-4">{{ form_widget(form.startDate, {'attr': {'class': 'datepicker', 'placeholder' : ' Cliquez pour choisir la date'}}) }} </div>
+<div class="col-sm-4">{{ form_row(form.heureDebut) }}</div>
 <div class="col-sm-4"> Heure de fin : {{ form_widget(form.heureFin, {'attr': {}}) }} </div><br />
 
-<div class="col-md-7">Client : {{form_widget(form.client)}}</div>
-<div class="col-md-5">Nombre de participants  :{{ form_widget(form.nombreParticipants) }}</div>
-<div class="col-md-12">Responsable Qualité : {{form_widget(form.respoQuali)}}</div>
+<div class="col-md-7">{{form_row(form.client)}}</div>
+<div class="col-md-5">{{ form_row(form.nombreParticipants) }}</div>
+<div class="col-md-12">{{form_row(form.respoQuali)}}</div>
 
 
-<div class="col-md-4 ">Langue : {{form_widget(form.langue)}}</div>
-<div class="col-md-8">Theme : {{ form_widget(form.theme) }}</div>
-<div class="col-md-12">Objectif : {{ form_widget(form.objectif) }}</div>
-<div class="col-md-12">Description : {{ form_widget(form.description) }}</div>
+<div class="col-md-4 ">{{form_row(form.langue)}}</div>
+<div class="col-md-8">{{ form_row(form.theme) }}</div>
+<div class="col-md-12">{{ form_row(form.objectif) }}</div>
+<div class="col-md-12">{{ form_row(form.description) }}</div>
 
 
 </div>

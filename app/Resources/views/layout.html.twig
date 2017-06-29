@@ -12,6 +12,7 @@
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+
     <link rel="stylesheet" href="{{asset('css/materialize/materialize.css')}}">
     <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
     <!--   offline 
@@ -142,6 +143,11 @@
     <!-- Menu left -->
     <!-- Main Content -->
 {% endblock %}
+
+
+
+
+
     {% block mainContent %}
    <input type="checkbox" id="checkboxid"><label for="checkboxid">Yes?</label>
     {% endblock %}
@@ -151,18 +157,30 @@
     <img src="{{ asset('images/ajax-loader.gif')}}" id= "loading-image"></img>
 </div>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
 <script type="text/javascript" src="{{ asset('js/materialize/materialize.min.js') }}"></script>
 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 <script>
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+  
     $('#loading-image').hide();
 
 
-</script>
+    {% for label, flashes in app.session.flashbag.all %}
+        {% for flash in flashes %}
+     
+            
+            Materialize.toast('{{ flash }}', 2000);
+        {% endfor %}
+    {% endfor %}
+
 {% block javascript %}
-<script>
+
+
 
     //Permet d'initialiser le link active du menu à celui de Home 
     $link_active = "#home";
@@ -197,6 +215,10 @@
   );
       
   });
+  $(document).ready(function(){
+    $('.tooltipped').tooltip({delay: 50});
+  });
+        
 </script>
 
 

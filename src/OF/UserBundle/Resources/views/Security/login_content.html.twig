@@ -4,7 +4,7 @@
 
 <form action="{{ path("fos_user_security_check") }}"  method="post">
         {% if error %}
-             <div class="alert alert-danger col-md-12 disapear" fadeOutDuration="20000">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+             <div class="alert alert-danger col-xs-12 disapear" fadeOutDuration="20000">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
     <div id="loginbloc" style="">
        

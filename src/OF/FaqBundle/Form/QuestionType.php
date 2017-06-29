@@ -21,16 +21,19 @@ class QuestionType extends AbstractType
     {
 
         $builder
-        ->add('title', TextType::class)
-        ->add('content', TextareaType::class)
+        ->add('title', TextType::class, array('label' => 'Question'))
+        ->add('content', TextType::class, array('label' => 'Information complémentaire'))
         ->add('category', ChoiceType::class, array(
         'choices'  => array(
             'Technique' => "Technique",
             'Déroulement visite' => "Visite",
             'Déroulement de la procédure' => "Procedure",
             'Autre' => "Autre",
-    )))
-        ->add('save',  SubmitType::class);
+    ),
+        'label'=> 'Catégorie'
+
+        ))
+        ->add('save',  SubmitType::class, array('label' => 'Poser la question'));
     }
     
     /**

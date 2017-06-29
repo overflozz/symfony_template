@@ -6,12 +6,19 @@
      
 
     {{ form_start(form, {'attr' : {'class' : 'ajaxForm'}}) }} 
-    <div  id="formLogistique" data-prototype="<div class='element col-xs-12 pull-left'><br /><div class='col-xs-10'>{{  form_widget(form.otherInfos.vars.prototype)|e }}</div></div>">
+    <div  id="formLogistique" data-prototype="<div class='element col-xs-12 pull-left'><br /><div class='col-xs-10'>
+        <div class='input-field'>
+        <label for='{{ form.otherInfos.vars.id }} ' >Logistique supplémentaire</label>{{  form_widget(form.otherInfos.vars.prototype)|e }} 
+
+        </div></div></div>">
     {% for info in form.otherInfos %}
       <div class="element col-xs-12">
         <br />
         <div class='col-xs-10'>
-        {{ form_widget(info) }}
+        <div class="input-field">
+          {{ form_widget(info) }}
+          <label for="{{ info.vars.id }} " >Logistique supplémentaire</label>
+        </div>
         </div>
       </div>
     {% endfor %}
@@ -20,7 +27,7 @@
 <div class='element col-xs-12 pull-left'>
 <br />
   <div class='col-xs-10'>
-    {{ form_widget(form.save, {'label': 'Enregistrer', 'attr' : {'class' : 'btn btn-primary', 'role' : 'valid'}}) }}
+    {{ form_widget(form.save, {'label': 'Enregistrer', 'attr' : {'class' : 'btn btn-primary pull-left', 'role' : 'valid'}}) }}
     {{ form_end(form) }} 
     </div>
     </div>
@@ -28,7 +35,7 @@
   </div>
 </div>
 
-
+ 
 
   {# Voici le script en question : #}
 

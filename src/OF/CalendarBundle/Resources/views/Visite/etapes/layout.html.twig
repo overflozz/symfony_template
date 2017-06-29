@@ -13,7 +13,7 @@
 	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '2'})}}"><span class="glyphicon glyphicon-list-alt"></span> Proposition Visite</a>
 	    </li>
 	   	<li class="{% if (steptoshow== 3)%}stepshowed{% endif %} {% if (event.step|abs > 3) %}complete{% elseif (event.step|abs == 3)%}active{% else %}disabled{% endif %}">
-	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '3'})}}"><span class="glyphicon glyphicon-envelope"></span>Récapitulatif EDF</a>
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '3'})}}"><span class="glyphicon glyphicon-envelope"></span> Récapitulatif EDF</a>
 	    </li>
 	    <li class="{% if (steptoshow== 4)%}stepshowed{% endif %} {% if (event.step|abs > 4) %}complete{% elseif (event.step|abs == 4)%}active{% else %}disabled{% endif %}">
 	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '4'})}}"><span class="glyphicon glyphicon-time"></span> Déroulé</a>
@@ -56,11 +56,11 @@
 	<br />
 	{% if steptoshow != 0 %}
 		{% if event.step|abs > steptoshow %}
-	        <div class="alert alert-success">
+	        <div class="alert alert-success z-depth-1">
 	          <strong>Validée. </strong> Cette étape a été validée.
 	        </div>
 	      {% elseif event.step|abs == steptoshow and event.step <0 %}
-	        <div class="alert alert-warning">
+	        <div class="alert alert-warning z-depth-1 ">
 	          <strong>En cours de validation.</strong> Une demande de validation a été envoyée.
 	        </div>
 	        Valider l'étape : <button type="button" id="valid" class="btn btn-primary">Valider</button>
@@ -104,9 +104,12 @@
 				   url: Routing.generate('of_calendar_view_visite',{id: $idEvent, etape:$eventStep}),
 				   type:'GET',
 				   success: function(data){
+				   	
+	      				Materialize.toast('L\'étape a été validée.', 2000);
 
 				       $('#visitecontent').html($(data).filter('#visitecontent').first().children()); // ici on choisi filter car visitecontent est un top element. Sinon on prend find.
 				       $('#visitecontent').fadeIn(1000);  
+
 				   }
 				});  
 			
@@ -127,6 +130,7 @@
 				   type:'GET',
 				   success: function(data){
 
+				       	Materialize.toast('Une demande de validation a été générée.', 3000);
 				       $('#visitecontent').html($(data).filter('#visitecontent').first().children()); // ici on choisi filter car visitecontent est un top element. Sinon on prend find.
 				       $('#visitecontent').fadeIn(1000);  
 				   }

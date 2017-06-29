@@ -42,8 +42,8 @@
 			  <tr>
 			  	<td>{{ document.title }}</td>
 			  	<td>{{ document.category }}</td>
-			  	<td>{{ document.url }}</td>
-				<td>{{ document.getUploadDir}}/{{document.url}}</td>
+			  	<td style="">{{ document.url[:20]  }}</td>
+				<td>{{ document.getUploadDir}}/{{document.url[:20]}}</td>
 			    <td><a href="{{ asset(document.getUploadDir ~ '/' ~ document.url)}}">Télécharger</a>
 			    <a href="{{ path("of_calendar_Modifdocuments", {'id' : document.id} ) }}">Modifier</a> <a href=""  data-toggle="modal" data-target=".supprDocument{{ document.id }}">Supprimer</a></td>
 

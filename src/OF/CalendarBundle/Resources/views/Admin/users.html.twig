@@ -6,9 +6,8 @@
 	<button type="button" id="ajouterEventBouton" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalAdd"><span class="glyphicon glyphicon-plus"></span></button>
 
 	<!-- Modal -->
-	<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-		    <div class="modal-content">
+	<div class="modal modal-content col-md-6" id="modalAdd" tabindex="-1"  aria-labelledby="myModalLabel">
+		    <div class="">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Ajouter une visite</h4>
@@ -17,10 +16,9 @@
 		        {{form(form)}}
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+		        <button type="button" class="btn btn-danger red" data-dismiss="modal">Fermer</button>
 		    </div>
 		  </div>
-		</div>
 	</div>
 
 <div class="col-md-8"> 

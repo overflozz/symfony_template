@@ -28,7 +28,8 @@ class Etape1Type extends AbstractType
 
         // these options are passed to each "email" type
         'entry_options'  => array(
-            'attr'      => array('class' => 'form-control')
+            'attr'      => array('class' => 'form-control'),
+            'label' => 'Information Logistique supplémentaire'
         
         )))
         ->add('save',SubmitType::class);

@@ -3,7 +3,14 @@
 	<div class="panel-heading"><span class="glyphicon glyphicon-user"></span> Modification de profil </div>
 	<div class="panel-body">
 {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
-    {{ form_widget(form) }}
+	Email :
+    {{ form_widget(form.email) }}
+    Téléphone:
+    {{ form_widget(form.telephone) }}
+    RIB :
+    {{ form_widget(form.rib) }}
+    Image de profil :
+    {{ form_widget(form.profilePictureFile) }}
 
 
 {{ form_end(form) }}

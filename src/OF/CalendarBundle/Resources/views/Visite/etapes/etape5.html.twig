@@ -28,41 +28,44 @@
           <script>
 $( document ).ready(function() {
           function grapheQuestions(index, valeur1, valeur2, valeur3, valeur4) {
-             var data = [
-    {
-        value: valeur1,
-        color:"#F7464A",
-        highlight: "#c0392b",
-        label: "Insatisfaisant"
-    },
-    {
-        value: valeur2,
-        color: "#e67e22",
-        highlight: "#d35400",
-        label: "Assez Insatisfaisant"
-    },
-    {
-        value: valeur3,
-        color: "#f1c40f",
-        highlight: "#FFC870",
-        label: "Assez Satisfaisant"
-    },
-    {
-        value: valeur4,
-        color: "#2ecc71",
-        highlight: "#27ae60",
-        label: "Satisfaisant"
-    }];
+             var datas = {
+
+    datasets: [{
+        data: [ valeur1, valeur2, valeur3, valeur4],
 
 
-    var option = {
+    backgroundColor:[
+    '#f7464a', 
+    '#fdb45c',
+    '#46bfbd',
+    '#6ebd70']}
+    ]
+
+
+    ,
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+        'Insatisfaisant',
+        'Assez Insatisfaisant',
+        'Assez Satisfaisant',
+        'Satisfaisant'
+    ]
+
+
+
+
+    };
+
+
+    var options = {
     responsive: true,
     };
 
 
               // Get the context of the canvas element we want to select
               
-        new Chart(document.getElementById("Chart" + index).getContext('2d')).Pie(data,option); //'Line' defines type of the chart.
+       new Chart(document.getElementById("Chart" + index).getContext('2d'), { type :'pie', data : datas,option : options}); //'Line' defines type of the chart.
 
 
        

@@ -25,8 +25,6 @@ class Etape2Type extends AbstractType
         'allow_add' => true,
         'allow_delete' => true,
         'prototype' => true,
-        'label' => false,
-
         // these options are passed to each "email" type
         'entry_options'  => array(
         

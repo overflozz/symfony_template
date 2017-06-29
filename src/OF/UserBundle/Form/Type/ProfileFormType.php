@@ -4,6 +4,8 @@ namespace OF\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class ProfileFormType extends AbstractType
@@ -12,6 +14,8 @@ class ProfileFormType extends AbstractType
     {
         // add your custom field
         $builder->add('profilePictureFile')->add('save',SubmitType::class);
+        $builder->add('telephone',TextType::class);
+        $builder->add('rib',TextType::class);
     }
 
     public function getParent()

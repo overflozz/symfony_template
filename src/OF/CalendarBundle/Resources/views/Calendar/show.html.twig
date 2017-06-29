@@ -9,14 +9,14 @@
 {% block body %}
 <div class="col-md-8">      
 {% if is_granted('ROLE_ADMIN') %}
-	<button type="button" id="ajouterEventBouton" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalAdd"><span class="glyphicon glyphicon-plus"></span></button>
+	<button type="button" id="ajouterEventBouton" class="btn btn-primary " data-toggle="modal" data-target="#modalAdd"><span class="glyphicon glyphicon-plus"></span></button>
 {% endif %}
 	<div id="calendar-holder"></div>
 
 	<!-- Modal -->
 
 	{% include 'OFCalendarBundle:Calendar:addevent.html.twig' %}
-			<div id="modalShow" class="modal-content modal col-md-4" style="height:450px;">
+			<div id="modalShow" class="modal-content modal col-md-6" style="height:450px;">
 				
 			
 			</div>
