@@ -38,7 +38,7 @@ class CalendarController extends Controller
 	    	$visitesToDo = array();
 	    	$userApplications =$this->getUser()->getEvents();
 	    	foreach ( $userApplications as $application){
-			if ($application->getstartDatetime() > new \Datetime()){
+			if ($application->getstartDatetime() >= new \Datetime()){
 				array_push($visitesToDo,$application);
 			}
 			}

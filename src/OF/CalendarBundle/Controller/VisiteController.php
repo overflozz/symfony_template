@@ -72,13 +72,17 @@ class VisiteController extends Controller
 	      {
 	      	$em->persist($satisfaction);
 	      }
-	      $em->persist($event);
-	      foreach($event->getElementsVisites() as $elementvisite)
-	      {
-	      	$elementvisite->setVisite($event); // car l'id de la visite associée ne se met pas à jour tout seul ( bug )
-	      }
+	      // on accepte les modif de visite que si elle est dévérouillée
+	      if ($event->getVerrou() == 0){
 
-	      $em->flush();
+		      $em->persist($event);
+		      foreach($event->getElementsVisites() as $elementvisite)
+		      {
+		      	$elementvisite->setVisite($event); // car l'id de la visite associée ne se met pas à jour tout seul ( bug )
+		      }
+
+		      $em->flush();
+	      }
 
 
 	      return $this->redirectToRoute('of_calendar_view_visite', array('id' => $id, 'etape' => $etape));
@@ -189,6 +193,11 @@ class VisiteController extends Controller
 
 				}else{
 					$event->setStep(($event->getStep()) + 1);
+				}
+
+				//on verrouille si l'etape est la quatrième
+				if ($event->getStep() == 4){
+					$event->setVerrou(1);
 				}
 				$em->persist($event);
 				$em->flush();
@@ -307,5 +316,26 @@ class VisiteController extends Controller
 
 		$visitequalite = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findOneBy(array('id' => $id));
 		return $this->render('OFCalendarBundle:Visite:recap.html.twig',array('event' => $visitequalite));
+	}
+	// PANEL User Visite :
+
+
+	public function showVisitesAction(Request $req){
+		$visites = $this->getUser()->getEvents();
+		$visitequalite = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findBy(array('respoQuali' => $this->getUser()));
+		$visitesToDo = array();
+		$visitesDone = array();
+
+	    $userApplications =$this->getUser()->getEvents();
+	    	foreach ( $userApplications as $application){
+			if ($application->getstartDatetime() >= new \Datetime()){
+				array_push($visitesToDo,$application);
+			}else{
+				array_push($visitesDone, $application);
+			}
+		}
+
+
+		return $this->render('OFCalendarBundle:Visite:panelUser/show.html.twig',array('listeVisitesQualite' => $visitequalite, 'listeVisites' => $visites,'visitesToDo' => $visitesToDo, 'visitesDone' => $visitesDone));
 	}
 }

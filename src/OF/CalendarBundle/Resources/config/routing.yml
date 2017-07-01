@@ -149,3 +149,10 @@ of_calendar_voirDocVisite:
     path:     /recap/{id}
     defaults:
         _controller: OFCalendarBundle:Visite:showrecapHTML
+
+
+
+of_calendar_panelUser:
+    path:     /panelUser/
+    defaults:
+        _controller: OFCalendarBundle:Visite:showVisites

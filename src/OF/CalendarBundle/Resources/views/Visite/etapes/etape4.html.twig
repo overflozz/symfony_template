@@ -28,9 +28,15 @@
 
       </div>
 
-  <div class="col-md-8 panel panel-default">
+  <div class="col-md-8">
+  {% if event.verrou ==1 %}
+  <div class="alert alert-warning z-depth-1">
+    <span class="glyphicon glyphicon-lock"></span> Cette visite a été acceptée par EDF. Aucune modification sur son organisation n'est possible.
+  </div>
+  {% endif %}
+  <div class="panel panel-default">
+    <div id="before"> 
     <br />
-    <div id="before">
       
         <div class="row"><div style="text-align:center" >
          <span class="glyphicon glyphicon-bell" style="font-size:40px"; ></span><br>
@@ -102,7 +108,7 @@
          <span class="glyphicon glyphicon-ok" style="font-size:40px"; ></span><br />
          <span style="font-size:20px;">
          La visite est terminée. <br />
-         Elle a eu lieu le <b>{{event.startDatetime|date("d/m/Y", "Europe/Paris")}} de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b>.</span>
+         Elle a eu lieu le <b>{{event.startDatetime|date("d/m/Y", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b>.</span>
          <br /><br /><br />
         </div>
       </div>
@@ -111,7 +117,7 @@
     </div>
 
     </div>
-
+</div>
    
 
 

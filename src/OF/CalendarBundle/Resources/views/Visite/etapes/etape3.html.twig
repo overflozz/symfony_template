@@ -3,7 +3,18 @@
        Envoi du mail
     </div>
     <div class="panel-body">
+  {% if event.verrou == 0 %}
 
+  <div class="alert alert-warning">
+    <span class="glyphicon glyphicon-alert"></span> Une fois le mail envoyé, votre visite pourra être vérouillée d'un instant à l'autre. Veillez à bien vérifier les informations données avant de générer le mail.
+  </div>
+
+  
   Valider l'étape : <button type="button" id="valid" class="btn btn-primary">Valider</button>
+ 
+  {% else %}
+	Le mail a bien été envoyé et EDF l'a accepté.
+  {% endif %}
+
     </div>
 </div>

@@ -1,37 +1,48 @@
 {# Fichier qui overwrite le vendor/friendsofsymfony/FOSUSERBUNDLE/ressources/views/Security/#}
-
-{% trans_default_domain 'FOSUserBundle' %}
-
-<form action="{{ path("fos_user_security_check") }}"  method="post">
-        {% if error %}
-             <div class="alert alert-danger col-xs-12 disapear" fadeOutDuration="20000">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+     {% if error %}
+             <div class="alert alert-danger col-md-6 col-md-offset-3 col-xs-12 disapear" fadeOutDuration="20000">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
+{% trans_default_domain 'FOSUserBundle' %}
+<div class="col-xs-12 col-md-6 col-md-offset-3 ">
+<div class="panel-default panel">
+<div class="panel-body">
+   
+<form action="{{ path("fos_user_security_check") }}"  method="post">
+
     <div id="loginbloc" style="">
        
         {% if csrf_token %}
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
         {% endif %}
 
-        <div class="input-group">
-            <input class="form-control col-xs-12 " type="text" id="inlineFormInputGroup" name="_username" value="{{ last_username }}" placeholder="Username" required="required" />
-            
+        <div class="input-field">
+            <i class="material-icons prefix">account_circle</i>
+            <input class="col-xs-12 form-control " type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+            <label for="username">Nom d'utilisateur</label>
         </div>
-        <div class="input-group">
-            <input class="form-control col-xs-12" type="password" id="inlineFormInputGroup" name="_password" placeholder="Password" required="required" />
+        <div class="input-field">
+            <i class="material-icons prefix">vpn_key</i>
+            <input class="col-xs-12 form-control" type="password" id="password" name="_password" required="required" />
+            <label for="password">Mot de passe</label>
         </div>
 
-  <div class="row">
-        <div  class="form-group" style="margin-top:20px;">
-            <input type="checkbox" id="remember_mea" name="_remember_me" value="on" style="float:left; margin-right:10px;"/>  <span style="color:#7f8c8d;"></span> <label for="remember_mea">Remember Me</label>
+  <div class="row" style="">
 
-            <a href="{{path("fos_user_resetting_request")}}" class="pull-right">Mot de passe oublié ?</a><br />
+        <div  class="form-group">
+        <p class="pull-left"  style="margin-left:10px;">
+            <input type="checkbox" id="remember_me" name="_remember_me" value="on" style=" margin-right:30px;float:left; "/>
+
+            <label for="remember_me">S'en souvenir</label>
+        </p>
+            <a href="{{path("fos_user_resetting_request")}}" class="pull-right" >Mot de passe oublié ?</a>
         </div>
 </div>
     </div>
 
-    <input type="submit" class="col-xs-12 btn btn-primary btn waves-effect waves-light" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+    <input type="submit" class="col-xs-12 btn btn-primary btn waves-effect waves-light" id="_submit" name="_submit" value="Se connecter" />
 </form>
 
-<span  style="text-align:center; color:#95a5a6">Not a member yet ? <a href="{{path("fos_user_registration_register") }}" class="pull-right"> Sign up now ! </a></span>
-
-
+<span  class="col-xs-12" style="text-align:center; color:#95a5a6">Pas encore membre ? <a href="{{path('fos_user_registration_register') }}" > S'enregistrer ! </a></span>
+</div>
+</div>
+</div>

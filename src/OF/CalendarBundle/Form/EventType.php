@@ -35,7 +35,7 @@ class EventType extends AbstractType
                 }
         ))
         ->add('nombreParticipants', IntegerType::class)
-        ->add('startDate', DateType::class, array('widget' => 'single_text','format' => 'yyyy-MM-dd HH:mm:ss'))
+        ->add('startDate', DateType::class, array('widget' => 'single_text','format' => 'yyyy-MM-dd HH:mm:ss', 'label' => 'Date'))
         ->add('heureDebut', TimeType::class)
         ->add('heureFin', TimeType::class)
         ->add('langue', ChoiceType::class,array('choices'  => array(

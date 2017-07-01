@@ -92,6 +92,12 @@ class Event
     
     /**
      * 
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $verrou; // permet de savoir si on verouille ou non les etapes de procédure
+
+    /**
+     * 
      
      * @ORM\Column(type="string",length=512, nullable=true)
      */
@@ -200,6 +206,7 @@ class Event
         $this->elementsVisites = array();
         $this->nbUserMax = 2;
         $this->satisfactiongenere = false;
+        $this->verrou = 0;
 
     }
 
@@ -955,5 +962,30 @@ class Event
     public function getSatisfactiongenere()
     {
         return $this->satisfactiongenere;
+    }
+
+
+    /**
+     * Set verrou
+     *
+     * @param integer $verrou
+     *
+     * @return Event
+     */
+    public function setVerrou($verrou)
+    {
+        $this->verrou = $verrou;
+
+        return $this;
+    }
+
+    /**
+     * Get verrou
+     *
+     * @return integer
+     */
+    public function getVerrou()
+    {
+        return $this->verrou;
     }
 }

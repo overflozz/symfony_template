@@ -9,19 +9,30 @@
 {% block body %}
 <div class="col-md-8">
 	{% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
-		<div class="row">
+		<div class="row">		
+			<div class="">
+				<div class="">		
+
 		{% set cat = '' %}
 		{% for document in listeDocuments %}
 
 			{% if document.category != cat %}
 				</div>
-				{% set cat = document.category %}
+				</div>
+				</div>
 				<div class="row">
-				<h3>{{ cat }}</h3><br />
+				<div class="panel panel-default ">
+
+				<div class="panel-body ">
+				<div class="panel-heading">
+				{{ cat }}</div>
+
+				{% set cat = document.category %}
 			{% endif %}
 
 			<a href="{{ asset(document.getUploadDir ~ '/' ~ document.url)}}">
 				<div class="col-sm-2" style="text-align:center">
+				
 					<span class="glyphicon glyphicon-file" style="font-size:60px;"></span><br />
 					{{ document.title }}
 
@@ -29,12 +40,12 @@
 			</a>
 			
 		{% endfor %}
-		</div>
+		</div></div></div>
 	{% else %}
 		<div class="alert alert-danger">
 		<div class="col-md-8 col-md-offset-2">      
 		  	<strong> Page inaccessible.</strong> Connectez-vous pour accéder à cet espace.
-		<div>
+		<:div>
 		</div>
 	{% endif %}
 

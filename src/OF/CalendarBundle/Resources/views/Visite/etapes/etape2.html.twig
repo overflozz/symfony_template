@@ -1,4 +1,12 @@
-
+  {% if event.verrou ==1 %}
+  <div class="row">
+  <div class="col-xs-12">
+  <div class="alert alert-warning z-depth-1">
+    <span class="glyphicon glyphicon-lock"></span> Cette visite a été acceptée par EDF. Aucune modification sur son organisation n'est possible.
+  </div>
+  </div>
+  </div>
+  {% endif %}
 <div class="panel-group" id="choixVisite">
 	<div class="col-md-3 col-xs-12 pull-left ">
 		<div class="panel panel-default">
@@ -22,7 +30,11 @@
 		 		Ordre de visite
 		 	</div>
 		 	<div class="panel-body">
+
+
+{% if event.verrou == 0 %}
    {{ form_start(form, {'attr' : {'class' : 'ajaxForm'}})  }}
+
  <ul id="elements-fields-list"  style=" padding-left: 0;" data-prototype="
  <div id='collapsingpanel' class='panel panel-default element' style='margin:auto; width:auto; margin-bottom : 10px;'>
 	 <div class='panel-heading' style='height: 50px;'>
@@ -37,13 +49,13 @@
 				
 						<div class='col-md-12' style='padding:0px;''> 
 							<div class='col-md-2 pull-left'>
-								Durée
+								Durée :
 							</div>
 							<div class='col-md-5'>
-								{{  form_widget(form.elementsVisites.vars.prototype.duree.hour, {'attr' : {'class' : 'hourInput'}})|e }}
+								{{  form_widget(form.elementsVisites.vars.prototype.duree.hour, {'attr' : {'class' : 'hourInput browser-default'}})|e }}
 							</div>
 							<div class='col-md-5'>
-								{{ form_widget(form.elementsVisites.vars.prototype.duree.minute, {'attr' : {'class' : 'minuteInput'}})|e  }}
+								{{ form_widget(form.elementsVisites.vars.prototype.duree.minute, {'attr' : {'class' : 'minuteInput browser-default'}})|e  }}
 							</div>
 						</div>
 				
@@ -51,42 +63,59 @@
 	        	<div class='panel-footer' style='height: 50px;'></div>
 	      	</div>
 		</div>">
-
+  {% else %}
+  <ul id="elements-fields-list">
+{% endif %}
    {% for elementVisite in form.elementsVisites %}
 
-   		<div id="collapsingpanel" class="element panel panel-default " style="margin:auto; width:auto; margin-bottom : 10px;">
-	      	<div class="panel-heading" style='height: 50px;'>
-	         <div class='panel-title  col-md-12'>
-            <span class="glyphicon glyphicon-move pull-left hidden-xs" style="margin-top:7px; margin-left:-7px;opacity:0.5;"></span><div class="pull-right input-field" style="width: 95%;line-height:45px;">{{ form_widget(elementVisite.titre,  {'attr' : {'class' : 'titreInput browser-default', 'style' : 'margin-top:-22px;'}}) }}
-            </div></div>
+   		 <div id='collapsingpanel' class='panel panel-default element' style='margin:auto; width:auto; margin-bottom : 10px;'>
+   <div class='panel-heading' style='height: 50px;'>
+     <div class='panel-title  col-md-12'>
+        <span class='glyphicon glyphicon-move pull-left hidden-xs' style='margin-top:7px; margin-left:-7px;opacity:0.5;''></span>
+        <div class='pull-right' style='width: 95%;line-height:45px;'>{% if event.verrou == 0 %}{{form_widget(elementVisite.titre, {'attr' : {'class' : ' titreInput browser-default', 'style' : 'margin-top:-9px;'}}) }} {% else %}{{form_widget(elementVisite.titre, {'attr' : {'class' : ' titreInput browser-default','disabled':'disabled', 'style' : 'margin-top:-9px;'}}) }} {% endif %}
+        </div>
+      </div>
+     </div>
+          <div id='collapse' class='panel-default collapse'>
+            <div class='panel-body'>
+        
+            <div class='col-md-12' style='padding:0px;''> 
+              <div class='col-md-2 pull-left'>
+                Durée : 
+              </div>
+              <div class='col-md-5 input-field'>{% if event.verrou == 0 %}
+                {{  form_widget(elementVisite.duree.hour, {'attr' : {'class' : 'hourInput browser-default'}}) }}
+                {% else %}
+                {{  form_widget(elementVisite.duree.hour, {'attr' : {'class' : 'hourInput browser-default', 'disabled' : 'disabled'}}) }}
+                {% endif %}
+              </div>
+              <div class='col-md-5 input-field'>{% if event.verrou == 0 %}
+              {{ form_widget(elementVisite.duree.minute, {'attr' : {'class' : 'minuteInput browser-default'}})  }}
+              {% else %}
+              {{ form_widget(elementVisite.duree.minute, {'attr' : {'class' : 'minuteInput browser-default', 'disabled' : 'disabled'}})  }}
+
+              {% endif %}
+              
+              </div>
             </div>
-	      	<div id="collapse" class="panel-default collapse">
-	        	<div class="panel-body">
-					
-					<div class='col-md-12' style="padding:0px;"> 
-						<div class='col-md-2 pull-left'>
-							Durée :
-						</div>
-						<div class='col-md-5'>
-							{{ form_widget(elementVisite.duree.hour, {'attr' : {'class' : 'hourInput'}}) }}
-						</div>
-						<div class='col-md-5'>
-							{{ form_widget(elementVisite.duree.minute, {'attr' : {'class': 'minuteInput'}} ) }}
-						</div>
-					</div>
-					
-		        </div>
-	        	<div class="panel-footer" style='height: 50px;'></div>
-	      	</div>
-		</div>
+        
+            </div>
+            <div class='panel-footer' style='height: 50px;'></div>
+          </div>
+    </div>
 
     {% endfor %}
+
 </ul>
+
+
+{% if event.verrou == 0 %}
 {{ form_widget(form.save, {'label': 'Enregistrer', 'attr' : {'class' : 'btn btn-primary pull-left', 'role' : 'valid'}}) }}
        <a  id="add_field" class="btn-floating btn-large waves-effect waves-light btn-primary btn pull-right"><i class="material-icons">add</i></a>
     {{ form_end(form) }}
-
-
+{% else %}
+</ul>
+{% endif %}
 
 		 
 		 	</div>
@@ -124,7 +153,7 @@
 			updatePreview($container);
       }
     });
-
+    
     $( "#draggable" ).draggable({
 		connectToSortable: "#elements-fields-list",
 		helper: "clone",

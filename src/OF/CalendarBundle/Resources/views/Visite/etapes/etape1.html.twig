@@ -1,16 +1,27 @@
+  {% if event.verrou ==1 %}
+  <div class="row">
+  <div class="col-xs-12">
+  <div class="alert alert-warning z-depth-1">
+    <span class="glyphicon glyphicon-lock"></span> Cette visite a été acceptée par EDF. Aucune modification sur son organisation n'est possible.
+  </div>
+  </div>
+  </div>
+  {% endif %}
+
 <div class="panel panel-default">
   <div class="panel-heading">
     Logistique Complémentaire
   </div>
   <div class="panel-body">
      
-
+{% if event.verrou == 0 %}
     {{ form_start(form, {'attr' : {'class' : 'ajaxForm'}}) }} 
     <div  id="formLogistique" data-prototype="<div class='element col-xs-12 pull-left'><br /><div class='col-xs-10'>
         <div class='input-field'>
         <label for='{{ form.otherInfos.vars.id }} ' >Logistique supplémentaire</label>{{  form_widget(form.otherInfos.vars.prototype)|e }} 
 
         </div></div></div>">
+{% endif %}
     {% for info in form.otherInfos %}
       <div class="element col-xs-12">
         <br />
@@ -22,7 +33,10 @@
         </div>
       </div>
     {% endfor %}
-  </div>
+  
+
+{% if event.verrou == 0 %}
+</div>
   <br />
 <div class='element col-xs-12 pull-left'>
 <br />
@@ -35,7 +49,6 @@
   </div>
 </div>
 
- 
 
   {# Voici le script en question : #}
 
@@ -136,3 +149,6 @@
   });
 
 </script>
+
+
+ {% endif %}

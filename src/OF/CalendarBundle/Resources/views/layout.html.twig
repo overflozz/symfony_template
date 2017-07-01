@@ -43,11 +43,34 @@
 		$link_active = "#calendar";
 	{% endblock %}
 
-    	$( ".datepicker" ).datepicker({
-		  dateFormat: "yy-mm-dd 00:00:00"
-		});
-    	$( '.datepicker' ).datepicker("option", "dateFormat", "yy-mm-dd 00:00:00");
+  //   	$( ".datepicker" ).datepicker({
+		//   dateFormat: "yy-mm-dd 00:00:00"
+		// });
+  //   	$( '.datepicker' ).datepicker("option", "dateFormat", "yy-mm-dd 00:00:00");
 
+  $('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 3, // Creates a dropdown of 15 years to control year
+    monthsFull: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+ 	weekdaysShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+  	today: 'aujourd\'hui',
+ 	clear: 'effacer',
+ 	
+    default: 'now', // Set default time
+    formatSubmit: "yyyy-mm-dd 00:00:00"
+  });
+    $('.timepicker').pickatime({
+    default: 'now', // Set default time
+    fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+    twelvehour: false, // Use AM/PM or 24-hour format
+    donetext: 'OK', // text for done-button
+    cleartext: 'Clear', // text for clear-button
+    canceltext: 'Cancel', // Text for cancel-button
+    autoclose: false, // automatic close timepicker
+    ampmclickable: true, // make AM PM clickable
+    aftershow: function(){} //Function for after opening timepicker  
+  });
+        
            
       		
    			

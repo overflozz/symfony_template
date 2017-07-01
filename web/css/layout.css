@@ -272,3 +272,7 @@ font-weight:600;}
 .solved{
 	border: 1px solid var(--color-success);
 }
+
+.caret{
+	border:none;
+}
