@@ -1,5 +1,5 @@
 of_calendar_homepage:
-    path:     /calendar
+    path:     /
     defaults: { _controller: OFCalendarBundle:Calendar:show }
 
 
@@ -89,8 +89,10 @@ of_calendar_voirDocuments:
     defaults:
         _controller: OFCalendarBundle:Document:view
 
-
-
+of_calendar_statsAdmin: 
+    path:     /admin/statsAll
+    defaults:
+        _controller: OFCalendarBundle:Visite:statsAll
 
 
 

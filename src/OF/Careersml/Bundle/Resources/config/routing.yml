@@ -1,5 +1,5 @@
 of_careersml_homepage:
-    path:     /
+    path:     /careers/
     defaults: { _controller: OFCareersmlBundle:Candidature:index }
 
 of_careersml_view:

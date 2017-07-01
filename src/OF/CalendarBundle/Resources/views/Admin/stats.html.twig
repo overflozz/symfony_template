@@ -1,14 +1,27 @@
+
+{% extends "OFCalendarBundle::Admin/layout.html.twig" %}
+
+
+{% block body %}    
+{% for int in visitesMonth %}
+{{ int }}
+{% endfor %}
 <div class="col-md-12">
 
-
-  {% if event.getNotes is empty %}
+<div class="col-md-8 col-xs-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">Evolution du nombre de visites.</div>
+		<div class="panel-content"></div>
+	</div>
+</div>
+  {% if stats is empty %}
   Aucun questionnaire n'a encore été rempli.
   {% else %}
   {% set index=0 %}
     {% set tableauQuestion = ['Attitude', 'Pédagogie', 'Connaissance', 'Charisme', 'Logistique', 'Durée de la Visite', 'Globalement'] %}
-     {% for tableau in event.getNotes %}
+     {% for tableau in stats %}
     
-    <div class="col-md-4">
+    <div class="col-md-2">
     <div class="panel panel-default">
         <div class="panel-heading">{{ tableauQuestion[index]}}</div>
         <div class="panel-body">
@@ -60,12 +73,18 @@ $( document ).ready(function() {
 
     var options = {
     responsive: true,
+    
+    legend: {
+            display: false
+           
+        }
+    
     };
 
 
               // Get the context of the canvas element we want to select
               
-       new Chart(document.getElementById("Chart" + index).getContext('2d'), { type :'pie', data : datas,option : options}); //'Line' defines type of the chart.
+       new Chart(document.getElementById("Chart" + index).getContext('2d'), { type :'pie', data : datas, options : options}); //'Line' defines type of the chart.
 
 
        
@@ -76,14 +95,18 @@ $( document ).ready(function() {
     }
 
      {% set index = 0 %}
-         {% for tableau in event.getNotes %}
-          grapheQuestions({{ index }} , {{tableau[1]}}, {{tableau[2]}}, {{tableau[3]}}, {{tableau[4]}})
-
-
+         {% for tableau in stats %}
+          grapheQuestions({{ index }} , {{tableau[0]}}, {{tableau[1]}}, {{tableau[2]}}, {{tableau[3]}});
           {% set index = index + 1 %}
           {% endfor %}
+
           
 });
     </script>
 
     {% endif %}
+
+		
+
+{% endblock %}
+

@@ -152,6 +152,18 @@ class Event
 
     protected $heureDebut;
 
+        /**
+     * @ORM\Column(name="refusEDF", type="integer")
+     */
+
+    protected $refusEDF;
+        /**
+     * 
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $commentaireEDF;
+
+
     /**
      * @ORM\Column(name="nbUserMax", type="integer")
      */
@@ -207,6 +219,7 @@ class Event
         $this->nbUserMax = 2;
         $this->satisfactiongenere = false;
         $this->verrou = 0;
+        $this->refusEDF = 0;
 
     }
 
@@ -964,27 +977,28 @@ class Event
         return $this->satisfactiongenere;
     }
 
+
     /**
-     * Set verou
+     * Set verrou
      *
-     * @param integer $verou
+     * @param integer $verrou
      *
      * @return Event
      */
-    public function setVerou($verou)
+    public function setVerrou($verrou)
     {
-        $this->verou = $verou;
+        $this->verrou = $verrou;
 
         return $this;
     }
 
     /**
-     * Get verou
+     * Get verrou
      *
      * @return integer
      */
-    public function getVerou()
+    public function getVerrou()
     {
-        return $this->verou;
+        return $this->verrou;
     }
 }

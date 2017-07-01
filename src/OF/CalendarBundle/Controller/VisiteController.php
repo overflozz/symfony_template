@@ -9,11 +9,13 @@ use OF\CalendarBundle\Form\ajoutquestionnaireType;
 use OF\CalendarBundle\Form\EventType;
 use OF\CalendarBundle\Form\Etape1Type;
 use OF\CalendarBundle\Form\Etape2Type;
+use OF\CalendarBundle\Form\validAdminType;
 use OF\CalendarBundle\Form\questionnaireType;
 use OF\CalendarBundle\Entity\Event;
 use OF\CalendarBundle\Entity\EventUser;
 use OF\CalendarBundle\Entity\Satisfaction;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Doctrine\ORM\Query\Expr\OrderBy;
 use OF\UserBundle\Entity\User;
 class VisiteController extends Controller
 {
@@ -25,13 +27,17 @@ class VisiteController extends Controller
     	$repositoryEventUser = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:EventUser');
 
 		$event = $repositoryEvent->findOneBy(array('id' => $id));
+
+		$applications = $event->getApplications();
+
+
 		if ($event == null){
 			throw new NotFoundHttpException("Visite non trouvée");
 		}
 		if(abs($event->getStep())< $etape){ // il veut voir la prochaine etape sans avoir valider les anciennes
 			$etape  = $event->getStep();
 		}
-		$applications = $event->getApplications();
+
 
 		if($this->getUser() != NULL){
 			$userParticipe = $event->getUsers()->contains($this->getUser());
@@ -44,6 +50,10 @@ class VisiteController extends Controller
 		if($etape == 2 ){
 			$form   = $this->get('form.factory')->create(Etape2Type::class, $event);
 		}
+		if($etape == -48 ){
+			$form   = $this->get('form.factory')->create(validAdminType::class, $event);
+		}
+
 		if($etape == 4 ){
 			if ($event->getSatisfactiongenere() == False){
 	      		$satisfaction = new Satisfaction();
@@ -71,6 +81,13 @@ class VisiteController extends Controller
 	      if ($etape==4)
 	      {
 	      	$em->persist($satisfaction);
+	      }
+	      if($event->getStep() == -3 && $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) // validation EDF requise
+	      {
+	      	// si le form a été envoyé ce que l'admin a appuyé sur refuser.
+	      	$event->setRefusEDF(1);
+	      	$event->setStep(3); // on enlève la demande.
+
 	      }
 	      // on accepte les modif de visite que si elle est dévérouillée
 	      if ($event->getVerrou() == 0){
@@ -201,12 +218,27 @@ class VisiteController extends Controller
 				}
 				$em->persist($event);
 				$em->flush();
+				return new Response("Validé.", 200 );
+			}
+			if ($etape == -48 && $event->getStep() < 0 && $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
+				// alors c'est que l'admin a reçu le mail et cherche à valider 
+				$event->setStep(-($event->getStep()) + 1);
+				$event->setRefusEDF(0);
+				$event->setVerrou(1); // on verrouille
+				$em->persist($event);
+				$em->flush();
+				return new Response("Validé.", 200 );
 			}
 
 
-	   	return new Response("Validé.", 200 );
+
+
 		}
+
+
+
 		return new Response("pas validé.", 400 );
+
 
 	}
 	public function miseenvalidationEtapeAction($id, $etape, Request $req){
@@ -219,6 +251,9 @@ class VisiteController extends Controller
 					$event->setStep(-($event->getStep()));
 					$em->persist($event);
 					$em->flush();
+					if($etape == 3){
+						$this->envoyerMailAction($id); // si on est à l'étape 3, c'est que l'admin EDF doit recevoir son mail.
+					}
 				}
 			}
 
@@ -227,19 +262,11 @@ class VisiteController extends Controller
 		return new Response("demande non effectuée.", 200 );
 
 	}
-	public function envoyerMailAction($id, $etape){
+	public function envoyerMailAction($id){
 
     	$repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
     	$repositoryEventUser = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:EventUser');
 		$event = $repositoryEvent->findOneBy(array('id' => $id));	
-
-
-		if($this->getUser() != NULL){
-			$userParticipe = $event->getUsers()->contains($this->getUser());
-		}else{
-			$userParticipe = false;
-		}
-		$applications = $event->getApplications();
 
 
 	    $message = \Swift_Message::newInstance()
@@ -247,8 +274,8 @@ class VisiteController extends Controller
 	        ->setFrom('overflozz@gmail.com')
 	        ->setTo('overflozz@gmail.com')
 	        ->setBody(
-	            $this->renderView('OFCalendarBundle:Visite:Emails/recap1.html.twig',
-	                array('event' => $event, 'Participants' => $applications, 'userParticipe' => $userParticipe, 'steptoshow' => $etape)
+	            $this->renderView('OFCalendarBundle:Visite:Emails/mailAdminEDF.html.twig',
+	                array('event' => $event, 'demandeur' => $this->getUser())
 	            ),
 	            'text/html'
 	        )
@@ -264,8 +291,6 @@ class VisiteController extends Controller
 	        */
 	    ;
 	    $this->get('mailer')->send($message);
-
-	   	return $this->render('OFCalendarBundle:Visite:Emails/recap1.html.twig',array('event' => $event, 'Participants' => $applications, 'userParticipe' => $userParticipe, 'steptoshow' => $etape));
 
 	}
 
@@ -319,6 +344,63 @@ class VisiteController extends Controller
 	}
 	// PANEL User Visite :
 
+	public function statsAllAction(){
+
+		
+		$visites = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findBy(array('satisfactiongenere' => 1));
+		
+   		$MonthAgo = date('Y-m-d', strtotime('-32 days'));
+   		$allVisitesmonth = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->createQueryBuilder('event')->where('event.startDate BETWEEN ?1 and CURRENT_DATE()')->setParameter(1, $MonthAgo)->orderBy('event.startDate', 'ASC')->getQuery()->getResult();
+
+			
+   		$statsVisitesMonth = array_fill(0, 32, 0);
+   		// on part du monthago et on remonte
+   		$datecourante =  date('Y-m-d', strtotime('-32 days'));
+   		$i = 0;
+   		foreach ($allVisitesmonth  as $visite){
+
+
+   			while (date_format($visite->getstartDate(), 'Y-m-d') != $datecourante){
+   				$i = $i + 1;
+   				$datecourante = date('Y-m-d', strtotime($datecourante . ' +1 day'));
+   				if ($i  ==  32) {
+   					throw new NotFoundHttpException($datecourante);
+   				}
+
+   			}
+
+   			$statsVisitesMonth[$i] +=1;
+   				
+   		}
+   		
+
+		$stats = $this->statsSommeVisites($visites);
+		$visites2 = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findOneBy(array('id' => 2));
+		return $this->render('OFCalendarBundle:Admin:stats.html.twig',array('stats' => $stats,'visitesMonth'=> $statsVisitesMonth));
+
+	}
+
+	public function statsSommeVisites($visites){
+		$result = array(array(0,0,0,0), array(0,0,0,0), array(0,0,0,0), array(0,0,0,0), array(0,0,0,0), array(0,0,0,0), array(0,0,0,0));
+		foreach ($visites as $visite){
+			$tableauNotes = $visite->getNotes();
+			// on somme le tableau result avec le tableau tableauNotes
+			$i = 0;
+			foreach ($tableauNotes as $notes){
+				$j = 0;
+				foreach ($notes as $note){
+
+					$result[$i][$j] = $result[$i][$j] + $note;
+					$j +=1;
+				}
+				$i += 1;
+			}
+
+		}
+		return $result;
+
+
+	}
 
 	public function showVisitesAction(Request $req){
 		$visites = $this->getUser()->getEvents();
@@ -333,7 +415,7 @@ class VisiteController extends Controller
 			}else{
 				array_push($visitesDone, $application);
 			}
-		}
+	}
 
 
 		return $this->render('OFCalendarBundle:Visite:panelUser/show.html.twig',array('listeVisitesQualite' => $visitequalite, 'listeVisites' => $visites,'visitesToDo' => $visitesToDo, 'visitesDone' => $visitesDone));

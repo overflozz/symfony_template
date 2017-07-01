@@ -152,6 +152,18 @@ class Event
 
     protected $heureDebut;
 
+        /**
+     * @ORM\Column(name="refusEDF", type="integer")
+     */
+
+    protected $refusEDF;
+        /**
+     * 
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $commentaireEDF;
+
+
     /**
      * @ORM\Column(name="nbUserMax", type="integer")
      */
@@ -207,6 +219,7 @@ class Event
         $this->nbUserMax = 2;
         $this->satisfactiongenere = false;
         $this->verrou = 0;
+        $this->refusEDF = 0;
 
     }
 
@@ -235,7 +248,8 @@ class Event
             $resultat3[''.$enquete->getResultat3()] = $resultat3[$enquete->getResultat3()] + 1; 
             $resultat4[''.$enquete->getResultat4()] = $resultat4[$enquete->getResultat4()] + 1; 
             $resultat5[''.$enquete->getResultat5()] = $resultat5[$enquete->getResultat5()] + 1; 
-            $resultat6[''.$enquete->getResultat6()] = $resultat6[''.$enquete->getResultat6()] + 1; 
+            $resultat6[''.$enquete->getResultat6()] = $resultat6[$enquete->getResultat6()] + 1; 
+            $resultat7[''.$enquete->getResultat7()] = $resultat6[$enquete->getResultat7()] + 1;
 
         }
         array_push($result, $resultat1);
@@ -244,6 +258,7 @@ class Event
         array_push($result, $resultat4);
         array_push($result, $resultat5);
         array_push($result, $resultat6);
+        array_push($result, $resultat7);
         return $result;
     }
     /**
@@ -987,5 +1002,53 @@ class Event
     public function getVerrou()
     {
         return $this->verrou;
+    }
+
+    /**
+     * Set refusEDF
+     *
+     * @param integer $refusEDF
+     *
+     * @return Event
+     */
+    public function setRefusEDF($refusEDF)
+    {
+        $this->refusEDF = $refusEDF;
+
+        return $this;
+    }
+
+    /**
+     * Get refusEDF
+     *
+     * @return integer
+     */
+    public function getRefusEDF()
+    {
+        return $this->refusEDF;
+    }
+
+    /**
+     * Set commentaireEDF
+     *
+     * @param string $commentaireEDF
+     *
+     * @return Event
+     */
+    public function setCommentaireEDF($commentaireEDF)
+    {
+        $this->commentaireEDF = $commentaireEDF;
+
+        return $this;
+    }
+
+    /**
+     * Get commentaireEDF
+     *
+     * @return string
+     */
+    public function getCommentaireEDF()
+    {
+        return $this->commentaireEDF;
     }
 }

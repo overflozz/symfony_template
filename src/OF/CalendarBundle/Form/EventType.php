@@ -44,7 +44,7 @@ class EventType extends AbstractType
         ->add('theme', TextType::class)
         ->add('description', TextareaType::class)
         ->add('objectif', TextType::class)
-        ->add('save',  SubmitType::class);
+        ->add('save',  SubmitType::class, array('label' => 'Enregistrer'));
     }
     
     /**

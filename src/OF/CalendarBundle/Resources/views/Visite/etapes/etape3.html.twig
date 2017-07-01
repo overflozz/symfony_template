@@ -3,17 +3,38 @@
        Envoi du mail
     </div>
     <div class="panel-body">
-  {% if event.verrou == 0 %}
+  {% if event.step == 3 %}
+  {% if event.refusEDF == 1 %}
+
+  <div class="alert alert-danger">
+    <span class="glyphicon glyphicon-remove-sign"> </span><b>  Votre denière demande a été refusée.</b><br />
+     {{ event.commentaireEDF }}
+  </div>
+  <br />
+
+  {% endif %}
+  <div class="alert alert-warning">
+    <span class="glyphicon glyphicon-alert"></span> Une fois le mail envoyé, votre visite pourra être verrouillée d'un instant à l'autre. Veillez à bien vérifier les informations données avant de générer le mail.
+  </div>
+<div style="text-align:center">
+<button type="button" id="validreq" class="btn btn-primary"> <span class="glyphicon glyphicon-share-alt"></span> Envoyer le mail d'approbation de visite</button>
+</div>
+  {% elseif event.step == -3 %}
 
   <div class="alert alert-warning">
-    <span class="glyphicon glyphicon-alert"></span> Une fois le mail envoyé, votre visite pourra être vérouillée d'un instant à l'autre. Veillez à bien vérifier les informations données avant de générer le mail.
+    <span class="glyphicon glyphicon-share-alt"></span> Le mail a été envoyé. Nous essaierons de répondre à la demande d'approbation dans les plus brefs délais.
   </div>
-
-  
-  Valider l'étape : <button type="button" id="valid" class="btn btn-primary">Valider</button>
- 
+  {% elseif event.step > 3 %}
+  L'administrateur a validé cette visite.
   {% else %}
-	Le mail a bien été envoyé et EDF l'a accepté.
+
+<div class="col-md-12 ">      
+
+<div class="alert alert-danger" style="text-align:center"><span class="glyphicon glyphicon-remove-sign" style="font-size:40px"></span><br />
+    <strong> Page Cassée.</strong> Une erreur dans la validation des étapes a eu lieu.
+</div>
+</div>
+
   {% endif %}
 
     </div>

@@ -37,8 +37,9 @@ class AdminController extends Controller
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
           $em = $this->getDoctrine()->getManager();
-          $user->setPassword($user->getNom().$user->getPrenom());
+          $user->setPlainPassword($user->getNom().$user->getPrenom());
           $user->setUsername( strtolower(substr($user->getNom(),0, 10)).'_'.strtolower(substr($user->getPrenom(),0, 3)));
+          $user->setEnabled(true);
           $em->persist($user);
           $em->flush();
           $request->getSession()->getFlashBag()->add('success', 'Le compte de '.$user->getNom().' '.$user->getPrenom().' a bien été ajouté !');

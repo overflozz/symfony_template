@@ -54,7 +54,7 @@
 	</div>
 <div class="col-md-8 col-md-offset-2 col-xs-12">      
 	<br />
-	{% if steptoshow != 0 %}
+<!-- 	{% if steptoshow != 0 %}
 		{% if event.step|abs > steptoshow %}
 	        <div class="alert alert-success z-depth-1">
 	          <strong>Validée. </strong> Cette étape a été validée.
@@ -63,10 +63,9 @@
 	        <div class="alert alert-warning z-depth-1 ">
 	          <strong>En cours de validation.</strong> Une demande de validation a été envoyée.
 	        </div>
-	        Valider l'étape : <button type="button" id="valid" class="btn btn-primary">Valider</button>
 	      {% else %}
 	    {% endif %}
-	{% endif %}
+	{% endif %} -->
 
 	<div class="etapeBloc">
 	{% if (steptoshow == 0)%}
@@ -81,6 +80,8 @@
 		{% include("@OFCalendar/Visite/etapes/etape4.html.twig") %}
 	{% elseif (steptoshow == 5)%}
 		{% include("@OFCalendar/Visite/etapes/etape5.html.twig") %}
+	{% elseif (steptoshow == -48)%}
+		{% include("@OFCalendar/Visite/etapes/validAdmin.html.twig") %}
 	{% else %}
 		{% include("@OFCalendar/Visite/etapes/etape0.html.twig") %}
 	{% endif %}

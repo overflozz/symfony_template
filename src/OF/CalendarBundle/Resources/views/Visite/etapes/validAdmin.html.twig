@@ -1,0 +1,52 @@
+{% if is_granted("ROLE_ADMIN") %}
+{% if event.step == -3 %}
+ <div class="col-md-2 col-xs-12 pull-left affix ">
+ <div class="panel panel-default">
+	 <div class="panel-heading">
+	 	Approbation de la visite
+	 </div>
+	 <div class="panel-body">
+	 <div class="col-xs-12">
+  			<div class="col-xs-12" style="text-align:center">Vous pouvez valider l'organisation de la visite :<br /> <button type="button" id="valid" class="btn btn-primary">Valider</button></div>
+	 </div>
+
+	 <div class="col-xs-12">
+	 	 <br />
+	 <div class="divider"></div>
+	 <br />
+	 		Ou demander de la retravailler :
+{{ form_start(form)}}
+<div class="col-xs-12">
+{{ form_row(form.commentaireEDF)}}
+</div>
+<div class="col-xs-12" style="text-align:center">
+{{ form_row(form.refuser, {'attr' : {'class' : 'btn btn-danger red'}})}}
+</div>
+{{ form_end(form)}}
+</div>
+  </div>
+</div>
+
+</div>
+
+
+ <div class="col-md-8 col-xs-12 pull-right">
+ {% include("@OFCalendar/Visite/recap.html.twig") %}
+ </div>
+
+{% elseif event.step == 3 and event.refusEDF == 1 %}
+Vous avez refusé cette visite
+{% elseif event.step|abs > 3 %}
+<div class="alert alert-success">Vous avez déjà approuvé cette visite.</div>
+{% else %}
+<div class="alert alert-warning">Vous ne pouvez pas encore donner votre approbation pour cette visite.</div>
+{% endif %}
+
+{% else %}
+	<div class="col-xs-12 ">      
+
+		<div class="alert alert-danger" style="text-align:center"><span class="glyphicon glyphicon-remove-sign" style="font-size:40px"></span><br />
+		  	<strong> Page inaccessible.</strong> Vous n'êtes pas administrateur.
+		</div>
+	</div>
+{% endif %}
