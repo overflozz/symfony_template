@@ -57,7 +57,11 @@
 							<div class='col-md-5'>
 								{{ form_widget(form.elementsVisites.vars.prototype.duree.minute, {'attr' : {'class' : 'minuteInput browser-default'}})|e  }}
 							</div>
+              <div class='col-xs-12'>
+                {{ form_row(form.elementsVisites.vars.prototype.description, {'attr' : {'class' : ''}})|e  }}
+              </div>
 						</div>
+
 				
 		        </div>
 	        	<div class='panel-footer' style='height: 50px;'></div>
@@ -96,6 +100,13 @@
 
               {% endif %}
               
+              </div>
+              <div class='col-xs-12'>
+              {% if event.verrou == 0 %}
+                {{ form_row(elementVisite.description, {'attr' : {'class' : ''}}) }}
+                {% else %}
+                 {{ form_row(elementVisite.description, {'attr' : { 'disabled' : 'disabled'}})  }}
+                 {% endif %}
               </div>
             </div>
         
@@ -191,7 +202,9 @@
 
       $container.find('.element').each(function() {
 
+              {% if event.verrou == 0 %}
         addDeleteLink($(this));
+        {% endif %}
 
       });
 

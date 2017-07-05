@@ -30,7 +30,11 @@ class VisiteController extends Controller
 
 		$applications = $event->getApplications();
 
-
+		if(strtotime(date_format($event->getendDateTime(), 'Y-m-d H:i:s') )< strtotime( date('Y-m-d H:i:s'))){
+			$event->setStep(5);
+			$em->persist($event);
+				$em->flush();
+		}
 		if ($event == null){
 			throw new NotFoundHttpException("Visite non trouvée");
 		}
@@ -57,11 +61,11 @@ class VisiteController extends Controller
 		if($etape == 4 ){
 			if ($event->getSatisfactiongenere() == False){
 	      		$satisfaction = new Satisfaction();
-				$satisfaction->setVisite($event);
-				$event->addenquete($satisfaction);
-				$event->setSatisfactiongenere(True);
+				//$satisfaction->setVisite($event);
+				//$event->addenquete($satisfaction);
+				//$event->setSatisfactiongenere(True);
 
-				$em->persist($satisfaction);
+				//$em->persist($satisfaction);
 				$em->persist($event);
 				$em->flush();
 	      	}else{
@@ -110,6 +114,7 @@ class VisiteController extends Controller
     		
 
 	}
+
     public function viewModalAction(Request $request)
     {	
 
@@ -142,7 +147,7 @@ class VisiteController extends Controller
 			
 			
 			
-			if ($listeUser->contains($user) or count($listeUser) >= $event->getNbUserMax()){
+			if ($listeUser->contains($user) || count($listeUser) >= $event->getNbUserMax()){
 				return new Response("Dejà enregistré ou trop de monde.", 200 );
 			}else{
 				$eventUser = new EventUser();
@@ -302,6 +307,26 @@ class VisiteController extends Controller
 
 		return $this->render('OFCalendarBundle:Visite:Quali/show.html.twig',array('listeVisites' => $visitequalite));
 	}
+
+
+	public function majVisiteAction(){
+
+    	$em = $this->getDoctrine()->getManager();
+    	$events = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findAll();
+    	foreach ($events as $event){
+    		if(strtotime(date_format($event->getendDateTime(), 'Y-m-d H:i:s') )< strtotime( date('Y-m-d H:i:s'))){
+			$event->setStep(5);
+			$em->persist($event);
+			$em->flush();
+			}
+
+		}
+		$visitequalite = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findBy(array('respoQuali' => $this->getUser()));
+
+		return $this->render('OFCalendarBundle:Visite:Quali/show.html.twig',array('listeVisites' => $visitequalite));
+
+	}
+
 	public function showQualiteVisiteAction($id, Request $req){
 
 		$visitequalite = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findOneBy(array('id' => $id));
@@ -349,38 +374,48 @@ class VisiteController extends Controller
 		
 		$visites = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findBy(array('satisfactiongenere' => 1));
 		
-   		$MonthAgo = date('Y-m-d', strtotime('-32 days'));
+   		$MonthAgo = date('Y-m-d', strtotime('-31 days'));
    		$allVisitesmonth = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->createQueryBuilder('event')->where('event.startDate BETWEEN ?1 and CURRENT_DATE()')->setParameter(1, $MonthAgo)->orderBy('event.startDate', 'ASC')->getQuery()->getResult();
 
 			
    		$statsVisitesMonth = array_fill(0, 32, 0);
+   		$statsVisitesMonthlabels = array_fill(0, 32, "");
+   		$statsMoyenneMonth = array_fill(0, 32, 0);
    		// on part du monthago et on remonte
-   		$datecourante =  date('Y-m-d', strtotime('-32 days'));
+   		$datecourante =  date('Y-m-d', strtotime('-31 days'));
    		$i = 0;
+   		$nombreMemeJour = 0;
    		foreach ($allVisitesmonth  as $visite){
 
 
    			while (date_format($visite->getstartDate(), 'Y-m-d') != $datecourante){
-   				$i = $i + 1;
-   				$datecourante = date('Y-m-d', strtotime($datecourante . ' +1 day'));
-   				if ($i  ==  32) {
-   					throw new NotFoundHttpException($datecourante);
+   				if ($nombreMemeJour > 1){
+   					$statsMoyenneMonth[$i]= $statsMoyenneMonth[$i]  / $nombreMemeJour;
    				}
 
-   			}
+   				$nombreMemeJour = 0;
+   				$i = $i + 1;
 
+   				$statsVisitesMonthlabels[$i] = date('d/m',strtotime($datecourante. ' +1 day'));
+   				$datecourante = date('Y-m-d', strtotime($datecourante . ' +1 day'));
+   				
+
+
+   			}
+   			$nombreMemeJour += 1;
+   			$statsMoyenneMonth[$i] += $visite->getNotesMoyenne();
    			$statsVisitesMonth[$i] +=1;
    				
    		}
    		
 
-		$stats = $this->statsSommeVisites($visites);
+		$stats = $this->statsSommeVisitesAction($visites);
 		$visites2 = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findOneBy(array('id' => 2));
-		return $this->render('OFCalendarBundle:Admin:stats.html.twig',array('stats' => $stats,'visitesMonth'=> $statsVisitesMonth));
+		return $this->render('OFCalendarBundle:Admin:stats.html.twig',array('stats' => $stats,'visitesMonth'=> $statsVisitesMonth,'statsMoyenneMonth' => $statsMoyenneMonth, 'visitesMonthLabels' => $statsVisitesMonthlabels));
 
 	}
 
-	public function statsSommeVisites($visites){
+	public function statsSommeVisitesAction($visites){
 		$result = array(array(0,0,0,0), array(0,0,0,0), array(0,0,0,0), array(0,0,0,0), array(0,0,0,0), array(0,0,0,0), array(0,0,0,0));
 		foreach ($visites as $visite){
 			$tableauNotes = $visite->getNotes();

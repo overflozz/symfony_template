@@ -70,9 +70,19 @@ class Event
     protected $langue;
     /**
      * 
-     * @ORM\Column(type="string",length=512, nullable=true)
+     * @ORM\Column(type="string",nullable=true)
      */
-    protected $description;
+    protected $descriptionVisiteurs;
+        /**
+     * 
+     * @ORM\Column(type="string",nullable=true)
+     */
+    protected $infoComplementaire;
+            /**
+     * 
+     * @ORM\Column(type="string",nullable=true)
+     */
+    protected $priorite;
     /**
      * 
      * @ORM\Column(type="text", nullable=true)
@@ -232,6 +242,7 @@ class Event
     public function getNotes(){
         // Le résultat est un tableau de tableau contenant à chaque case les nombre de réponses données pour chaque question.
         $result = array();
+
         $somme = 0;
         $compteur = 0;
         $resultat1 = array(0,0,0,0);
@@ -241,7 +252,9 @@ class Event
         $resultat5 = array(0,0,0,0);
         $resultat6 = array(0,0,0,0);
         $resultat7 = array(0,0,0,0);
+
         foreach ($this->enquetes as $enquete) {
+            if ($enquete->getResultat1() != null){
             $resultenquete = 1;
             $resultat1[''.$enquete->getResultat1()] = $resultat1[$enquete->getResultat1()] + 1; 
             $resultat2[''.$enquete->getResultat2()] = $resultat2[$enquete->getResultat2()] + 1; 
@@ -250,6 +263,7 @@ class Event
             $resultat5[''.$enquete->getResultat5()] = $resultat5[$enquete->getResultat5()] + 1; 
             $resultat6[''.$enquete->getResultat6()] = $resultat6[$enquete->getResultat6()] + 1; 
             $resultat7[''.$enquete->getResultat7()] = $resultat6[$enquete->getResultat7()] + 1;
+        }
 
         }
         array_push($result, $resultat1);
@@ -260,6 +274,27 @@ class Event
         array_push($result, $resultat6);
         array_push($result, $resultat7);
         return $result;
+    }
+    function getNotesMoyenne(){
+        
+        $somme = 0;
+        $nombreTot = 0;
+        $notes = $this->getNotes();
+        foreach ($notes as $result){
+            $note = 0; // 0 pour insuffisant et 3 pour tb.
+            foreach ($result as $nombre){
+                $somme += $nombre * $note;
+                $nombreTot += $nombre;
+                $note +=1;
+            }
+
+        }
+        if( $nombreTot != 0 ){
+            return $somme / $nombreTot;
+        }else{
+            return 0;
+        }
+    
     }
     /**
      * Convert calendar event details to an array
@@ -1050,5 +1085,101 @@ class Event
     public function getCommentaireEDF()
     {
         return $this->commentaireEDF;
+    }
+
+    /**
+     * Set descriptionVisiteurs
+     *
+     * @param string $descriptionVisiteurs
+     *
+     * @return Event
+     */
+    public function setDescriptionVisiteurs($descriptionVisiteurs)
+    {
+        $this->descriptionVisiteurs = $descriptionVisiteurs;
+
+        return $this;
+    }
+
+    /**
+     * Get descriptionVisiteurs
+     *
+     * @return string
+     */
+    public function getDescriptionVisiteurs()
+    {
+        return $this->descriptionVisiteurs;
+    }
+
+    /**
+     * Set infoComplémentaire
+     *
+     * @param string $infoComplémentaire
+     *
+     * @return Event
+     */
+    public function setInfoComplémentaire($infoComplémentaire)
+    {
+        $this->infoComplémentaire = $infoComplémentaire;
+
+        return $this;
+    }
+
+    /**
+     * Get infoComplémentaire
+     *
+     * @return string
+     */
+    public function getInfoComplémentaire()
+    {
+        return $this->infoComplémentaire;
+    }
+
+    /**
+     * Set infoComplementaire
+     *
+     * @param string $infoComplementaire
+     *
+     * @return Event
+     */
+    public function setInfoComplementaire($infoComplementaire)
+    {
+        $this->infoComplementaire = $infoComplementaire;
+
+        return $this;
+    }
+
+    /**
+     * Get infoComplementaire
+     *
+     * @return string
+     */
+    public function getInfoComplementaire()
+    {
+        return $this->infoComplementaire;
+    }
+
+    /**
+     * Set priorite
+     *
+     * @param string $priorite
+     *
+     * @return Event
+     */
+    public function setPriorite($priorite)
+    {
+        $this->priorite = $priorite;
+
+        return $this;
+    }
+
+    /**
+     * Get priorite
+     *
+     * @return string
+     */
+    public function getPriorite()
+    {
+        return $this->priorite;
     }
 }

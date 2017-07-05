@@ -3,15 +3,15 @@
 
 
 {% block body %}    
-{% for int in visitesMonth %}
-{{ int }}
-{% endfor %}
+
 <div class="col-md-12">
 
 <div class="col-md-8 col-xs-12">
 	<div class="panel panel-default">
-		<div class="panel-heading">Evolution du nombre de visites.</div>
-		<div class="panel-content"></div>
+		<div class="panel-heading">Evolution du mois dernier</div>
+		<div class="panel-content">
+			<canvas id="ChartEvolVisites"></canvas>
+		</div>
 	</div>
 </div>
   {% if stats is empty %}
@@ -37,72 +37,118 @@
 
   </div>
 
+<!-- pie charts -->
+<script>
+	$( document ).ready(function() {
+	function grapheQuestions(index, valeur1, valeur2, valeur3, valeur4) {
+	             var datas = {
 
-          <script>
+	    datasets: [{
+	        data: [ valeur1, valeur2, valeur3, valeur4],
+
+
+	    backgroundColor:[
+	    '#f7464a', 
+	    '#fdb45c',
+	    '#46bfbd',
+	    '#6ebd70']}
+	    ],
+
+	    // These labels appear in the legend and in the tooltips when hovering different arcs
+	    labels: [
+	        'Insatisfaisant',
+	        'Assez Insatisfaisant',
+	        'Assez Satisfaisant',
+	        'Satisfaisant'
+	    ]
+
+
+
+
+	    };
+
+
+	    var options = {
+	    responsive: true,
+	    
+	    legend: {
+	            display: false
+	           
+	        }
+	    
+	};
+
+
+	              // Get the context of the canvas element we want to select
+	              
+	       new Chart(document.getElementById("Chart" + index).getContext('2d'), { type :'pie', data : datas, options : options}); //'Line' defines type of the chart.
+
+
+	     
+
+
+
+	              
+	    }
+
+	     {% set index = 0 %}
+	         {% for tableau in stats %}
+	          grapheQuestions({{ index }} , {{tableau[0]}}, {{tableau[1]}}, {{tableau[2]}}, {{tableau[3]}});
+	          {% set index = index + 1 %}
+	          {% endfor %}
+
+	          
+	});
+</script>
+
+<!-- Line chart -->
+<script>
 $( document ).ready(function() {
-          function grapheQuestions(index, valeur1, valeur2, valeur3, valeur4) {
-             var datas = {
+var data = {
+	"labels":[{% for label in visitesMonthLabels %},"{{ label }}"{% endfor %}],
+	"datasets" :[{
+		"label":"Nombre de visites",
+		"data" : [{% for nombre in visitesMonth %},{{ nombre}}{% endfor %}],
+		"fill":false,
 
-    datasets: [{
-        data: [ valeur1, valeur2, valeur3, valeur4],
+		"borderColor":"rgb(75, 192, 192)",
 
-
-    backgroundColor:[
-    '#f7464a', 
-    '#fdb45c',
-    '#46bfbd',
-    '#6ebd70']}
-    ]
+		"lineTension":0.1
 
 
-    ,
+	},{
+		"label":"Moyenne des visites",
+		"data" : [{% for nombre in statsMoyenneMonth %},{{ nombre }}{% endfor %}],
+		"fill":false,
 
-    // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: [
-        'Insatisfaisant',
-        'Assez Insatisfaisant',
-        'Assez Satisfaisant',
-        'Satisfaisant'
-    ]
+		"borderColor":"#f7464a",
 
+		"lineTension":0.1
 
 
-
-    };
-
-
-    var options = {
-    responsive: true,
-    
-    legend: {
-            display: false
-           
-        }
-    
-    };
+	}
 
 
-              // Get the context of the canvas element we want to select
-              
-       new Chart(document.getElementById("Chart" + index).getContext('2d'), { type :'pie', data : datas, options : options}); //'Line' defines type of the chart.
+	]
 
-
-       
+};
+ 
+var options = {
+	    
+	    
+	};
 
 
 
-              
-    }
-
-     {% set index = 0 %}
-         {% for tableau in stats %}
-          grapheQuestions({{ index }} , {{tableau[0]}}, {{tableau[1]}}, {{tableau[2]}}, {{tableau[3]}});
-          {% set index = index + 1 %}
-          {% endfor %}
-
-          
+new Chart(document.getElementById("ChartEvolVisites").getContext('2d'), {
+    type: 'line',
+    data: data,
+    options: options
 });
-    </script>
+
+
+});
+</script>
 
     {% endif %}
 

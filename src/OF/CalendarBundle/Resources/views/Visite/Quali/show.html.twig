@@ -1,16 +1,45 @@
 {% extends "OFCalendarBundle::Visite/Quali/layout.html.twig" %} 
 {% block body %}
 	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-	<div class="headerSidebar">
-		Mes visites
+
+<div class="col-md-8"> 
+	<div class="panel panel-default">
+		<div class="panel-heading">Questionnaires de satisfaction</div>   
+		<div class="panel-body">
+
+			<a class="btn btn-primary pull-right" href="{{ path('of_calendar_qualimaj')}}">Mettre à jour</a>
+			<table class="table table-striped">
+			<thead>
+			  <tr>
+			  	<th>Date</th>
+			  	<th>Client</th>
+			  	<th>Visite terminée</th>
+			    <th>Enquêtes remplies<th>
+			    <th>Actions</th>
+			  </tr>
+			</thead>
+			<tbody>
+			{% for event in listeVisites %}
+			  <tr>
+			  	<td>Le <b>{{event.startDatetime|date("d/m", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b> </td>
+			  	<td>{{ event.client.entreprise }} ({{ event.client.nom }} {{ event.client.prenom }}) </td>
+			  	<td>{% if event.step >= 5 %}Oui {% else %} Non {% endif %}</td>
+			    <td>{{event.enquetes|length}}</td>
+			    <td></td>
+			    <td>{% if event.step >= 5 %}<a href="{{ path('of_calendar_view_qualitevisite',{'id' : event.id})}}">Remplir les réponses</a>{% else %} Attendez que la visite soit terminée. {% endif %}</td>
+
+			
+				
+
+
+
+
+			  </tr>	
+			{% endfor %}    
+			</tbody>
+			</table>
+		</div>
 	</div>
-	<div class="contentSidebar">
-		{% for event in listeVisites %}
-			<a href="{{ path('of_calendar_view_qualitevisite',{'id' : event.id})}}">
-				Le <b>{{event.startDatetime|date("d/m", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b> : <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{event.title}}</li><br/>
-			</a>
-		{% endfor %}
-	</div>
-	
+</div>
 	{% endif %}
 {% endblock %}

@@ -34,6 +34,7 @@ class EventType extends AbstractType
                     return ''.$client->getEntreprise().' ( respo : '.$client->getResponsable().' )';
                 }
         ))
+        ->add('nbUserMax', IntegerType::class, array('label' => 'Nombre de conférenciers'))
         ->add('nombreParticipants', IntegerType::class)
         ->add('startDate', DateType::class, array('widget' => 'single_text','format' => 'yyyy-MM-dd HH:mm:ss', 'label' => 'Date'))
         ->add('heureDebut', TimeType::class)
@@ -42,8 +43,12 @@ class EventType extends AbstractType
         'Français' => 'Français',
         'Anglais' => 'Anglais')))
         ->add('theme', TextType::class)
-        ->add('description', TextareaType::class)
-        ->add('objectif', TextType::class)
+        ->add('descriptionVisiteurs', TextareaType::class)
+        ->add('infoComplementaire', TextareaType::class)
+        ->add('priorite', ChoiceType::class,array('choices'  => array(
+        'Elevée' => 'Elevée',
+        'Moyenne' => 'Moyenne',
+        'Faible' => 'Faible' )))
         ->add('save',  SubmitType::class, array('label' => 'Enregistrer'));
     }
     

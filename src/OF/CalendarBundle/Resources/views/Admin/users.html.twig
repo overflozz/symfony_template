@@ -42,11 +42,10 @@
 			  	<td>{{ user.prenom }}</td>
 			    <td>{{ user.username }}</td>
 			    <td>{{ user.email }}</td>
-			    <td><a href="{{ path("of_calendar_Modifusers", {'id' : user.id} ) }}">Modifier</a> <a href=""  data-toggle="modal" data-target=".supprUser{{ user.id }}">Supprimer</a></td>
+			    <td><a href="{{ path("of_calendar_AdminViewVisiteuser", {'id' : user.id} ) }}">Voir les visites</a><a href="{{ path("of_calendar_Modifusers", {'id' : user.id} ) }}">Modifier</a> <a href=""  data-toggle="modal" data-target=".supprUser{{ user.id }}">Supprimer</a></td>
 
-				<div class="modal fade supprUser{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-				  <div class="modal-dialog modal-lg" role="document">
-				    <div class="modal-content">
+				<div class="modal fade supprUser{{ user.id }} modal-content" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+				   
 				    	<div class="modal-header">
        						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
        						<h4 class="modal-title" id="gridSystemModalLabel">Confirmation</h4>
@@ -56,8 +55,7 @@
 				     		<a href="{{ path("of_calendar_Supprusers", {'id' : user.id} ) }} ">Oui</a>
 				  		</div>
 				    </div>
-				  </div>
-				</div>
+				  
 		
 
 

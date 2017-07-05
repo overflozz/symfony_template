@@ -95,7 +95,7 @@
                                     <li><a href="{{ path('fos_user_profile_show') }}"><span class="glyphicon glyphicon-user"></span> Mon Profil</a></li>          <li><a href="{{ path('fos_user_profile_edit')}}"><span class="glyphicon glyphicon-cog"></span> Réglages Profil</a></li>
                                     {% if is_granted('ROLE_ADMIN') %} 
 
-                            <li><a href="{{ path('of_calendar_admin') }}"><span class="glyphicon glyphicon-edit"></span> Administration</a></li>
+                            <li><a href="{{ path('of_calendar_statsAdmin') }}"><span class="glyphicon glyphicon-edit"></span> Administration</a></li>
                         {% endif %}
 
                                     <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-remove"></span> Deconnexion</a></li>

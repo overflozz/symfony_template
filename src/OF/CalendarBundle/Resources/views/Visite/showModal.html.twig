@@ -80,7 +80,7 @@
 
 				$('#loading-image').fadeOut(1000);
 				$div.html("{{ app.user.prenom}} {{ app.user.nom}}<button id='suppr_conferencier'  class='btn red lighten-1' style='color:#fff;' type='button' ><span class='glyphicon glyphicon-remove'></span><span class='hidden-xs'> Supprimer</span></button>");
-					Materialize.toast('Vous êtes maintenant conférencier sur cette visite.', 3000);
+					//Materialize.toast('Vous êtes maintenant conférencier sur cette visite.', 3000);
 			});
 		});
 		$('.modal-content').on("click", "#suppr_conferencier",function(){
@@ -97,7 +97,7 @@
 				$("#viewModal").fadeOut(1000);
 				
 				$('#loading-image').fadeOut(500);
-				Materialize.toast('Vous n\'êtes plus conférencier sur cette visite.', 3000);
+				//Materialize.toast('Vous n\'êtes plus conférencier sur cette visite.', 3000);
 				$div.html("N/A <button id='ajout_conferencier' class='btn btn-primary' type='button' ><span class='glyphicon glyphicon-plus'></span> S'ajouter</button>");
 
 			});

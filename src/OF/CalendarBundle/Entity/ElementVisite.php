@@ -20,6 +20,10 @@ class ElementVisite
      * @ORM\Column(name="titre", type="string", length=255)
      */
     protected $titre;
+     /**
+     * @ORM\Column(name="description", type="string", nullable=true)
+     */
+    protected $description;
   /**
 
     * @ORM\Column(name="duree", type="time")
@@ -117,5 +121,29 @@ class ElementVisite
     public function getVisite()
     {
         return $this->visite;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return ElementVisite
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

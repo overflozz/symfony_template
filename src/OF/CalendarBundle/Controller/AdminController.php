@@ -82,6 +82,31 @@ class AdminController extends Controller
         return $this->render('OFCalendarBundle:Admin:modifUser.html.twig', array('form' => $form->createView(), 'user' => $user));
     } 
 
+    public function viewVisiteUserAdminAction($id, Request $request)
+    {   
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getDoctrine()->getManager()->getRepository('OFUserBundle:User')->findOneBy(array('id' => $id));
+        if($user == null){
+            throw new NotFoundHttpException("Utilisateur non trouvé :(");
+        }
+        $visites = $user->getEvents();
+        $visitequalite = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findBy(array('respoQuali' => $user));
+        $visitesToDo = array();
+        $visitesDone = array();
+
+
+        $userApplications =$user->getEvents();
+            foreach ( $userApplications as $application){
+            if ($application->getstartDatetime() >= new \Datetime()){
+                array_push($visitesToDo,$application);
+            }else{
+                array_push($visitesDone, $application);
+            }
+        }
+
+        return $this->render('OFCalendarBundle:Admin:userVisites.html.twig', array('listeVisitesQualite' => $visitequalite, 'listeVisites' => $visites,'visitesToDo' => $visitesToDo, 'visitesDone' => $visitesDone, 'user' => $user));
+    } 
+
 
     //ADMINISTRATION CLIENT
         public function clientsAdminAction(Request $request)
@@ -184,6 +209,7 @@ class AdminController extends Controller
 
         return $this->render('OFCalendarBundle:Admin:modifClient.html.twig', array('form' => $form->createView(), 'client' => $client));
     } 
+
 
     // ADMINISTRATION DOCUMENTS
 

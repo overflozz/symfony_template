@@ -1,10 +1,12 @@
 <div class="col-md-12">
 
-
-  {% if event.getNotes is empty %}
-  Aucun questionnaire n'a encore été rempli.
-  {% else %}
   {% set index=0 %}
+
+  {% if event.getEnquetes is empty%}
+  <div class="alert alert-warning">
+  Aucun questionnaire n'a encore été rempli.
+  </div>
+  {% else %}
     {% set tableauQuestion = ['Attitude', 'Pédagogie', 'Connaissance', 'Charisme', 'Logistique', 'Durée de la Visite', 'Globalement'] %}
      {% for tableau in event.getNotes %}
     
@@ -77,7 +79,7 @@ $( document ).ready(function() {
 
      {% set index = 0 %}
          {% for tableau in event.getNotes %}
-          grapheQuestions({{ index }} , {{tableau[1]}}, {{tableau[2]}}, {{tableau[3]}}, {{tableau[4]}})
+          grapheQuestions({{ index }} , {{tableau[0]}}, {{tableau[1]}}, {{tableau[2]}}, {{tableau[3]}})
 
 
           {% set index = index + 1 %}

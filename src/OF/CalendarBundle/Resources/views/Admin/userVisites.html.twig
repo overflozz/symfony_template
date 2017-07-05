@@ -5,6 +5,7 @@
 	
 
 <div class="col-md-8 ">
+<a href="{{ path('of_calendar_usersadmin') }}"> Administration des conférenciers</a> | Visites de {{ user.nom }} {{ user.prenom }} <br /><br />
 
   <ul id="tabs-swipe-demo" class="tabs">
     <li class="tab col s4"><a class="active" href="#test-swipe-1">Visites à venir ( {{visitesToDo|length}} ) </a></li>
@@ -35,14 +36,14 @@
         </thead>
 
         <tbody>
-      {% for event in visitesToDo %}
-      <tr>
-        <td> Le <b>{{event.startDatetime|date("d/m", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}} </td>
-        <td> {{ event.client.entreprise }} </td>
-        <td> {{ event.step }}</td>
-      <td><a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : 0})}}"> Panel de gestion de visite</a></td>
-    </tr>
-    {% endfor %}
+  	 	{% for event in visitesToDo %}
+  	 	<tr>
+  	 		<td> Le <b>{{event.startDatetime|date("d/m", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}} </td>
+  	 		<td> {{ event.client.entreprise }} </td>
+  	 		<td> {{ event.step }}</td>
+			<td><a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : 0})}}"> Panel de gestion de visite</a></td>
+		</tr>
+		{% endfor %}
 
           
           
@@ -76,15 +77,15 @@
         </thead>
 
         <tbody>
-      {% for event in visitesDone %}
+  	 	{% for event in visitesDone %}
 
-      <tr>
-        <td> Le <b>{{event.startDatetime|date("d/m", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}} </td>
-        <td> {{ event.client.entreprise }} </td>
-        <td> {% if (event.step == 5) %}<a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : 5})}}"> Consulter les résultats des questionnaires </a> {% else %} Les questionnaires n'ont pas encore été remplis. {% endif %}</td>
-      <td><a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : 0})}}"> Panel de gestion de visite</a></td>
-    </tr>
-    {% endfor %}
+  	 	<tr>
+  	 		<td> Le <b>{{event.startDatetime|date("d/m", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}} </td>
+  	 		<td> {{ event.client.entreprise }} </td>
+  	 		<td> {% if (event.step == 5) %}<a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : 5})}}"> Consulter les résultats des questionnaires </a> {% else %} Les questionnaires n'ont pas encore été remplis. {% endif %}</td>
+			<td><a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : 0})}}"> Panel de gestion de visite</a></td>
+		</tr>
+		{% endfor %}
 
           
           
@@ -95,7 +96,7 @@
   
   </div>
   <div id="test-swipe-3" class="col s12 white">
-      
+  	  
 
         <tbody>
       {% if listeVisitesQualite|length == 0 %}
@@ -117,14 +118,14 @@
               <th>Panel qualité de la visite</th>
           </tr>
         </thead>
-      {% for event in listeVisitesQualite %}
-      <tr>
-        <td> Le <b>{{event.startDatetime|date("d/m", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}} </td>
-        <td> {{ event.client.entreprise }} </td>
-        <td> {% if (event.step == 5) %}<a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : 5})}}"> Consulter les résultats des questionnaires </a> {% else %} Les questionnaires n'ont pas encore été remplis. {% endif %}</td>
-      <td><a href="{{ path('of_calendar_view_qualitevisite',{'id' : event.id})}}"> Panel Qualité</a></td>
-    </tr>
-    {% endfor %}
+  	 	{% for event in listeVisitesQualite %}
+  	 	<tr>
+  	 		<td> Le <b>{{event.startDatetime|date("d/m", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}} </td>
+  	 		<td> {{ event.client.entreprise }} </td>
+  	 		<td> {% if (event.step == 5) %}<a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : 5})}}"> Consulter les résultats des questionnaires </a> {% else %} Les questionnaires n'ont pas encore été remplis. {% endif %}</td>
+			<td><a href="{{ path('of_calendar_view_qualitevisite',{'id' : event.id})}}"> Panel Qualité</a></td>
+		</tr>
+		{% endfor %}
 
           
           
@@ -137,7 +138,6 @@
   </div>
 
   </div>
-
 
 </div>
 

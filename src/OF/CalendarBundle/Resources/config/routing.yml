@@ -4,11 +4,11 @@ of_calendar_homepage:
 
 
 
-of_calendar_admin:
-    path:     /adminpanel
-    defaults:
-        _controller: OFCalendarBundle:Admin:homeAdmin
 
+of_calendar_statsAdmin: 
+    path:     /admin/
+    defaults:
+        _controller: OFCalendarBundle:Visite:statsAll
 
 
 
@@ -22,6 +22,11 @@ of_calendar_Supprusers:
     path:     /adminpanel/supprUsers/{id}
     defaults:
         _controller: OFCalendarBundle:Admin:supprUserAdmin
+
+of_calendar_AdminViewVisiteuser:
+    path:     /adminpanel/viewVisiteUser/{id}
+    defaults:
+        _controller: OFCalendarBundle:Admin:viewVisiteUserAdmin
 
 of_calendar_Modifusers:
     path:     /adminpanel/modifUsers/{id}
@@ -89,10 +94,6 @@ of_calendar_voirDocuments:
     defaults:
         _controller: OFCalendarBundle:Document:view
 
-of_calendar_statsAdmin: 
-    path:     /admin/statsAll
-    defaults:
-        _controller: OFCalendarBundle:Visite:statsAll
 
 
 
@@ -141,11 +142,22 @@ of_calendar_view_qualitevisite:
         _controller: OFCalendarBundle:Visite:showQualiteVisite
     options:
         expose: true
-
+of_calendar_qualimaj:
+    path:     /quali/maj
+    defaults:
+        _controller: OFCalendarBundle:Visite:majVisite
+    
 of_calendar_voirQuestionnaire:
     path:     /questionnaire/{id}
     defaults:
         _controller: OFCalendarBundle:Visite:showQuestionnaireHTML
+
+
+
+
+
+
+
 
 of_calendar_voirDocVisite:
     path:     /recap/{id}
