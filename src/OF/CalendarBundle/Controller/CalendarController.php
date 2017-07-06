@@ -12,7 +12,6 @@ class CalendarController extends Controller
 {
     public function showAction(Request $request)
     {	
-
 	    $event = new Event();
 	    // on génère le form pour le placer dans le add button.
 

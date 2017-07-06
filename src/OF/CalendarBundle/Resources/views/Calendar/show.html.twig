@@ -1,4 +1,5 @@
 {% extends "OFCalendarBundle::layout.html.twig" %} 
+
 {% block stylesheets %}
 	{{ parent()}}
 	<link rel="stylesheet" href="{{ asset('css/fullcalendar/fullcalendar.css') }}" />
@@ -7,6 +8,8 @@
 	{% include("@OFCalendar/sidebar.html.twig") %}
 {% endblock %}
 {% block body %}
+ {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
 <div class="col-md-8">      
 {% if is_granted('ROLE_ADMIN') %}
 	<button type="button" id="ajouterEventBouton" class="btn btn-primary " data-toggle="modal" data-target="#modalAdd"><span class="glyphicon glyphicon-plus"></span></button>
@@ -21,7 +24,18 @@
 			
 			</div>
 </div>
+
+{% else %}
+    <br />
+   
+    <br />
+    {{ render(controller('OFUserBundle:User:LoginBis')) }}
+{% endif %}
+
+
 {% endblock %}
+
+
 {% block javascript %}
 	{{ parent() }}
 
@@ -45,6 +59,7 @@ $('.main-content').on("click", "#modalVisitetrigger", function(){
 });
 	</script>
 
-
-
 {% endblock %}
+
+
+

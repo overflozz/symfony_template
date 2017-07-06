@@ -33,7 +33,7 @@ class QuestionType extends AbstractType
         'label'=> 'Catégorie'
 
         ))
-        ->add('save',  SubmitType::class, array('label' => 'Poser la question'));
+        ->add('save',  SubmitType::class, array('label' => 'Poser'));
     }
     
     /**
