@@ -19,7 +19,7 @@
 	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '4'})}}"><span class="glyphicon glyphicon-time"></span> Déroulé</a>
 	    </li>
 	   	<li class="{% if (steptoshow== 5)%}stepshowed{% endif %} {% if (event.step|abs > 5) %}complete{% elseif (event.step|abs == 5)%}active{% else %}disabled{% endif %}">
-	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '5'})}}"><span class="glyphicon glyphicon-time"></span> Bilan</a>
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '5'})}}"><span class="glyphicon glyphicon-tasks"></span> Bilan</a>
 	    </li>
 	</ul>
 </div>
@@ -46,48 +46,118 @@
 	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '4'})}}"><span class="glyphicon glyphicon-time"></span> Déroulé</a>
 	    </li>
 	   	<li class="{% if (steptoshow== 5)%}stepshowed{% endif %} {% if (event.step|abs > 5) %}complete{% elseif (event.step|abs == 5)%}active{% else %}disabled{% endif %}">
-	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '5'})}}"><span class="glyphicon glyphicon-time"></span> Bilan</a>
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '5'})}}"><span class="glyphicon glyphicon-tasks"></span> Bilan</a>
 	    </li>
 	</ul>
 	</div>
 	</div>
 	</div>
-<div class="col-md-8 col-md-offset-2 col-xs-12">      
-	<br />
-<!-- 	{% if steptoshow != 0 %}
-		{% if event.step|abs > steptoshow %}
-	        <div class="alert alert-success z-depth-1">
-	          <strong>Validée. </strong> Cette étape a été validée.
-	        </div>
-	      {% elseif event.step|abs == steptoshow and event.step <0 %}
-	        <div class="alert alert-warning z-depth-1 ">
-	          <strong>En cours de validation.</strong> Une demande de validation a été envoyée.
-	        </div>
-	      {% else %}
-	    {% endif %}
-	{% endif %} -->
+<div class="row panel-group" style=" border-collapse: collapse;">
 
-	<div class="etapeBloc">
-	{% if (steptoshow == 0)%}
-		{% include("@OFCalendar/Visite/etapes/etape0.html.twig") %}
-	{% elseif (steptoshow == 1)%}
-		{% include("@OFCalendar/Visite/etapes/etape1.html.twig") %}
-	{% elseif (steptoshow == 2)%}
-		{% include("@OFCalendar/Visite/etapes/etape2.html.twig") %}
-	{% elseif (steptoshow == 3)%}
-		{% include("@OFCalendar/Visite/etapes/etape3.html.twig") %}
-	{% elseif (steptoshow == 4)%}
-		{% include("@OFCalendar/Visite/etapes/etape4.html.twig") %}
-	{% elseif (steptoshow == 5)%}
-		{% include("@OFCalendar/Visite/etapes/etape5.html.twig") %}
-	{% elseif (steptoshow == -48)%}
-		{% include("@OFCalendar/Visite/etapes/validAdmin.html.twig") %}
+
+	        <div class="col-md-2 col-xs-12 col-sm-12 pull-left" id="sidebar"><br />
+	        	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+	<div class="headerSidebar">
+		Mes visites en cours
+	</div>
+	<div class="contentSidebar">
+	{% if visitesToDo|length == 0 %}
+ <div  style="text-align:center;color:#7f8c8d">
+        <span class="glyphicon glyphicon-eye-close" style="color:#7f8c8d; font-size:40px;"></span>
+        <br />
+        Il n'y a rien à afficher.
+        <br />
+  </div>
 	{% else %}
-		{% include("@OFCalendar/Visite/etapes/etape0.html.twig") %}
+		{% for event in visitesToDo %}
+			<a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : event.step})}}">
+				Le <b>{{event.startDatetime|date("d/m", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}<br/><br/></b></li>
+			</a>
+		{% endfor %}
+
 	{% endif %}
+	</div>
+	<div  style="text-align:center;" class="col-xs-12 footerSidebar"><a href="{{ path('of_calendar_panelUser') }}" > Voir toutes mes visites </a></div>
+	
+{% endif %}
+	        </div>
+	<div class="col-md-8 col-xs-12">      
+		<br />
+	<!-- 	{% if steptoshow != 0 %}
+			{% if event.step|abs > steptoshow %}
+		        <div class="alert alert-success z-depth-1">
+		          <strong>Validée. </strong> Cette étape a été validée.
+		        </div>
+		      {% elseif event.step|abs == steptoshow and event.step <0 %}
+		        <div class="alert alert-warning z-depth-1 ">
+		          <strong>En cours de validation.</strong> Une demande de validation a été envoyée.
+		        </div>
+		      {% else %}
+		    {% endif %}
+		{% endif %} -->
+
+		<div class="etapaeBloc">
+		{% if (steptoshow == 0)%}
+			{% include("@OFCalendar/Visite/etapes/etape0.html.twig") %}
+		{% elseif (steptoshow == 1)%}
+			{% include("@OFCalendar/Visite/etapes/etape1.html.twig") %}
+		{% elseif (steptoshow == 2)%}
+			{% include("@OFCalendar/Visite/etapes/etape2.html.twig") %}
+		{% elseif (steptoshow == 3)%}
+			{% include("@OFCalendar/Visite/etapes/etape3.html.twig") %}
+		{% elseif (steptoshow == 4)%}
+			{% include("@OFCalendar/Visite/etapes/etape4.html.twig") %}
+		{% elseif (steptoshow == 5)%}
+			{% include("@OFCalendar/Visite/etapes/etape5.html.twig") %}
+		{% elseif (steptoshow == -48)%}
+			{% include("@OFCalendar/Visite/etapes/validAdmin.html.twig") %}
+		{% else %}
+			{% include("@OFCalendar/Visite/etapes/etape0.html.twig") %}
+		{% endif %}
+
+		</div>
+	</div>
+
+		<div class="col-md-2 col-xs-12">
+	<br />
+		<div class="panel panel-default">
+						<div class="panel-heading">
+							<span class="glyphicon  glyphicon glyphicon-send"></span> Contact Client
+						</div>
+						<div class="panel-body">
+							<b>Responsable :</b> {{ event.client.civilite }} {{ event.client.nom }} {{ event.client.prenom}} <br />
+							<b>Mail : </b> {{ event.client.adresseMail}} <br/>
+							<b>Tél. :</b> {{ event.client.telephone}} <br/><br />
+							<a data-toggle="modal" data-target="#modalPremierContact" class="btn btn-primary col-xs-12">Premier Contact</a>
+						</div>
+					</div>
+		<br />
+				<div class="panel panel-default">
+						<div class="panel-heading"><span class="glyphicon glyphicon-comment"></span> Contact Conférence</div>
+						<div class="panel-body">
+						<b> Conférenciers : </b>
+						<ul style="margin-left:20px;">
+							{% for participant in event.applications %}
+								<li >{{participant.user.prenom}} {{participant.user.nom}}<br />
+								<div style="margin-left:10px; border-left : 2px solid #4a8bee; padding-left:20px;">
+								{{participant.user.telephone}}<br />
+								{{participant.user.email}}
+								</div>	
+							</li>
+							{% endfor %}
+						
+						</ul>
+						</div>
+					</div>
+		<br />
 
 	</div>
 </div>
+
+ 
+
+
+
 <script>
 	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
@@ -107,7 +177,7 @@
 				   type:'GET',
 				   success: function(data){
 				   	
-	      				Materialize.toast('L\'étape a été validée.', 2000);
+	      				Materialize.toast('L\'étape a été enregistrée.', 2000);
 
 				       $('#visitecontent').html($(data).filter('#visitecontent').first().children()); // ici on choisi filter car visitecontent est un top element. Sinon on prend find.
 				       $('#visitecontent').fadeIn(1000);  

@@ -16,29 +16,57 @@
 		{% set cat = '' %}
 		{% for document in listeDocuments %}
 
-			{% if document.category != cat %}
-				</div>
-				</div>
-				</div>
-				<div class="row">
-				<div class="panel panel-default ">
+			{% if document.category == 'Admin' and is_granted("ROLE_ADMIN") %}
+				{% if document.category != cat %}
+					{% set cat = document.category %}
+					</div>
+					</div>
+					</div>
+					<div class="row">
+					<div class="panel panel-default ">
 
-				<div class="panel-body ">
-				<div class="panel-heading">
-				{{ cat }}</div>
+					<div class="panel-body ">
+					<div class="panel-heading">
+					{{ cat }} ( seuls les administrateurs ont accès à ces documents )</div>
 
-				{% set cat = document.category %}
+					
+				{% endif %}
+
+				<a href="{{ asset(document.getUploadDir ~ '/' ~ document.url)}}">
+					<div class="col-sm-2 col-xs-3" style="text-align:center">
+					
+						<span class="glyphicon glyphicon-file" style="font-size:60px;"></span><br />
+						{{ document.title }}
+
+					</div>
+				</a>
 			{% endif %}
+			{% if document.category != 'Admin' %}
+				{% if document.category != cat %}
+					{% set cat = document.category %}
+					</div>
+					</div>
+					</div>
+					<div class="row">
+					<div class="panel panel-default ">
 
-			<a href="{{ asset(document.getUploadDir ~ '/' ~ document.url)}}">
-				<div class="col-sm-2 col-xs-3" style="text-align:center">
+					<div class="panel-body ">
+					<div class="panel-heading">
+					{{ cat }}</div>
+
+					
+				{% endif %}
+
+				<a href="{{ asset(document.getUploadDir ~ '/' ~ document.url)}}">
+					<div class="col-sm-2 col-xs-3" style="text-align:center">
+					
+						<span class="glyphicon glyphicon-file" style="font-size:60px;"></span><br />
+						{{ document.title }}
+
+					</div>
+				</a>
 				
-					<span class="glyphicon glyphicon-file" style="font-size:60px;"></span><br />
-					{{ document.title }}
-
-				</div>
-			</a>
-			
+			{%endif%}
 		{% endfor %}
 		</div></div></div>
 	{% else %}

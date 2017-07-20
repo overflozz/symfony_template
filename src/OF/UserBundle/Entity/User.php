@@ -79,6 +79,8 @@ class User extends BaseUser
     {
         parent::__construct();
         // your own logic
+
+        $this->setprofilePicturePath("default.jpeg") ;
     }
 
     // Tout ce qui est en rapport avec l'image //

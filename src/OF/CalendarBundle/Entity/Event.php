@@ -65,6 +65,11 @@ class Event
     protected $nombreParticipants;
     /**
      * 
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $halleessais; // vaut 1 si la halle d'essai est dans le processus de visite.
+    /**
+     * 
      * @ORM\Column(type="string",length=512, nullable=true)
      */
     protected $langue;
@@ -1181,5 +1186,29 @@ class Event
     public function getPriorite()
     {
         return $this->priorite;
+    }
+
+    /**
+     * Set halleessais
+     *
+     * @param integer $halleessais
+     *
+     * @return Event
+     */
+    public function setHalleessais($halleessais)
+    {
+        $this->halleessais = $halleessais;
+
+        return $this;
+    }
+
+    /**
+     * Get halleessais
+     *
+     * @return integer
+     */
+    public function getHalleessais()
+    {
+        return $this->halleessais;
     }
 }

@@ -42,9 +42,9 @@ class EventType extends AbstractType
         ->add('langue', ChoiceType::class,array('choices'  => array(
         'Français' => 'Français',
         'Anglais' => 'Anglais')))
-        ->add('theme', TextType::class)
-        ->add('descriptionVisiteurs', TextareaType::class)
-        ->add('infoComplementaire', TextareaType::class)
+        ->add('theme', TextType::class, array('required' => false))
+        ->add('descriptionVisiteurs', TextareaType::class, array('required' => false))
+        ->add('infoComplementaire', TextareaType::class, array('required' => false))
         ->add('priorite', ChoiceType::class,array('choices'  => array(
         'Elevée' => 'Elevée',
         'Moyenne' => 'Moyenne',

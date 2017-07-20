@@ -32,7 +32,7 @@ class ElementVisiteType extends AbstractType
 
         ), 'attr'  => array('class' => 'titreInput', 'placeholder' => 'Activité'))) // les classes pour le js
         ->add('duree', TimeType::class,array('attr'  => array('class' => 'dureeInput' , 'placeholder' => 'Durée')))
-        ->add('description', TextType::class);
+        ->add('description', TextType::class, array('required' => false));
     }
     
     /**

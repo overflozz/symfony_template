@@ -65,6 +65,11 @@ class Event
     protected $nombreParticipants;
     /**
      * 
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $halleessais; // vaut 1 si la halle d'essai est dans le processus de visite.
+    /**
+     * 
      * @ORM\Column(type="string",length=512, nullable=true)
      */
     protected $langue;
@@ -242,6 +247,7 @@ class Event
     public function getNotes(){
         // Le résultat est un tableau de tableau contenant à chaque case les nombre de réponses données pour chaque question.
         $result = array();
+
         $somme = 0;
         $compteur = 0;
         $resultat1 = array(0,0,0,0);
@@ -251,7 +257,9 @@ class Event
         $resultat5 = array(0,0,0,0);
         $resultat6 = array(0,0,0,0);
         $resultat7 = array(0,0,0,0);
+
         foreach ($this->enquetes as $enquete) {
+            if ($enquete->getResultat1() != null){
             $resultenquete = 1;
             $resultat1[''.$enquete->getResultat1()] = $resultat1[$enquete->getResultat1()] + 1; 
             $resultat2[''.$enquete->getResultat2()] = $resultat2[$enquete->getResultat2()] + 1; 
@@ -260,6 +268,7 @@ class Event
             $resultat5[''.$enquete->getResultat5()] = $resultat5[$enquete->getResultat5()] + 1; 
             $resultat6[''.$enquete->getResultat6()] = $resultat6[$enquete->getResultat6()] + 1; 
             $resultat7[''.$enquete->getResultat7()] = $resultat6[$enquete->getResultat7()] + 1;
+        }
 
         }
         array_push($result, $resultat1);
@@ -272,6 +281,7 @@ class Event
         return $result;
     }
     function getNotesMoyenne(){
+        
         $somme = 0;
         $nombreTot = 0;
         $notes = $this->getNotes();
@@ -289,6 +299,7 @@ class Event
         }else{
             return 0;
         }
+    
     }
     /**
      * Convert calendar event details to an array

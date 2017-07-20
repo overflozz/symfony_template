@@ -3,12 +3,22 @@
 		Mes visites en cours
 	</div>
 	<div class="contentSidebar">
+	{% if visitesToDo|length == 0 %}
+ <div  style="text-align:center;color:#7f8c8d">
+        <span class="glyphicon glyphicon-eye-close" style="color:#7f8c8d; font-size:40px;"></span>
+        <br />
+        Il n'y a rien à afficher.
+        <br />
+  </div>
+	{% else %}
 		{% for event in visitesToDo %}
 			<a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : event.step})}}">
-				Le <b>{{event.startDatetime|date("d/m", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b> : <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{event.title}}</li><br/>
+				Le <b>{{event.startDatetime|date("d/m", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}<br/><br/></b></li>
 			</a>
 		{% endfor %}
+
+	{% endif %}
 	</div>
-	<a href="" > Voir toutes mes visites </a>
+	<div  style="text-align:center;" class="col-xs-12 footerSidebar"><a href="{{ path('of_calendar_panelUser') }}" > Voir toutes mes visites </a></div>
 	
 {% endif %}

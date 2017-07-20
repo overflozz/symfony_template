@@ -42,9 +42,16 @@ class VisiteController extends Controller
 			$etape  = $event->getStep();
 		}
 
-
+		$visitesToDo = array();
 		if($this->getUser() != NULL){
 			$userParticipe = $event->getUsers()->contains($this->getUser());
+
+	    	$userApplications =$this->getUser()->getEvents();
+	    	foreach ( $userApplications as $application){
+				if ($application->getstartDatetime() >= new \Datetime()){
+					array_push($visitesToDo,$application);
+				}
+			}
 		}else{
 			$userParticipe = false;
 		}
@@ -78,7 +85,7 @@ class VisiteController extends Controller
 
 	    if($form == null){
 
-		return $this->render('OFCalendarBundle:Visite:show.html.twig', array('event' => $event, 'Participants' => $applications, 'userParticipe' => $userParticipe, 'steptoshow' => $etape));
+		return $this->render('OFCalendarBundle:Visite:show.html.twig', array('event' => $event,'visitesToDo' =>$visitesToDo, 'Participants' => $applications, 'userParticipe' => $userParticipe, 'steptoshow' => $etape));
 	    }
 
     	if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
@@ -88,29 +95,43 @@ class VisiteController extends Controller
 	      }
 	      if($event->getStep() == -3 && $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) // validation EDF requise
 	      {
-	      	// si le form a été envoyé ce que l'admin a appuyé sur refuser.
+	      	// si le form a été envoyé c'est que l'admin a appuyé sur refuser.
 	      	$event->setRefusEDF(1);
 	      	$event->setStep(3); // on enlève la demande.
 
 	      }
+
 	      // on accepte les modif de visite que si elle est dévérouillée
 	      if ($event->getVerrou() == 0){
 
 		      $em->persist($event);
+		      $halle = 0;
 		      foreach($event->getElementsVisites() as $elementvisite)
 		      {
-		      	$elementvisite->setVisite($event); // car l'id de la visite associée ne se met pas à jour tout seul ( bug )
-		      }
 
+		      	$elementvisite->setVisite($event); // car l'id de la visite associée ne se met pas à jour tout seul ( bug )
+		      	if ($elementvisite->getTitre()=="Halle d’essais"){
+		      		$halle = 1;
+		      	}
+		      	$em->persist($elementvisite);
+		      }
+		    if ($halle == 1){
+	   			$event->setHalleessais(1);
+
+		    }else{
+		    	$event->setHalleessais(0);
+		    }
+	
+			$em->persist($event);
 		      $em->flush();
 	      }
 
 
-	      return $this->redirectToRoute('of_calendar_view_visite', array('id' => $id, 'etape' => $etape));
+	      return $this->redirectToRoute('of_calendar_view_visite', array('id' => $id,'visitesToDo' =>$visitesToDo, 'etape' => abs($etape)));
 	    }
 
 
-		return $this->render('OFCalendarBundle:Visite:show.html.twig', array('event' => $event, 'nbParticipants' => count($applications), 'userParticipe' => $userParticipe, 'steptoshow' => $etape, 'form' => $form->createView()));
+		return $this->render('OFCalendarBundle:Visite:show.html.twig', array('event' => $event,'visitesToDo' =>$visitesToDo, 'nbParticipants' => count($applications), 'userParticipe' => $userParticipe, 'steptoshow' => $etape, 'form' => $form->createView()));
     		
 
 	}
@@ -209,6 +230,38 @@ class VisiteController extends Controller
 		$repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
 		if ($req->isXMLHttpRequest()  ){
 			$event = $repositoryEvent->findOneBy(array('id' => $id));
+
+			// la visite avait été mise en demande de validation mais la halle d'essais n'est plus voulue
+			if (abs($event->getStep()) == 3 && $etape == 2 && $event->getHalleessais() != 1){
+				//le gars a changé et a enlevé la halle d'essais.
+				// Dans ce cas on valide
+				$event->setStep(4);
+				$em->persist($event);
+				$em->flush();
+				return new Response("Validé.", 200 );
+
+			}
+			if ($event->getStep() == 2 && $etape == 2 && $event->getHalleessais() != 1){
+				//le gars veut pas la halle d'essais
+				$event->setStep(4);
+				$em->persist($event);
+				$em->flush();
+				return new Response("Validé.", 200 );
+
+			}			
+
+			if (abs($event->getStep()) >= 3 && $etape == 2 && $event->getHalleessais() == 1){
+				//le gars a changé et veut la halle d'essais.
+				$event->setStep(3);
+				$em->persist($event);
+				$event->setRefusEDF(0);
+				$em->flush();
+				return new Response("Validé.", 200 );
+
+			}
+
+
+
 			if (abs($event->getStep()) == $etape){
 				if($event->getStep() < 0){// il y a eu une demande de validation
 					$event->setStep(-($event->getStep()) + 1);
@@ -235,7 +288,7 @@ class VisiteController extends Controller
 				return new Response("Validé.", 200 );
 			}
 
-
+			return new Response("Non Validé.", 200 );
 
 
 		}
@@ -251,16 +304,23 @@ class VisiteController extends Controller
 		$repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
 		if ($req->isXMLHttpRequest()){
 			$event = $repositoryEvent->findOneBy(array('id' => $id));
+			// si l'etape est la 3eme, alors tout dépend de halle d'essais
 			if (abs($event->getStep()) == $etape){
-				if($event->getStep() > 0){// il y a eu une demande de validation
+				if($event->getStep() > 0){// il y a pas eu de demande de validation
 					$event->setStep(-($event->getStep()));
 					$em->persist($event);
 					$em->flush();
 					if($etape == 3){
-						$this->envoyerMailAction($id); // si on est à l'étape 3, c'est que l'admin EDF doit recevoir son mail.
+						
+
+							// si halle d'essais
+							$this->envoyerMailAction($id); // si on est à l'étape 3, c'est que l'admin EDF doit recevoir son mail.
+						
+						
 					}
 				}
 			}
+	
 
 			return new Response("demande effectuée.", 200 );
 		}

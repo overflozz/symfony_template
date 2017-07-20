@@ -76,6 +76,18 @@ class Satisfaction
      */
 
     protected $resultat7;
+           /**
+     * 
+     * @ORM\Column(type="integer", nullable=true)
+     */
+
+    protected $resultat8;
+           /**
+     * 
+     * @ORM\Column(type="integer", nullable=true)
+     */
+
+    protected $resultat9;
    
    
     /**
@@ -336,5 +348,53 @@ class Satisfaction
     public function getResultat7()
     {
         return $this->resultat7;
+    }
+
+    /**
+     * Set resultat8
+     *
+     * @param integer $resultat8
+     *
+     * @return Satisfaction
+     */
+    public function setResultat8($resultat8)
+    {
+        $this->resultat8 = $resultat8;
+
+        return $this;
+    }
+
+    /**
+     * Get resultat8
+     *
+     * @return integer
+     */
+    public function getResultat8()
+    {
+        return $this->resultat8;
+    }
+
+    /**
+     * Set resultat9
+     *
+     * @param integer $resultat9
+     *
+     * @return Satisfaction
+     */
+    public function setResultat9($resultat9)
+    {
+        $this->resultat9 = $resultat9;
+
+        return $this;
+    }
+
+    /**
+     * Get resultat9
+     *
+     * @return integer
+     */
+    public function getResultat9()
+    {
+        return $this->resultat9;
     }
 }

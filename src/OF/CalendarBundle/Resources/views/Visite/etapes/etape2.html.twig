@@ -7,7 +7,7 @@
   </div>
   </div>
   {% endif %}
-<div class="panel-group" id="choixVisite">
+<div class="" id="choixVisite">
 	<div class="col-md-3 col-xs-12 pull-left ">
 		<div class="panel panel-default">
 		 	<div class="panel-heading">Aperçu : 
@@ -30,8 +30,8 @@
 		 		Ordre de visite
 		 	</div>
 		 	<div class="panel-body">
-
-
+<div class="alert alert-warning" id="avertissementHalle" style="display:none;"> <b>La Halle d'essais nécessite une validation de la part d'EDF</b>. Cela implique qu'il vous faudra attendre leur confirmation avant de pouvoir terminer le processus de visite. <br />Veillez à bien renseigner les descriptions pour les demandes de la Halle d'essais.
+</div>
 {% if event.verrou == 0 %}
    {{ form_start(form, {'attr' : {'class' : 'ajaxForm'}})  }}
 
@@ -117,24 +117,18 @@
 
     {% endfor %}
 
-</ul>
-
-
-{% if event.verrou == 0 %}
+</ul>{% if event.verrou == 0 %}
 {{ form_widget(form.save, {'label': 'Enregistrer', 'attr' : {'class' : 'btn btn-primary pull-left', 'role' : 'valid'}}) }}
        <a  id="add_field" class="btn-floating btn-large waves-effect waves-light btn-primary btn pull-right"><i class="material-icons">add</i></a>
     {{ form_end(form) }}
 {% else %}
-</ul>
-{% endif %}
-
-		 
-		 	</div>
+</ul>{% endif %}		 	</div>
 		</div>
 	</div>
 </div>
  <script>
   $(document).ready(function() {
+    
   	// On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
     var $container = $('#elements-fields-list');
     updatePreview($container);
@@ -229,12 +223,24 @@
 
     function updatePreview($container){
     	var $titre;
+      var $avertissementHalle = 0;
     	var $heure  = parseInt({{event.startDatetime|date("H", "Europe/Paris")}}) ;
     	var $minute = parseInt({{event.startDatetime|date("i", "Europe/Paris")}});
 	   	var $replacment='<li><div class="dotElementVisite pull-left" style="margin-left:-6px;"></div> <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b></li>';
 
     	$container.find('.element').each(function() {
     		$titre = $(this).find('.titreInput').val();
+
+        if($titre == "Halle d’essais" && $avertissementHalle == 0 )
+        {
+          $avertissementHalle = 1;
+         
+          $('#avertissementHalle').show();
+        }
+
+        if($avertissementHalle == 0){
+          $('#avertissementHalle').hide();
+        }
     		$minute = $minute + parseInt($(this).find('.minuteInput :selected').attr('value'));
     		// Ensuite on effectue un ajout d'heure et application de modulo si minutes > 60
     		$heure = $heure + ($minute-$minute%60)/60;

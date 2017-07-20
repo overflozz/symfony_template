@@ -11,6 +11,7 @@
 
 		<div style="text-align:center; width:100%; font-size : 25px; font-weight:600" >{{ user.nom}} {{ user.prenom}}</div>
 		<div style="text-align:center; width:100%; font-size : 20px; font-weight:400" ><i>{{ user.username }}</i></div>
+		<div style="text-align:center; width:100%; font-size : 13px; font-weight:400" >  <a href="{{ path('fos_user_profile_edit')}}"> <span class=" 	glyphicon glyphicon-pencil"></span> Modifier mon profil</a></div>
 
 		<br />
 		<div class="row">
@@ -30,7 +31,7 @@
 				<div class="panel-body">
 				<b> Nombre de conférences données </b>: {{ user.visites|length }}<br /> 
 				<b> Langue </b>: {{ user.langue }}</br />
-				<a href="">Voir toutes les conférences données</a>
+				<a href="{{ path('of_calendar_panelUser')}}">Voir toutes les conférences données</a>
 				</div>
 			</div>
 			</div>

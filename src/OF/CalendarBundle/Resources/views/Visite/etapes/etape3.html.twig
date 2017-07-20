@@ -3,6 +3,7 @@
        Envoi du mail
     </div>
     <div class="panel-body">
+
   {% if event.step == 3 %}
   {% if event.refusEDF == 1 %}
 
@@ -14,7 +15,7 @@
 
   {% endif %}
   <div class="alert alert-warning">
-    <span class="glyphicon glyphicon-alert"></span> Une fois le mail envoyé, votre visite pourra être verrouillée d'un instant à l'autre. Veillez à bien vérifier les informations données avant de générer le mail.
+    <span class="glyphicon glyphicon-alert"></span> L'accès à la halle d'essai nécessite <b>une autorisation d'EDF</b>. Veillez à bien vérifier les <b>informations données avant de générer le mail</b>. Vous pourrez toujours modifier à votre guise la visite, mais dès que la halle d'essais sera concernée, vous devrez repasser par cette étape.
   </div>
 <div style="text-align:center">
 <button type="button" id="validreq" class="btn btn-primary"> <span class="glyphicon glyphicon-share-alt"></span> Envoyer le mail d'approbation de visite</button>
@@ -25,7 +26,11 @@
     <span class="glyphicon glyphicon-share-alt"></span> Le mail a été envoyé. Nous essaierons de répondre à la demande d'approbation dans les plus brefs délais.
   </div>
   {% elseif event.step > 3 %}
+    {% if event.halleessais == 0 %}
+  Vous n'avez pas demandé la halle d'essais. Aucune validation n'est donc nécessaire.
+    {% else %}
   L'administrateur a validé cette visite.
+  {% endif %}
   {% else %}
 
 <div class="col-md-12 ">      

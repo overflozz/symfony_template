@@ -322,15 +322,13 @@ html .fc,
 .fc-state-default .fc-button-inner {
 	border-radius:0px;
 	border:none;
-	background: var(--color-secondaire);
-
-	color: #fff;
+	color:#bdc3c7;
 	}
 .fc-state-default:hover,
 .fc-state-default .fc-button-inner:hover {
 	opacity:0.8;
 
-	color: #fff;
+	
 	}
 
 .fc-button-effect{
@@ -343,11 +341,12 @@ html .fc,
 	
 .fc-state-down,
 .fc-state-down .fc-button-inner {
+
 	}
 	
 .fc-state-active,
 .fc-state-active .fc-button-inner {
-	background: #777;
+	
 	color: #fff;
 	}
 	
@@ -396,10 +395,13 @@ a.fc-event {
 	border-radius:5px;
 	margin : 5px;
 	margin-bottom:10px;
-	padding:5px;
+	padding:1px;
+	margin-left:11px;
+	padding-bottom: 3px;
 	}
 
 .fc-event-skin:hover{
+	cursor:pointer;
 }
 	
 .fc-event-inner {

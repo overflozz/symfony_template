@@ -17,7 +17,7 @@
 				<div class='panel-heading' style='height: 50px;'>
 				    <div class='panel-title  col-md-12' style='font-size:12px;margin-top:5px;'>
 				    	<span class=' glyphicon glyphicon-fullscreen pull-left' style='opacity:0.5;margin-top:2px;'></span>
-				    	<span style='opacity:0.5;'>  Cliquer pour dérouler</span>
+				    	<span style='opacity:0.5;'>   Cliquer pour dérouler</span>
 				    </div>
 				</div>
 				<div id='collapse' class='panel-default collapse'>
@@ -67,14 +67,14 @@
 
    		<div id="collapsingpanel" class= "panel panel-default element" style="margin:auto; width:auto; margin-bottom : 10px;">
 	      	<div class="panel-heading" style='height: 50px;margin-top:5px;'>
-	        	<div class="panel-title col-md-12" style='font-size:12px;'><span class=" glyphicon glyphicon-fullscreen pull-left" style="opacity:0.5;margin-top:2px;"></span><span style="opacity:0.5;">  Cliquer pour dérouler</span></div>
+	        	<div class="panel-title col-md-12" style='font-size:12px;'><span class=" glyphicon glyphicon-fullscreen pull-left" style="opacity:0.5;margin-top:2px;"></span><span style="opacity:0.5;">   Cliquer pour dérouler</span></div>
 
 	     	</div>
 	      	<div id="collapse" class="panel-default collapse">
 	        	<div class="panel-body">
 					
 					<div class='col-md-12' style="padding:0px;"> 
-							<row>
+							<div class="row">
 								<div class='col-md-6'>
 
 									{{ form_label(enquete.resultat1)}}
@@ -84,8 +84,8 @@
 									{{ form_label(enquete.resultat2)}}
 									{{  form_widget(enquete.resultat2) }}
 								</div>
-							</row>
-							<row>
+							</div>
+							<div class="row">
 								<div class='col-md-6'>
 									{{ form_label(enquete.resultat3)}}
 									{{  form_widget(enquete.resultat3) }}
@@ -94,7 +94,8 @@
 									{{ form_label(enquete.resultat4)}}
 									{{  form_widget(enquete.resultat4) }}
 								</div>
-							</row>
+							</div>
+							<div class="row">
 							<div class='col-md-6'>
 								{{ form_label(enquete.resultat5)}}
 								{{  form_widget(enquete.resultat5) }}
@@ -103,9 +104,20 @@
 								{{ form_label(enquete.resultat6)}}
 								{{  form_widget(enquete.resultat6) }}
 							</div>
+							</div>
+							<div class="row">
 							<div class='col-md-6'>
 								{{ form_label(enquete.resultat7)}}
 								{{  form_widget(enquete.resultat7) }}
+							</div>
+							<div class='col-md-6'>
+								{{ form_label(enquete.resultat8)}}
+								{{  form_widget(enquete.resultat8) }}
+							</div>
+							</div>
+							<div class='col-md-6'>
+								{{ form_label(enquete.resultat9)}}
+								{{  form_widget(enquete.resultat9) }}
 							</div>
 					</div>
 					
@@ -254,7 +266,7 @@
 
       // Création du lien
 
-      var $deleteLink = $('<a href="#" class="btn btn-danger pull-right red waves-effect" style="color:#fff; margin-top:-10px;"><span class="glyphicon glyphicon-remove"></span> <span class="hidden-xs hidden-sm>Supprimer</span></a>');
+      var $deleteLink = $('<a href="#" class="btn btn-danger pull-right red waves-effect" style="color:#fff; margin-top:-8px;"><span class="glyphicon glyphicon-remove"></span> <span class="hidden-xs hidden-sm>Supprimer</span></a>');
 
 
       // Ajout du lien

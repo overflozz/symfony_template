@@ -34,6 +34,7 @@ class DocumentType extends AbstractType
             'Technique' => "Technique",
             'Déroulement visite' => "Visite",
             'Déroulement de la procédure' => "Procedure",
+            'Admin' => "Admin",
             'Autre' => "Autre",
     )))
     ->add('save', SubmitType::class)
