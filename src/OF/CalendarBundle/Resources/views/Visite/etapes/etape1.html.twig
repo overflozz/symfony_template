@@ -9,12 +9,15 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    Logistique Complémentaire
+    Logistique
   </div>
   <div class="panel-body">
      
 {% if event.verrou == 0 %}
     {{ form_start(form, {'attr' : {'class' : 'ajaxForm'}}) }} 
+    <div class="element col-xs-12">
+    {{ form_row(form.nombredebadges) }}
+    </div>
     <div  id="formLogistique" data-prototype="<div class='element col-xs-12 pull-left'><br /><div class='col-xs-10'>
         <div class='input-field'>
         <label for='{{ form.otherInfos.vars.id }} ' >Logistique supplémentaire</label>{{  form_widget(form.otherInfos.vars.prototype)|e }} 

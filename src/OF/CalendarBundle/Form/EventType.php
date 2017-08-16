@@ -28,12 +28,24 @@ class EventType extends AbstractType
                     return ''.$user->getPrenom().' '.$user->getNom();
                 }
             ))
-        ->add('client', EntityType::class, array(
-                'class' => 'OFCalendarBundle:Client',
-                'choice_label' => function($client){
-                    return ''.$client->getEntreprise().' ( respo : '.$client->getResponsable().' )';
-                }
-        ))
+        ->add('entrepriseClient', TextType::class)
+        ->add('typeClient', TextType::class)
+        ->add('nomClient', TextType::class)
+        ->add('prenomClient', TextType::class)
+
+        ->add('civiliteClient', ChoiceType::class, array('choices'  => array(
+        'Mme' => 'Mme',
+        'Mr' => 'Mr'), 
+
+        'label' => 'Civilité'))
+        ->add('serviceClient', TextType::class)
+        ->add('villeClient', TextType::class)
+        ->add('paysClient', TextType::class)
+        ->add('adresseMailClient', TextType::class)
+        ->add('telephoneClient', TextType::class)
+        ->add('commentaireClient', TextType::class)
+        ->add('lieurdv', TextType::class, array('label' => 'Lieu de rdv'))
+        ->add('lieudepart', TextType::class, array('label' => 'Lieu de fin'))
         ->add('nbUserMax', IntegerType::class, array('label' => 'Nombre de conférenciers'))
         ->add('nombreParticipants', IntegerType::class)
         ->add('startDate', DateType::class, array('widget' => 'single_text','format' => 'yyyy-MM-dd HH:mm:ss', 'label' => 'Date'))
@@ -42,9 +54,7 @@ class EventType extends AbstractType
         ->add('langue', ChoiceType::class,array('choices'  => array(
         'Français' => 'Français',
         'Anglais' => 'Anglais')))
-        ->add('theme', TextType::class, array('required' => false))
-        ->add('descriptionVisiteurs', TextareaType::class, array('required' => false))
-        ->add('infoComplementaire', TextareaType::class, array('required' => false))
+        ->add('contexte', TextType::class, array('required' => false))
         ->add('priorite', ChoiceType::class,array('choices'  => array(
         'Elevée' => 'Elevée',
         'Moyenne' => 'Moyenne',

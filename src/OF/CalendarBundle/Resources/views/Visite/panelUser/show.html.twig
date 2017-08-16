@@ -38,7 +38,7 @@
       {% for event in visitesToDo %}
       <tr>
         <td> Le <b>{{event.startDatetime|date("d/m", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}} </td>
-        <td> {{ event.client.entreprise }} </td>
+        <td> {{ event.entrepriseClient }} </td>
         <td> {{ event.step|abs }}</td>
       <td><a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : 0})}}"> Panel de gestion de visite</a></td>
     </tr>
@@ -80,7 +80,7 @@
 
       <tr>
         <td> Le <b>{{event.startDatetime|date("d/m", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}} </td>
-        <td> {{ event.client.entreprise }} </td>
+        <td> {{ event.entrepriseClient }} </td>
         <td> {% if (event.step == 5) %}<a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : 5})}}"> Consulter les résultats des questionnaires </a> {% else %} Les questionnaires n'ont pas encore été remplis. {% endif %}</td>
       <td><a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : 0})}}"> Panel de gestion de visite</a></td>
     </tr>
@@ -120,7 +120,7 @@
       {% for event in listeVisitesQualite %}
       <tr>
         <td> Le <b>{{event.startDatetime|date("d/m", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}} </td>
-        <td> {{ event.client.entreprise }} </td>
+        <td> {{ event.entrepriseClient }} </td>
         <td> {% if (event.step == 5) %}<a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : 5})}}"> Consulter les résultats des questionnaires </a> {% else %} Les questionnaires n'ont pas encore été remplis. {% endif %}</td>
       <td><a href="{{ path('of_calendar_view_qualitevisite',{'id' : event.id})}}"> Panel Qualité</a></td>
     </tr>

@@ -53,7 +53,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand page-scroll" id="home"  href="#page-top">CS</a>
+                    <a class="navbar-brand page-scroll" id="home"  href="#page-top">Visites EDF </a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -98,20 +98,21 @@
                                  
 
                                     <li><a href="{{ path('of_calendar_panelUser')}}"><span class="glyphicon glyphicon-list-alt"></span> Mes visites </a></li>
-                                    <li><a href="{{ path('fos_user_profile_show') }}"><span class="glyphicon glyphicon-user"></span> Mon Profil</a></li>          <li><a href="{{ path('fos_user_profile_edit')}}"><span class="glyphicon glyphicon-cog"></span> Réglages Profil</a></li>
+                                    <li><a href="{{ path('fos_user_profile_show') }}"><span class="glyphicon glyphicon-user"></span> Mon Profil</a></li>          
+                                    <li><a href="{{ path('fos_user_profile_edit')}}"><span class="glyphicon glyphicon-cog"></span> Réglages Profil</a></li>
+                                    <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-user"></span> Deconnexion</a></li> 
                                     {% if is_granted('ROLE_ADMIN') %} 
 
                             <li><a href="{{ path('of_calendar_statsAdmin') }}"><span class="glyphicon glyphicon-edit"></span> Administration</a></li>
                         {% endif %}
 
-                                    <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-remove"></span> Deconnexion</a></li>
                                 </ul>
                             </li>
                           
 
                         {% else %}
                             <li class="">
-                                <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-user"></span> Connexion <span class="caret"></span></a>
+                                <a class="" href="{{ path('fos_user_profile_show') }}" data-toggle="" role="button" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-user"></span> Connexion <span class="caret"></span></a>
                                 <ul class="dropdown-menu pull-right" id="login_dropdown">
                                 <li></li>
                                         {{ render(controller('OFUserBundle:User:LoginMenu')) }}

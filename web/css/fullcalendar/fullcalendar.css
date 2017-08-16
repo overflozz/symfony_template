@@ -118,8 +118,11 @@ html .fc,
 	background-color: var(--color-secondaire-hover);
 }
 .dispo{
-	background-color:#9fa3a6;
+	background-color:#bdc3c7;
 
+}
+.dispo:hover{
+	background-color:#d0d5d9;
 }
 
 .fc-widget-header{

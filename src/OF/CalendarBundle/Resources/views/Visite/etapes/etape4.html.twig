@@ -1,5 +1,5 @@
 
- <div class="col-md-4">
+ <div class="col-md-4" style="padding-left: 0px">
         <div class="panel panel-default">
           <div class="panel-heading">Déroulé en temps réel : 
           </div>
@@ -28,7 +28,7 @@
 
       </div>
 
-  <div class="col-md-8">
+  <div class="col-md-8" style="padding-right: 0px">
   {% if event.verrou ==1 %}
   <div class="alert alert-warning z-depth-1">
     <span class="glyphicon glyphicon-lock"></span> Cette visite a été acceptée par EDF. Aucune modification sur son organisation n'est possible.
@@ -38,7 +38,7 @@
     <div id="before"> 
     <br />
       
-        <div class="row"><div style="text-align:center" >
+        <div class="row"><div style="text-align:center" ><br />
          <span class="glyphicon glyphicon-bell" style="font-size:40px"; ></span><br>
          <span style="font-size:20px;">
          La visite n'a pas encore commencé. <br />
@@ -62,8 +62,8 @@
           </div>
           <div class="col-md-4 col-xs-12">
            <a class="btn btn-primary btn-lg col-xs-12"  style=" padding-top:10px;height:100px; line-height:20px;" href="{{ path('of_faq_homepage')}}">
-              <span class="glyphicon glyphicon-paperclip" style="font-size:40px;"></span><br />
-             Accéder à la<br /> Foire Aux Questions<br />
+              <span class="glyphicon glyphicon-paperclip" style="text-align:center; font-size:40px;"></span><br />
+             Accéder à la<br /> FAQ<br />
           </a>
         
         </div>
@@ -71,7 +71,7 @@
       </div><br />
     </div>
     <div id="today">
-      <div class="row"><div style="text-align:center" >
+      <div class="row"><div style="text-align:center" ><br />
          <span class="glyphicon glyphicon-bell" style="font-size:40px"; ></span><br />
          <span style="font-size:20px;">
          La visite est aujourd'hui. <br />
@@ -96,7 +96,7 @@
         <div class="col-md-4 col-xs-12">
          <a class="btn btn-primary btn-lg col-xs-12"  style=" padding-top:10px;height:100px; line-height:20px;" href="{{ path('of_faq_homepage')}}">
             <span class="glyphicon glyphicon-paperclip" style="font-size:40px;"></span><br />
-           Accéder à la<br /> Foire Aux Questions<br />
+           Accéder à la<br /> FAQ<br />
         </a>
 
          </div>

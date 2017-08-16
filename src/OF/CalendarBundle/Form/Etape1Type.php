@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 class Etape1Type extends AbstractType
 {
@@ -18,6 +19,7 @@ class Etape1Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+        ->add('nombredebadges', IntegerType::class, array('label' => 'Nombre de badges'))
         ->add('otherInfos', CollectionType::class, array(
         // each entry in the array will be an "email" field
         'entry_type'   => TextType::class,

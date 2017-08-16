@@ -51,15 +51,15 @@ of_calendar_supprUserEvent:
 
 
 
-of_calendar_clientsadmin:
-    path:     /adminpanel/clients
+of_calendar_visitesadmin:
+    path:     /adminpanel/visites
     defaults:
-        _controller: OFCalendarBundle:Admin:clientsAdmin
+        _controller: OFCalendarBundle:Admin:visitesAdmin
 
-of_calendar_Supprclients:
-    path:     /adminpanel/supprClients/{id}
+of_calendar_Supprvisites:
+    path:     /adminpanel/supprVisites/{id}
     defaults:
-        _controller: OFCalendarBundle:Admin:supprClientAdmin
+        _controller: OFCalendarBundle:Admin:supprVisiteAdmin
 
 of_calendar_Modifclients:
     path:     /adminpanel/modifClients/{id}

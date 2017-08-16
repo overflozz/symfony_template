@@ -108,71 +108,28 @@ class AdminController extends Controller
     } 
 
 
-    //ADMINISTRATION CLIENT
-        public function clientsAdminAction(Request $request)
+    //ADMINISTRATION Visites
+        public function visitesAdminAction(Request $request)
     {   
 
-        $listeClients = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Client')->createQueryBuilder('alias')->getQuery()->getResult();
-        $client = new Client();
-        // on génère le form pour le placer dans le add button.
-
-
-        $form   = $this->createFormBuilder($client)
-        ->add('entreprise', TextType::class)
-        ->add('type', ChoiceType::class, array(
-        'choices'  => array(
-            'Entités et Directions du groupe EDF et filiales' => "Entités et Directions du groupe EDF et filiales",
-            'Clients et partenaires industriels et académiques' => "Clients et partenaires industriels et académiques",
-            'Etudiants de grandes écoles ou d’universités' => 'Etudiants de grandes écoles ou d’universités',
-            'Actionnaires, investisseurs' => 'Actionnaires et investisseurs',
-            'PME et ETI' => 'PME et ETI',
-            'Institutionnels et élus ' => 'Institutionnels et élus ',
-            'Grand public' => 'Grand public',
-            'Public scolaire ' =>'Public scolaire'
-
-        ))) 
-         ->add('civilite', ChoiceType::class, array(
-        'choices'  => array(
-            'Mr.' => "Mr.",
-            'Mme.' => "Mme.",
-        )))         
-        ->add('nom', TextType::class)
-        ->add('prenom', TextType::class)
-        ->add('service', TextType::class)
-        ->add('ville', TextType::class)
-        ->add('pays', TextType::class)
-        ->add('adresseMail', TextType::class)
-        ->add('telephone', TextType::class)
-        ->add('commentaire', TextType::class)
-        ->add('save', SubmitType::class)
-        ->getForm();
-
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-          $em = $this->getDoctrine()->getManager();
-          $em->persist($client);
-
-          $em->flush();
-
-          $request->getSession()->getFlashBag()->add('success', 'Le client a été ajouté.');
-
-          return $this->redirectToRoute('of_calendar_clientsadmin');
-        }
-        return $this->render('OFCalendarBundle:Admin:clients.html.twig', array('form' => $form->createView(),'listeClients' => $listeClients));
+        $listeVisites = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->createQueryBuilder('alias')->add('orderBy', 'alias.startDatetime DESC')->getQuery()->getResult();
+ 
+        return $this->render('OFCalendarBundle:Admin:visites.html.twig', array('listeVisites' => $listeVisites));
     }
 
 
-       public function supprClientAdminAction($id, Request $request)
+       public function supprVisiteAdminAction($id, Request $request)
     {   
         $em = $this->getDoctrine()->getManager();
-        $client = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Client')->findOneBy(array('id' => $id));
+        $client = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findOneBy(array('id' => $id));
         if($client != null){
             $em->remove($client);
             $em->flush();
 
-          $request->getSession()->getFlashBag()->add('success', 'Le client a été supprimé.');
+          $request->getSession()->getFlashBag()->add('success', 'La visite a été supprimé.');
         }
         $listeClients = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Client')->createQueryBuilder('alias')->getQuery()->getResult();
-        return $this->clientsAdminAction($request);
+        return $this->visitesAdminAction($request);
     } 
        public function modifClientAdminAction($id, Request $request)
     {   

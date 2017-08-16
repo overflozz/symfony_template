@@ -328,3 +328,9 @@ a{
 a:hover{
 	color: var(--color-secondaire-hover);
 }
+
+[type="radio"]:not(:checked) + label,
+[type="radio"]:checked + label {
+	font-size: 0.8rem;
+	font-weight:400;
+}

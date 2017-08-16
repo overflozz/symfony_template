@@ -50,9 +50,9 @@
 					<span class="glyphicon glyphicon-th-list"></span> Informations générales
 				</div>
  				<div class="panel-body">
-					<b> Client </b>: {{ event.client.entreprise }} <br />
-					<b> Type Client </b>: {{ event.client.type }} <br />
-					<b> Thématique</b> : {{ event.theme }} <br />
+					<b> Client </b>: {{ event.entrepriseClient }} <br />
+					<b> Type Client </b>: {{ event.typeClient }} <br />
+					<b> Thématique</b> : {{ event.contexte}} <br />
 					<b> Objectif de la visite</b>: {{ event.objectif }} <br />
 					<b> Nombre de partcipants </b> : {{ event.nombreParticipants }} <br />
 					<b> Langue </b> : {{ event.langue }}  <br />
@@ -63,9 +63,9 @@
 						<span class="glyphicon glyphicon-align-center"></span> Contact Visiteur
 					</div>
 					<div class="panel-body">
-						<b>Responsable</b> : {{ event.client.nom }} {{ event.client.prenom }} <br />
-						<b>Téléphone</b> : {{ event.client.telephone }}<br />
-						<b>Adresse Mail</b> : {{ event.client.adresseMail }}
+						<b>Responsable</b> : {{ event.nomClient }} {{ event.prenomClient }} <br />
+						<b>Téléphone</b> : {{ event.telephoneClient }}<br />
+						<b>Adresse Mail</b> : {{ event.adresseMailClient }}
 					</div>
 			</div>
 			<div class="panel panel-default">

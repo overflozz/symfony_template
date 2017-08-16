@@ -1,49 +1,55 @@
 
-		<div class="col-md-6 pull-left col-xs-12">
+		<div style="padding-left: 0px" class="col-md-6 pull-left col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<span class="glyphicon glyphicon-th-list"></span> Informations générales
 				</div>
  				<div class="panel-body">
- 				Le <b>{{event.startDatetime|date("d/m/Y", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b>
+ 				Le <b>{{event.startDatetime|date("d/m/Y", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b><br />
  					<b> Priorité </b> : {{ event.priorite }}<br />
-					<b> Client </b>: {{ event.client.entreprise }} <br />
-					<b> Type Client </b>: {{ event.client.type }} <br />
-					<b> Description Visiteurs : </b> {{event.descriptionVisiteurs}} <br />
-					<b> Thématique</b> : {{ event.theme }} <br />
-					<b> Nombre de partcipants </b> : {{ event.nombreParticipants }} <br />
-					<b> Langue </b> : {{ event.langue }}  <br />				
+					<b> Client </b>: {{ event.entrepriseClient }} <br />
+					<b> Type Client </b>: {{ event.typeClient }} <br />
+					
+								
 				</div>
 			</div>
-			<div class="panel panel-default">
+			<div  class="panel panel-default">
 					<div class="panel-heading">
-						<span class="glyphicon glyphicon-inbox"></span> Logistique Complémentaire
+						<span class="glyphicon glyphicon-inbox"></span> Logistique
 					</div>
 					<div class="panel-body">
+
+					<b> Nombre de partcipants </b> : {{ event.nombreParticipants }} <br />
+					<b> Langue </b> : {{ event.langue }}  <br />	
+					<b> Lieu de RDV </b> : {{event.lieurdv}} <br />
+					<b> Lieu de fin </b> : {{event.lieudepart}} <br />
 						{% for logistique in event.otherInfos %}
 							{{ logistique }} <br />
 						{% endfor %}
 					</div>
 			</div>
 
-			<div class="panel panel-default">
+			<div  class="panel panel-default">
 					<div class="panel-heading">
-						<span class="glyphicon glyphicon-align-center"></span> Information Complémentaire
+						<span class="glyphicon glyphicon-align-center"></span> Information(s) Complémentaire(s)
 					</div>
+
 					<div class="panel-body">
+					<b> Description Visiteurs : </b> {{event.descriptionVisiteurs}} <br />
+					<b> Contexte</b> : {{ event.contexte }} <br />
 						{{ event.infoComplementaire }}
 					</div>
 			</div>
 		</div>
-		<div class="col-md-6 pull-right col-xs-12">
+		<div class="col-md-6 pull-right col-xs-12" style="padding-right: 0px">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<span class="glyphicon  glyphicon glyphicon-send"></span> Prise de Contact
 				</div>
 				<div class="panel-body">
-					<b>Responsable :</b> {{ event.client.civilite }} {{ event.client.nom }} {{ event.client.prenom}} <br />
-					<b>Mail : </b> {{ event.client.adresseMail}} <br/>
-					<b>Tél. :</b> {{ event.client.telephone}} <br/>
+					<b>Responsable :</b> {{ event.civiliteClient }} {{ event.nomClient }} {{ event.prenomClient}} <br />
+					<b>Mail : </b> {{ event.adresseMailClient}} <br/>
+					<b>Tél. :</b> {{ event.telephoneClient}} <br/>
 
 				</div>
 			</div>

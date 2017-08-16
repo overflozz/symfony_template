@@ -22,11 +22,12 @@ class ElementVisiteType extends AbstractType
         ->add('titre', ChoiceType::class,array('label' => 'élément de visite' , 'choices'  => array(
         'Extérieurs des bâtiments' => 'Extérieurs des bâtiments',
         'Iroise' => 'Iroise',
-        'Iroise, Espace de restauration et espace de créativité' => 'Iroise, Espace de restauration et espace de créativité',
-        'Azur, centre de conférences' => 'Azur, centre de conférences',
-        'Rez-de-chaussée Opale, espace exposition' =>'Rez-de-chaussée Opale, espace exposition',
+        'Espace de restauration et espace de créativité' => 'Espace de restauration et espace de créativité',
+        'Azur' => 'Azur',
+        'Rez-de-chaussée Opale' =>'Rez-de-chaussée Opale',
+        'Showroom' => 'Showroom',
         'Halle d’essais' => 'Halle d’essais',
-        'Bancs d’essais AMA et THEMIS'=>'Bancs d’essais AMA et THEMIS',
+        'Bancs d’essais Ermès'=>'Bancs d’essais Ermès',
         'Restauration'=>'Restauration',
 
 

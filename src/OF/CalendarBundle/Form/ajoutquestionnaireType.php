@@ -26,6 +26,7 @@ class ajoutquestionnaireType extends AbstractType
     {
         $builder
         ->add('enquetes', CollectionType::class, array(
+        'label' => false,
         'entry_type'   => QuestionnaireType::class,
         'allow_add'    => true,
         'allow_delete' => true

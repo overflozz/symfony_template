@@ -1,0 +1,62 @@
+
+{% extends "OFCalendarBundle::Admin/layout.html.twig" %}
+
+
+{% block body %}    
+	
+
+
+<div class="col-md-8"> 
+	<div class="panel panel-default">
+		<div class="panel-heading">Visites</div>   
+		<div class="panel-body">
+			<table class="table table-striped responsive-table">
+			<thead>
+			  <tr>
+			  	<th>Date</th>
+			  	<th>Client</th>
+			  	<th>Nombre de Participants</th>
+			    <th>Langue</th>
+			    <th>Actions</th>
+			  </tr>
+			</thead>
+			<tbody>
+			{% for visite in listeVisites %}
+			  <tr>
+			  	<td>Le <b>{{visite.startDatetime|date("d/m", "Europe/Paris")}}</b> de <b>{{visite.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{visite.endDatetime|date("H:i", "Europe/Paris")}}</b> </td>
+			  	<td>{{ visite.entrepriseClient }}</td>
+			  	<td>{{ visite.nombreParticipants }}</td>
+			    <td>{{ visite.langue }}</td>
+			    <td><a href=""  data-toggle="modal" data-target=".supprVisite{{ visite.id }}">Supprimer</a>  <a href="{{ path("of_calendar_view_visite", {'id' : visite.id, 'etape' : 0} ) }} " >Voir</a></td>
+
+				<div class="modal fade supprVisite{{ visite.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+				  <div class="modal-dialog modal-lg" role="document">
+				    <div class="modal-content">
+				    	<div class="modal-header">
+       						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+       						<h4 class="modal-title" id="gridSystemModalLabel">Confirmation</h4>
+       					</div>
+       					<div class="modal-body">
+				     		Voulez-vous vraiment supprimer la visite? <br />
+				     		<a href="{{ path("of_calendar_Supprvisites", {'id' : visite.id} ) }}">Oui</a>
+				  		</div>
+				    </div>
+				  </div>
+				</div>
+				
+
+
+
+
+			  </tr>	
+			{% endfor %}    
+			</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+		
+
+{% endblock %}
+

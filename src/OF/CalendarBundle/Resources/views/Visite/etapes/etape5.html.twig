@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="col-sm-12">
 
   {% set index=0 %}
 
@@ -7,9 +7,13 @@
   Aucun questionnaire n'a encore été rempli.
   </div>
   {% else %}
-    {% set tableauQuestion = ['Attitude', 'Pédagogie', 'Connaissance', 'Charisme', 'Logistique', 'Durée de la Visite', 'Globalement'] %}
-     {% for tableau in event.getNotes %}
-    
+    {% set tableauQuestion = ["Cette visite vous a-t-elle permis de mieux connaitre les activités d’EDF R&D, et de changer votre vision d’EDF ? ", 'Pensiez-vous que la R&D travaillait sur toutes ces thématiques ?', 'Quel était le but de la visite ?', 'Le parcours de visite proposé correspondait-il à ce que vous souhaitiez visiter ? ', 'Comment avez-vous trouvé l’accompagnement et la préparation pour cette visite ?', 'Avez-vous été suffisamment informé en amont de la visite (contenu, parcours, accessibilité…) ?', 'Comment jugez-vous l’attitude de votre conférencier lors de cette visite ? ', 'Le niveau de discours et de technicité du conférencier vous a-t-il convenu ?', 'A-t-il répondu à toutes vos questions ? A-t-il répondu à toutes vos questions ? '] %}
+  <div class="row">
+     {% for tableau in event.getNotes  %}
+       {%if index is divisible by(3) and index != 0 %}
+    </div>
+    <div class="row">
+    {% endif %}
     <div class="col-md-4">
     <div class="panel panel-default">
         <div class="panel-heading">{{ tableauQuestion[index]}}</div>
@@ -19,73 +23,76 @@
 
           </div>
         </div>
+     
+
           {% set index = index + 1 %}
           {% endfor %}
-
- 
-
-  </div>
+</div>
 
 
-          <script>
-$( document ).ready(function() {
-          function grapheQuestions(index, valeur1, valeur2, valeur3, valeur4) {
-             var datas = {
+          <script> 
+ $( document ).ready(function() {
+  function grapheQuestions(index, valeur1, valeur2, valeur3, valeur4, valeur5, valeur6, valeur7) {
+               var datas = {
 
-    datasets: [{
-        data: [ valeur1, valeur2, valeur3, valeur4],
-
-
-    backgroundColor:[
-    '#f7464a', 
-    '#fdb45c',
-    '#46bfbd',
-    '#6ebd70']}
-    ]
+      datasets: [{
+          data: [ valeur1, valeur2, valeur3, valeur4, valeur5, valeur6, valeur7],
 
 
-    ,
+      backgroundColor:[
+      '#46bfbd', 
+      '#f7464a',
+      '#fdb45c',
+      '#46bfbd', 
+      '#46bfcd',
+      '#fdb45c',
+      '#f7464a']}
+      ],
 
-    // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: [
-        'Insatisfaisant',
-        'Assez Insatisfaisant',
-        'Assez Satisfaisant',
-        'Satisfaisant'
-    ]
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+      labels: [
+      'oui','non', 'moyennement','satisfaisant', 'assez satisfaisant', 'assez insatisfaisant', 'insatisfaisant'
+      ]
 
 
 
 
-    };
+      };
 
 
-    var options = {
-    responsive: true,
-    };
+      var options = {
+      responsive: true,
+      
+      legend: {
+              display: false
+             
+          }
+      
+  };
 
 
-              // Get the context of the canvas element we want to select
-              
-       new Chart(document.getElementById("Chart" + index).getContext('2d'), { type :'pie', data : datas,option : options}); //'Line' defines type of the chart.
+                // Get the context of the canvas element we want to select
+                
+         new Chart(document.getElementById("Chart" + index).getContext('2d'), { type :'pie', data : datas, options : options}); //'Line' defines type of the chart.
 
 
        
 
 
 
-              
-    }
+                
+      }
 
-     {% set index = 0 %}
-         {% for tableau in event.getNotes %}
-          grapheQuestions({{ index }} , {{tableau[0]}}, {{tableau[1]}}, {{tableau[2]}}, {{tableau[3]}})
+       {% set index = 0 %}
+           {% for tableau in event.getNotes %}
+            grapheQuestions({{ index }} , {{tableau[0]}}, {{tableau[1]}}, {{tableau[2]}}, {{tableau[3]}},  {{tableau[4]}},  {{tableau[5]}},  {{tableau[6]}}, {{tableau[7]}});
+            {% set index = index + 1 %}
+            {% endfor %}
 
-
-          {% set index = index + 1 %}
-          {% endfor %}
           
 });
     </script>
 
     {% endif %}
+
+    </div>

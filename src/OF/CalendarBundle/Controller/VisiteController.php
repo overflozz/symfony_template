@@ -44,7 +44,7 @@ class VisiteController extends Controller
 
 		$visitesToDo = array();
 		if($this->getUser() != NULL){
-			$userParticipe = $event->getUsers()->contains($this->getUser());
+			$userParticipe = ($event->getUsers()->contains($this->getUser()) || $event->getRespoQuali() == $this->getUser());
 
 	    	$userApplications =$this->getUser()->getEvents();
 	    	foreach ( $userApplications as $application){
@@ -147,7 +147,7 @@ class VisiteController extends Controller
 		}
 
 		$applications = $event->getApplications();
-		$userParticipe = $event->getUsers()->contains($this->getUser());
+		$userParticipe = ($event->getUsers()->contains($this->getUser()) || $event->getRespoQuali() == $this->getUser());
 		
 		return $this->render('OFCalendarBundle:Visite:showModal.html.twig', array('event' => $event, 'Participants' => $applications, 'userParticipe' => $userParticipe));
     		
@@ -468,15 +468,62 @@ class VisiteController extends Controller
    				
    		}
    		
+   		//stats sur les 12 derniers mois :
+   		$moisenarriere = 12;
+   		$dateStart = date('Y-m-d', strtotime('-13 months'));
+		$dateEnd = date('Y-m-d', strtotime('-12 months'));
+
+   		$statsnbvisites = array_fill(0, 12, 0);
+   		$statsnbvisiteurs = array_fill(0, 12, 0);
+
+   		$statsBatiment = array_fill(0, 12, 0);
+		$statsIroise = array_fill(0, 12, 0);
+		$statsAzur = array_fill(0, 12, 0);
+		$statsOpale = array_fill(0, 12, 0);
+		$statsShowroom = array_fill(0, 12, 0);
+		$statsHalle = array_fill(0, 12, 0);
+		$statsErmes = array_fill(0, 12, 0);
+
+
+   		while($moisenarriere != 0){
+			$dateStart = date('Y-m-d', strtotime($dateStart . ' +1 month'));
+			$dateEnd = date('Y-m-d', strtotime($dateEnd . ' +1 month'));
+			// une fois les dates de l'intervalle updateted on selectionne les visites
+   			$visitesEtudiees = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->createQueryBuilder('event')->where('event.startDate BETWEEN ?1 and ?2')->setParameter(1, $dateStart)->setParameter(2, $dateEnd)->orderBy('event.startDate', 'ASC')->getQuery()->getResult();
+   			foreach ($visitesEtudiees  as $visite){
+   				// on peut mtn prendre les stats qu'on veut:
+   				$statsnbvisites[12-$moisenarriere]+=1;
+   				$statsnbvisiteurs[12-$moisenarriere]+=$visite->getNombreParticipants();
+   				foreach($visite->getElementsVisites() as $element){
+   					if($element->getTitre() == 'Extérieurs des bâtiments' ){
+   						$statsBatiment[12-$moisenarriere]+=1;
+   					}else if($element->getTitre() == 'Iroise' ){
+   						$statsIroise[12-$moisenarriere] +=1;
+   					}else if($element->getTitre() == 'Azur' ){
+   						$statsAzur[12-$moisenarriere] +=1;
+   					}else if($element->getTitre() == 'Rez-de-chaussée Opale' ){
+   						$statsOpale[12-$moisenarriere] +=1;
+   					}else if($element->getTitre() == 'Showroom' ){
+   						$statsShowroom[12-$moisenarriere] +=1;
+   					}else if($element->getTitre() == 'Bancs d’essais Ermès' ){
+   						$statsErmes[12-$moisenarriere] +=1;
+   					}
+   				}
+   			}
+
+   			$moisenarriere -= 1;
+   		}
+
 
 		$stats = $this->statsSommeVisitesAction($visites);
 		$visites2 = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findOneBy(array('id' => 2));
-		return $this->render('OFCalendarBundle:Admin:stats.html.twig',array('stats' => $stats,'visitesMonth'=> $statsVisitesMonth,'statsMoyenneMonth' => $statsMoyenneMonth, 'visitesMonthLabels' => $statsVisitesMonthlabels));
+		return $this->render('OFCalendarBundle:Admin:stats.html.twig',array('stats' => $stats,'visitesMonth'=> $statsVisitesMonth,'statsMoyenneMonth' => $statsMoyenneMonth, 'visitesMonthLabels' => $statsVisitesMonthlabels, 'statsnbvisites' => $statsnbvisites, 'statsnbvisiteurs' => $statsnbvisiteurs, 'statsBatiment' => $statsBatiment, 'statsIroise'=>$statsIroise, 'statsAzur' => $statsAzur, 'statsOpale'=>$statsOpale, 'statsShowroom'=>$statsShowroom, 'statsErmes'=>$statsErmes));
 
 	}
 
 	public function statsSommeVisitesAction($visites){
-		$result = array(array(0,0,0,0), array(0,0,0,0), array(0,0,0,0), array(0,0,0,0), array(0,0,0,0), array(0,0,0,0), array(0,0,0,0));
+		//dans result autant de tableau que de questions, et dans chaque sous tableaux, autant de tableau que de réponses.
+		$result = array(array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0));
 		foreach ($visites as $visite){
 			$tableauNotes = $visite->getNotes();
 			// on somme le tableau result avec le tableau tableauNotes
@@ -498,6 +545,9 @@ class VisiteController extends Controller
 	}
 
 	public function showVisitesAction(Request $req){
+		if($this->getUser()==null){
+			throw new NotFoundHttpException("Vous n'êtes pas connecté !");
+		}
 		$visites = $this->getUser()->getEvents();
 		$visitequalite = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findBy(array('respoQuali' => $this->getUser()));
 		$visitesToDo = array();

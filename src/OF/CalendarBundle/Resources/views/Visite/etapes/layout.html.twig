@@ -125,9 +125,9 @@
 							<span class="glyphicon  glyphicon glyphicon-send"></span> Contact Client
 						</div>
 						<div class="panel-body">
-							<b>Responsable :</b> {{ event.client.civilite }} {{ event.client.nom }} {{ event.client.prenom}} <br />
-							<b>Mail : </b> {{ event.client.adresseMail}} <br/>
-							<b>Tél. :</b> {{ event.client.telephone}} <br/><br />
+							<b>Responsable :</b> {{ event.civiliteClient }} {{ event.nomClient }} {{ event.prenomClient}} <br />
+							<b>Mail : </b><span class="tooltipped" data-tooltip="{{ event.adresseMailClient}}" data-position="left" data-delay="20" > {{ event.adresseMailClient[:16]}}...</span> <br/>
+							<b>Tél. :</b> {{ event.telephoneClient}} <br/><br />
 							<a data-toggle="modal" data-target="#modalPremierContact" class="btn btn-primary col-xs-12">Premier Contact</a>
 						</div>
 					</div>
@@ -141,7 +141,7 @@
 								<li >{{participant.user.prenom}} {{participant.user.nom}}<br />
 								<div style="margin-left:10px; border-left : 2px solid #4a8bee; padding-left:20px;">
 								{{participant.user.telephone}}<br />
-								{{participant.user.email}}
+								<span class="tooltipped" data-tooltip="{{ participant.user.email}}" data-position="left" data-delay="20" >{{participant.user.email[:15]}}...</span>
 								</div>	
 							</li>
 							{% endfor %}

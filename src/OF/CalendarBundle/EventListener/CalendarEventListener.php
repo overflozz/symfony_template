@@ -56,16 +56,16 @@ class CalendarEventListener
 
 		    // create an event with a start/end time, or an all day event
 		    if ($companyEvent->getAllDay() === false) {
-		    	$eventEntity = new EventEntity($companyEvent->getClient()->getEntreprise()." (".$companyEvent->getLangue().")", $companyEvent->getStartDatetime(), $companyEvent->getEndDatetime());
+		    	$eventEntity = new EventEntity($companyEvent->getEntrepriseClient()." (".$companyEvent->getLangue().")", $companyEvent->getStartDatetime(), $companyEvent->getEndDatetime());
 		    } else {
-		    	$eventEntity = new EventEntity($companyEvent->getClient()->getEntreprise()."(".$companyEvent->getLangue().")", $companyEvent->getStartDatetime(), null, true);
+		    	$eventEntity = new EventEntity($companyEvent->getCgetEntrepriseClient()."(".$companyEvent->getLangue().")", $companyEvent->getStartDatetime(), null, true);
 		    }
 
 		    //optional calendar event settings
 		    $eventEntity->setAllDay($companyEvent->getAllDay()); // default is false, set to true if this is an all day event
 		    $eventEntity->setUrl((string)$companyEvent->getId()); // url to send user to when event label is clicked
 		    $eventEntity->setCssClass($companyEvent->getCssClass()); // a custom class you may want to apply to event labels
-		    if ($companyEvent->getUsers()->contains($this->token->getToken()->getUser())){
+		    if ($companyEvent->getUsers()->contains($this->token->getToken()->getUser()) ){
 		    	$eventEntity->setCssClass('applying');
 		    }
 		    else if (count($companyEvent->getApplications()) >= $companyEvent->getNbUserMax()){

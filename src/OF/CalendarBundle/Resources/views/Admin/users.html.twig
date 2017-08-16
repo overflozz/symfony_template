@@ -28,6 +28,7 @@
 			<table class="table table-striped responsive-table">
 			<thead>
 			  <tr>
+			  	<th>Photo</th>
 			  	<th>Nom</th>
 			  	<th>Prénom</th>
 			    <th>Username</th>
@@ -38,6 +39,7 @@
 			<tbody>
 			{% for user in listeUsers %}
 			  <tr>
+			  <td><img src="{{ asset(user.getWebProfilePicturePath) }}" style="height:50px; width:50px;"></td>
 			  	<td>{{ user.nom }}</td>
 			  	<td>{{ user.prenom }}</td>
 			    <td>{{ user.username }}</td>

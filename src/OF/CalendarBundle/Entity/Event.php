@@ -38,26 +38,92 @@ class Event
     */
 
     private $respoQuali;
-    /**
 
-    * @ORM\ManyToOne(targetEntity="OF\CalendarBundle\Entity\Client", cascade={"persist"})
-    * @ORM\JoinColumn(nullable=false)
-
-    */
-
-    private $client;
-
+    /* Client */
 
     /**
      * 
      * @ORM\Column(type="string",length=512, nullable=true)
      */
+
+    protected $entrepriseClient;
+    /**
+     * 
+     * @ORM\Column(type="string",length=512, nullable=true)
+     */
     protected $typeClient;
+     /**
+     * 
+     * @ORM\Column(type="string",length=512, nullable=true)
+     */
+    protected $nomClient;
+    /**
+     * 
+     * @ORM\Column(type="string",length=512, nullable=true)
+     */
+    protected $prenomClient;
+    /**
+     * 
+     * @ORM\Column(type="string",length=512, nullable=true)
+     */
+    protected $civiliteClient;
+    /**
+     * 
+     * @ORM\Column(type="string",length=512, nullable=true)
+     */
+    protected $serviceClient;
+     /**
+     * 
+     * @ORM\Column(type="string",length=512, nullable=true)
+     */
+    protected $villeClient;
+     /**
+     * 
+     * @ORM\Column(type="string",length=512, nullable=true)
+     */
+    protected $paysClient;
+
+     /**
+     * 
+     * @ORM\Column(type="string",length=512, nullable=true)
+     */
+    protected $adresseMailClient;
+    /**
+     * 
+     * @ORM\Column(type="string",length=512, nullable=true)
+     */
+    protected $telephoneClient;
+    /**
+     * 
+     * @ORM\Column(type="string",length=512, nullable=true)
+     */
+    protected $commentaireClient;
+
+
+
+
+
     /**
      * 
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $theme;
+    protected $contexte;
+    /**
+     * 
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $lieurdv;
+    /**
+     * 
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $lieudepart;
+    /**
+     * 
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $nombredebadges;
+
     /**
      * 
      * @ORM\Column(type="integer", nullable=true)
@@ -201,7 +267,7 @@ class Event
 
   /**
 
-   * @ORM\OneToMany(targetEntity="OF\CalendarBundle\Entity\EventUser", mappedBy="event")
+   * @ORM\OneToMany(targetEntity="OF\CalendarBundle\Entity\EventUser", mappedBy="event" , cascade={"remove"})
 
    */
 
@@ -250,16 +316,17 @@ class Event
 
         $somme = 0;
         $compteur = 0;
-        $resultat1 = array(0,0,0,0);
-        $resultat2 = array(0,0,0,0);
-        $resultat3 = array(0,0,0,0);
-        $resultat4 = array(0,0,0,0);
-        $resultat5 = array(0,0,0,0);
-        $resultat6 = array(0,0,0,0);
-        $resultat7 = array(0,0,0,0);
+        $resultat1 = array(0,0,0,0, 0, 0,0, 0);
+        $resultat2 = array(0,0,0,0, 0, 0,0, 0);
+        $resultat3 = array(0,0,0,0, 0, 0,0, 0);
+        $resultat4 = array(0,0,0,0, 0, 0,0, 0);
+        $resultat5 = array(0,0,0,0, 0, 0,0, 0);
+        $resultat6 = array(0,0,0,0, 0, 0,0, 0);
+        $resultat7 = array(0,0,0,0, 0, 0,0,0);
+        $resultat8 = array(0,0,0,0, 0, 0,0,0);
+        $resultat9 = array(0,0,0,0, 0, 0,0,0);
 
         foreach ($this->enquetes as $enquete) {
-            if ($enquete->getResultat1() != null){
             $resultenquete = 1;
             $resultat1[''.$enquete->getResultat1()] = $resultat1[$enquete->getResultat1()] + 1; 
             $resultat2[''.$enquete->getResultat2()] = $resultat2[$enquete->getResultat2()] + 1; 
@@ -267,8 +334,10 @@ class Event
             $resultat4[''.$enquete->getResultat4()] = $resultat4[$enquete->getResultat4()] + 1; 
             $resultat5[''.$enquete->getResultat5()] = $resultat5[$enquete->getResultat5()] + 1; 
             $resultat6[''.$enquete->getResultat6()] = $resultat6[$enquete->getResultat6()] + 1; 
-            $resultat7[''.$enquete->getResultat7()] = $resultat6[$enquete->getResultat7()] + 1;
-        }
+            $resultat7[''.$enquete->getResultat7()] = $resultat7[$enquete->getResultat7()] + 1;
+            $resultat8[''.$enquete->getResultat8()] = $resultat8[$enquete->getResultat8()] + 1;
+            $resultat9[''.$enquete->getResultat9()] = $resultat9[$enquete->getResultat9()] + 1;
+        
 
         }
         array_push($result, $resultat1);
@@ -278,6 +347,8 @@ class Event
         array_push($result, $resultat5);
         array_push($result, $resultat6);
         array_push($result, $resultat7);
+        array_push($result, $resultat8);
+        array_push($result, $resultat9);
         return $result;
     }
     function getNotesMoyenne(){
@@ -733,51 +804,27 @@ class Event
     }
 
     /**
-     * Set client
+     * Set contexte
      *
-     * @param string $client
+     * @param string $contexte
      *
      * @return Event
      */
-    public function setClient($client)
+    public function setcontexte($contexte)
     {
-        $this->client = $client;
+        $this->contexte = $contexte;
 
         return $this;
     }
 
     /**
-     * Get client
+     * Get contexte
      *
      * @return string
      */
-    public function getClient()
+    public function getcontexte()
     {
-        return $this->client;
-    }
-
-    /**
-     * Set theme
-     *
-     * @param string $theme
-     *
-     * @return Event
-     */
-    public function setTheme($theme)
-    {
-        $this->theme = $theme;
-
-        return $this;
-    }
-
-    /**
-     * Get theme
-     *
-     * @return string
-     */
-    public function getTheme()
-    {
-        return $this->theme;
+        return $this->contexte;
     }
 
     /**
@@ -1210,5 +1257,317 @@ class Event
     public function getHalleessais()
     {
         return $this->halleessais;
+    }
+
+    /**
+     * Set lieurdv
+     *
+     * @param string $lieurdv
+     *
+     * @return Event
+     */
+    public function setLieurdv($lieurdv)
+    {
+        $this->lieurdv = $lieurdv;
+
+        return $this;
+    }
+
+    /**
+     * Get lieurdv
+     *
+     * @return string
+     */
+    public function getLieurdv()
+    {
+        return $this->lieurdv;
+    }
+
+    /**
+     * Set nombredebadges
+     *
+     * @param string $nombredebadges
+     *
+     * @return Event
+     */
+    public function setNombredebadges($nombredebadges)
+    {
+        $this->nombredebadges = $nombredebadges;
+
+        return $this;
+    }
+
+    /**
+     * Get nombredebadges
+     *
+     * @return string
+     */
+    public function getNombredebadges()
+    {
+        return $this->nombredebadges;
+    }
+
+    /**
+     * Set entrepriseClient
+     *
+     * @param string $entrepriseClient
+     *
+     * @return Event
+     */
+    public function setEntrepriseClient($entrepriseClient)
+    {
+        $this->entrepriseClient = $entrepriseClient;
+
+        return $this;
+    }
+
+    /**
+     * Get entrepriseClient
+     *
+     * @return string
+     */
+    public function getEntrepriseClient()
+    {
+        return $this->entrepriseClient;
+    }
+
+    /**
+     * Set nomClient
+     *
+     * @param string $nomClient
+     *
+     * @return Event
+     */
+    public function setNomClient($nomClient)
+    {
+        $this->nomClient = $nomClient;
+
+        return $this;
+    }
+
+    /**
+     * Get nomClient
+     *
+     * @return string
+     */
+    public function getNomClient()
+    {
+        return $this->nomClient;
+    }
+
+    /**
+     * Set prenomClient
+     *
+     * @param string $prenomClient
+     *
+     * @return Event
+     */
+    public function setPrenomClient($prenomClient)
+    {
+        $this->prenomClient = $prenomClient;
+
+        return $this;
+    }
+
+    /**
+     * Get prenomClient
+     *
+     * @return string
+     */
+    public function getPrenomClient()
+    {
+        return $this->prenomClient;
+    }
+
+    /**
+     * Set civiliteClient
+     *
+     * @param string $civiliteClient
+     *
+     * @return Event
+     */
+    public function setCiviliteClient($civiliteClient)
+    {
+        $this->civiliteClient = $civiliteClient;
+
+        return $this;
+    }
+
+    /**
+     * Get civiliteClient
+     *
+     * @return string
+     */
+    public function getCiviliteClient()
+    {
+        return $this->civiliteClient;
+    }
+
+    /**
+     * Set serviceClient
+     *
+     * @param string $serviceClient
+     *
+     * @return Event
+     */
+    public function setServiceClient($serviceClient)
+    {
+        $this->serviceClient = $serviceClient;
+
+        return $this;
+    }
+
+    /**
+     * Get serviceClient
+     *
+     * @return string
+     */
+    public function getServiceClient()
+    {
+        return $this->serviceClient;
+    }
+
+    /**
+     * Set villeClient
+     *
+     * @param string $villeClient
+     *
+     * @return Event
+     */
+    public function setVilleClient($villeClient)
+    {
+        $this->villeClient = $villeClient;
+
+        return $this;
+    }
+
+    /**
+     * Get villeClient
+     *
+     * @return string
+     */
+    public function getVilleClient()
+    {
+        return $this->villeClient;
+    }
+
+    /**
+     * Set paysClient
+     *
+     * @param string $paysClient
+     *
+     * @return Event
+     */
+    public function setPaysClient($paysClient)
+    {
+        $this->paysClient = $paysClient;
+
+        return $this;
+    }
+
+    /**
+     * Get paysClient
+     *
+     * @return string
+     */
+    public function getPaysClient()
+    {
+        return $this->paysClient;
+    }
+
+    /**
+     * Set adresseMailClient
+     *
+     * @param string $adresseMailClient
+     *
+     * @return Event
+     */
+    public function setAdresseMailClient($adresseMailClient)
+    {
+        $this->adresseMailClient = $adresseMailClient;
+
+        return $this;
+    }
+
+    /**
+     * Get adresseMailClient
+     *
+     * @return string
+     */
+    public function getAdresseMailClient()
+    {
+        return $this->adresseMailClient;
+    }
+
+    /**
+     * Set telephoneClient
+     *
+     * @param string $telephoneClient
+     *
+     * @return Event
+     */
+    public function setTelephoneClient($telephoneClient)
+    {
+        $this->telephoneClient = $telephoneClient;
+
+        return $this;
+    }
+
+    /**
+     * Get telephoneClient
+     *
+     * @return string
+     */
+    public function getTelephoneClient()
+    {
+        return $this->telephoneClient;
+    }
+
+    /**
+     * Set commentaireClient
+     *
+     * @param string $commentaireClient
+     *
+     * @return Event
+     */
+    public function setCommentaireClient($commentaireClient)
+    {
+        $this->commentaireClient = $commentaireClient;
+
+        return $this;
+    }
+
+    /**
+     * Get commentaireClient
+     *
+     * @return string
+     */
+    public function getCommentaireClient()
+    {
+        return $this->commentaireClient;
+    }
+
+    /**
+     * Set lieudepart
+     *
+     * @param string $lieudepart
+     *
+     * @return Event
+     */
+    public function setLieudepart($lieudepart)
+    {
+        $this->lieudepart = $lieudepart;
+
+        return $this;
+    }
+
+    /**
+     * Get lieudepart
+     *
+     * @return string
+     */
+    public function getLieudepart()
+    {
+        return $this->lieudepart;
     }
 }

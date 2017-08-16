@@ -6,19 +6,36 @@
 
 <div class="col-md-12">
 
-<div class="col-md-8 col-xs-12">
+<div class="col-md-6 col-xs-12">
 	<div class="panel panel-default">
-		<div class="panel-heading">Evolution du mois dernier</div>
+		<div class="panel-heading">Evolution sur les 12 derniers mois du nombre de visites</div>
 		<div class="panel-content hidden-xs hidden-sm">
-			<canvas id="ChartEvolVisites"></canvas>
+			<canvas id="ChartEvolAnneeVisites"></canvas>
 		</div>
 	</div>
 </div>
+<div class="col-md-6 col-xs-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">Evolution sur les 12 derniers mois du nombre de visiteurs</div>
+		<div class="panel-content hidden-xs hidden-sm">
+			<canvas id="ChartEvolAnneeVisiteurs"></canvas>
+		</div>
+	</div>
+</div>
+<div class="col-md-12 col-xs-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">Evolution sur les 12 derniers mois du parcours de visite</div>
+		<div class="panel-content hidden-xs hidden-sm" style="padding:10px;">
+			<canvas style="height:300px; " id="ChartEvolAnneeParcours"></canvas>
+		</div>
+	</div>
+</div>
+
   {% if stats is empty %}
   Aucun questionnaire n'a encore été rempli.
   {% else %}
   {% set index=0 %}
-    {% set tableauQuestion = ['Attitude', 'Pédagogie', 'Connaissance', 'Charisme', 'Logistique', 'Durée de la Visite', 'Globalement'] %}
+    {% set tableauQuestion = ["Cette visite vous a-t-elle permis de mieux connaitre les activités d’EDF R&D, et de changer votre vision d’EDF ? ", 'Pensiez-vous que la R&D travaillait sur toutes ces thématiques ?', 'Quel était le but de la visite ?', 'Le parcours de visite proposé correspondait-il à ce que vous souhaitiez visiter ? ', 'Comment avez-vous trouvé l’accompagnement et la préparation pour cette visite ?', 'Avez-vous été suffisamment informé en amont de la visite (contenu, parcours, accessibilité…) ?', 'Comment jugez-vous l’attitude de votre conférencier lors de cette visite ? ', 'Le niveau de discours et de technicité du conférencier vous a-t-il convenu ?', 'A-t-il répondu à toutes vos questions ? A-t-il répondu à toutes vos questions ? '] %}
      {% for tableau in stats %}
     
     <div class="col-md-2">
@@ -40,26 +57,26 @@
 <!-- pie charts -->
 <script>
 	$( document ).ready(function() {
-	function grapheQuestions(index, valeur1, valeur2, valeur3, valeur4) {
+	function grapheQuestions(index, valeur1, valeur2, valeur3, valeur4, valeur5, valeur6, valeur7) {
 	             var datas = {
 
 	    datasets: [{
-	        data: [ valeur1, valeur2, valeur3, valeur4],
+	        data: [ valeur1, valeur2, valeur3, valeur4, valeur5, valeur6, valeur7],
 
 
 	    backgroundColor:[
-	    '#f7464a', 
-	    '#fdb45c',
-	    '#46bfbd',
-	    '#6ebd70']}
-	    ],
+      '#46bfbd', 
+      '#f7464a',
+      '#fdb45c',
+      '#46bfbd', 
+      '#46bfcd',
+      '#fdb45c',
+      '#f7464a']}
+      ],
 
 	    // These labels appear in the legend and in the tooltips when hovering different arcs
 	    labels: [
-	        'Insatisfaisant',
-	        'Assez Insatisfaisant',
-	        'Assez Satisfaisant',
-	        'Satisfaisant'
+	    'oui','non', 'moyennement','satisfaisant', 'assez satisfaisant', 'assez insatisfaisant', 'insatisfaisant'
 	    ]
 
 
@@ -93,7 +110,7 @@
 
 	     {% set index = 0 %}
 	         {% for tableau in stats %}
-	          grapheQuestions({{ index }} , {{tableau[0]}}, {{tableau[1]}}, {{tableau[2]}}, {{tableau[3]}});
+	          grapheQuestions({{ index }} , {{tableau[0]}}, {{tableau[1]}}, {{tableau[2]}}, {{tableau[3]}},  {{tableau[4]}},  {{tableau[5]}},  {{tableau[6]}}, {{tableau[7]}});
 	          {% set index = index + 1 %}
 	          {% endfor %}
 
@@ -104,11 +121,15 @@
 <!-- Line chart -->
 <script>
 $( document ).ready(function() {
+
+
+//STATS SUR L'ANNEE VISITES
 var data = {
-	"labels":[{% for label in visitesMonthLabels %},"{{ label }}"{% endfor %}],
+	"labels":["","","","","","","","","","","","",""],
 	"datasets" :[{
+
 		"label":"Nombre de visites",
-		"data" : [{% for nombre in visitesMonth %},{{ nombre}}{% endfor %}],
+		"data" : [{% for nombre in statsnbvisites %},{{ nombre}}{% endfor %}],
 		"fill":false,
 
 		"borderColor":"rgb(75, 192, 192)",
@@ -116,9 +137,31 @@ var data = {
 		"lineTension":0.1
 
 
-	},{
-		"label":"Moyenne des visites",
-		"data" : [{% for nombre in statsMoyenneMonth %},{{ nombre }}{% endfor %}],
+	}
+
+
+	]
+
+};
+ 
+var options = {
+	    
+	    
+	};
+
+
+
+new Chart(document.getElementById("ChartEvolAnneeVisites").getContext('2d'), {
+    type: 'line',
+    data: data,
+    options: options
+});
+//STATS SUR L'ANNEE VISITEURS
+var data = {
+	"labels":["","","","","","","","","","","","",""],
+	"datasets" :[{
+		"label":"Nombre de visiteurs",
+		"data" : [{% for nombre in statsnbvisiteurs %},{{ nombre }}{% endfor %}],
 		"fill":false,
 
 		"borderColor":"#f7464a",
@@ -138,13 +181,97 @@ var options = {
 	    
 	};
 
-
-
-new Chart(document.getElementById("ChartEvolVisites").getContext('2d'), {
+new Chart(document.getElementById("ChartEvolAnneeVisiteurs").getContext('2d'), {
     type: 'line',
     data: data,
     options: options
 });
+
+//STATS SUR L'ANNEE Parcours visite
+var data = {
+	"labels":["","","","","","","","","","","","",""],
+	"datasets" :[{
+		"label":"Extérieurs Batiments",
+		"data" : [{% for nombre in statsBatiment %},{{ nombre }}{% endfor %}],
+		"fill":false,
+
+		"borderColor":"#1abc9c",
+
+		"lineTension":0.1
+
+
+	},	{
+		"label":"Showroom",
+		"data" : [{% for nombre in statsShowroom %},{{ nombre }}{% endfor %}],
+		"fill":false,
+
+		"borderColor":"#9b59b6",
+
+		"lineTension":0.1
+
+
+	}
+	,	
+	{
+		"label":"Iroise",
+		"data" : [{% for nombre in statsIroise %},{{ nombre }}{% endfor %}],
+		"fill":false,
+
+		"borderColor":"#f39c12",
+
+		"lineTension":0.1
+
+
+	},
+	{
+		"label":"Azur",
+		"data" : [{% for nombre in statsAzur %},{{ nombre }}{% endfor %}],
+		"fill":false,
+
+		"borderColor":"#f7464a",
+
+		"lineTension":0.1
+
+
+	},
+	{
+		"label":"Opale",
+		"data" : [{% for nombre in statsOpale %},{{ nombre }}{% endfor %}],
+		"fill":false,
+
+		"borderColor":"#e74c3c",
+
+		"lineTension":0.1
+
+
+	},{
+		"label":"Ermes",
+		"data" : [{% for nombre in statsErmes %},{{ nombre }}{% endfor %}],
+		"fill":false,
+
+		"borderColor":"#2c3e50",
+
+		"lineTension":0.1
+
+	}
+
+
+	]
+
+};
+ 
+var options = {
+	    
+	     maintainAspectRatio: false,
+	};
+
+new Chart(document.getElementById("ChartEvolAnneeParcours").getContext('2d'), {
+    type: 'line',
+    data: data,
+    options: options
+});
+
+
 
 
 });
