@@ -57,12 +57,15 @@
 							<div class='col-md-5'>
 								{{ form_widget(form.elementsVisites.vars.prototype.duree.minute, {'attr' : {'class' : 'minuteInput browser-default'}})|e  }}
 							</div>
+              <div class='col-xs-12 hidden thematique input-field'>
+                {{ form_widget(form.elementsVisites.vars.prototype.thematique, {'attr' : {'class' : 'thematiqueInput browser-default'}})|e  }}
+              </div>
               <div class='col-xs-12'>
                 {{ form_row(form.elementsVisites.vars.prototype.description, {'attr' : {'class' : ''}})|e  }}
               </div>
 						</div>
 
-				
+				  
 		        </div>
 	        	<div class='panel-footer' style='height: 50px;'></div>
 	      	</div>
@@ -101,6 +104,11 @@
               {% endif %}
               
               </div>
+              <div class='col-xs-12 hidden thematique input-field'>
+                {{ form_widget(elementVisite.thematique, {'attr' : {'class' : 'thematiqueInput browser-default'}}) }}
+              </div>
+
+
               <div class='col-xs-12'>
               {% if event.verrou == 0 %}
                 {{ form_row(elementVisite.description, {'attr' : {'class' : ''}}) }}
@@ -143,6 +151,10 @@
         updatePreview($container);
     });
     $("#choixVisite").on("change", ".hourInput",function(){
+
+        updatePreview($container);
+    });
+    $("#choixVisite").on("change", ".thematiqueInput",function(){
 
         updatePreview($container);
     });
@@ -231,6 +243,9 @@
     	$container.find('.element').each(function() {
     		$titre = $(this).find('.titreInput').val();
 
+        if($titre =="Showroom"){
+          $(this).find('.thematique').removeClass("hidden");
+        }
         if($titre == "Halle d’essais" && $avertissementHalle == 0 )
         {
           $avertissementHalle = 1;
@@ -246,7 +261,11 @@
     		$heure = $heure + ($minute-$minute%60)/60;
     		$minute = $minute%60;
     		$heure = $heure + parseInt($(this).find('.hourInput :selected').attr('value'));
-        $replacment+= ('<div class="elementPreview"><div class="titreElementVisite">'+ $titre + '</div><br /><li><div class="dotElementVisite pull-left"></div> ' +'<b>'+ $heure);
+        $thematique = "";
+        if($titre =="Showroom"){
+          $thematique = ($(this).find('.thematique :selected').attr('value'));
+        }
+        $replacment+= ('<div class="elementPreview"><div class="titreElementVisite">'+ $titre + '<br /> <i>' + $thematique+ '</i></div><br /><li><div class="dotElementVisite pull-left"></div> ' +'<b>'+ $heure);
         if($minute<10){ // pour rajouter le 0 devant la minute.
           $replacment+= ('h0'+ $minute +' </b></li></div>');
         }else{

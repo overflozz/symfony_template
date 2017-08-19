@@ -1,8 +1,9 @@
 <html><body><div style="margin: 0 auto; width: 5000px; text-align:center; border-bottom: 2px solid var(--color-secondaire);padding-bottom:5px"><b>Demande de validation de la visite {{ event.id }}</b></div><br />
 <div style="margin: 0 auto; width: 500px; text-align:center; margin-top : -20px; ">Le <b>{{event.startDatetime|date("d/m/Y", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b></div><br />
 
-Le conférencier {{ demandeur.nom }} {{ demandeur.prenom }} vous demande une validation de sa visite. 
-Pour accéder au système d'approbation, <a href="{{path('of_calendar_view_visite', {'id' : event.id, 'etape' : -48} )}}"> cliquez ici ! </a>
+
+Le conférencier {{ demandeur.nom }} {{ demandeur.prenom }} vous demande une validation de la disponibilité de la Halle d'essai.
+Pour accéder au système d'approbation, <a href="http://visitesaclayjcs.com{{path('of_calendar_view_visite', {'id' : event.id, 'etape' : -48} )}}"> cliquez ici ! </a>
 
 Il faudra vous être au préalable identifié sous votre compte admin.
 

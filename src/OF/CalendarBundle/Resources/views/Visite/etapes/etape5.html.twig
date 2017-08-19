@@ -7,14 +7,22 @@
   Aucun questionnaire n'a encore été rempli.
   </div>
   {% else %}
-    {% set tableauQuestion = ["Cette visite vous a-t-elle permis de mieux connaitre les activités d’EDF R&D, et de changer votre vision d’EDF ? ", 'Pensiez-vous que la R&D travaillait sur toutes ces thématiques ?', 'Quel était le but de la visite ?', 'Le parcours de visite proposé correspondait-il à ce que vous souhaitiez visiter ? ', 'Comment avez-vous trouvé l’accompagnement et la préparation pour cette visite ?', 'Avez-vous été suffisamment informé en amont de la visite (contenu, parcours, accessibilité…) ?', 'Comment jugez-vous l’attitude de votre conférencier lors de cette visite ? ', 'Le niveau de discours et de technicité du conférencier vous a-t-il convenu ?', 'A-t-il répondu à toutes vos questions ? A-t-il répondu à toutes vos questions ? '] %}
+    {% set tableauQuestion = [
+    "Cette visite vous a-t-elle permis de mieux connaitre les activités d’EDF R&D, et de changer votre vision d’EDF ? ", 
+    'Pensiez-vous que la R&D travaillait sur toutes ces thématiques ?                                                 ', 
+    'Le parcours de visite proposé correspondait-il à ce que vous souhaitiez visiter ?                                ', 
+    'Comment avez-vous trouvé l’accompagnement et la préparation pour cette visite ?                                  ', 
+    'Avez-vous été suffisamment informé en amont de la visite (contenu, parcours, accessibilité…) ?', 
+    'Comment jugez-vous l’attitude de votre conférencier lors de cette visite ?                    ', 
+    'Le niveau de discours et de technicité du conférencier vous a-t-il convenu ?                  ', 
+    'A-t-il répondu à toutes vos questions ? A-t-il répondu à toutes vos questions ?               '] %}
   <div class="row">
      {% for tableau in event.getNotes  %}
-       {%if index is divisible by(3) and index != 0 %}
+       {%if index is divisible by(4) and index != 0 %}
     </div>
     <div class="row">
     {% endif %}
-    <div class="col-md-4">
+    <div class="col-md-3">
     <div class="panel panel-default">
         <div class="panel-heading">{{ tableauQuestion[index]}}</div>
         <div class="panel-body">

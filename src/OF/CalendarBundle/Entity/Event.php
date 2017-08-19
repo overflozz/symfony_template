@@ -287,6 +287,12 @@ class Event
 
     protected $satisfactiongenere;
 
+    /**
+     * 
+     * @ORM\Column(type="string",length=512, nullable=true)
+     */
+    protected $premierContact;
+
     
     public function __construct()
     {
@@ -324,7 +330,6 @@ class Event
         $resultat6 = array(0,0,0,0, 0, 0,0, 0);
         $resultat7 = array(0,0,0,0, 0, 0,0,0);
         $resultat8 = array(0,0,0,0, 0, 0,0,0);
-        $resultat9 = array(0,0,0,0, 0, 0,0,0);
 
         foreach ($this->enquetes as $enquete) {
             $resultenquete = 1;
@@ -336,7 +341,6 @@ class Event
             $resultat6[''.$enquete->getResultat6()] = $resultat6[$enquete->getResultat6()] + 1; 
             $resultat7[''.$enquete->getResultat7()] = $resultat7[$enquete->getResultat7()] + 1;
             $resultat8[''.$enquete->getResultat8()] = $resultat8[$enquete->getResultat8()] + 1;
-            $resultat9[''.$enquete->getResultat9()] = $resultat9[$enquete->getResultat9()] + 1;
         
 
         }
@@ -348,7 +352,6 @@ class Event
         array_push($result, $resultat6);
         array_push($result, $resultat7);
         array_push($result, $resultat8);
-        array_push($result, $resultat9);
         return $result;
     }
     function getNotesMoyenne(){
@@ -1569,5 +1572,29 @@ class Event
     public function getLieudepart()
     {
         return $this->lieudepart;
+    }
+
+    /**
+     * Set premierContact
+     *
+     * @param string $premierContact
+     *
+     * @return Event
+     */
+    public function setPremierContact($premierContact)
+    {
+        $this->premierContact = $premierContact;
+
+        return $this;
+    }
+
+    /**
+     * Get premierContact
+     *
+     * @return string
+     */
+    public function getPremierContact()
+    {
+        return $this->premierContact;
     }
 }

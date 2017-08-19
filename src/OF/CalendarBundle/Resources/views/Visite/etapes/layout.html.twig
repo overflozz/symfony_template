@@ -128,7 +128,11 @@
 							<b>Responsable :</b> {{ event.civiliteClient }} {{ event.nomClient }} {{ event.prenomClient}} <br />
 							<b>Mail : </b><span class="tooltipped" data-tooltip="{{ event.adresseMailClient}}" data-position="left" data-delay="20" > {{ event.adresseMailClient[:16]}}...</span> <br/>
 							<b>Tél. :</b> {{ event.telephoneClient}} <br/><br />
-							<a data-toggle="modal" data-target="#modalPremierContact" class="btn btn-primary col-xs-12">Premier Contact</a>
+							{% if event.premierContact == "ok"%}
+								Le premier contact a été effectué.
+							{% else %}
+								<a data-toggle="" href="{{ path('of_calendar_premierContactEvent', {'id' : event.id})}}" data-target="#" class="btn btn-primary col-xs-12">Premier Contact</a>
+							{% endif %}
 						</div>
 					</div>
 		<br />

@@ -15,7 +15,12 @@
                 {% set heure  = heure + 1%}
                 {% set minute = minute - (minute//60) * 60 %}
               {% endif %}
-              <li minute="{{minute}}" heure="{{heure}}"> <div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> {{element.titre}} </div><br /><div class="dotElementVisite pull-left" style=""></div><b>{{heure}}:{% if minute < 10 %}0{% endif %}{{minute}}</b></li>
+              
+              <li minute="{{minute}}" heure="{{heure}}"> <div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> {{element.titre}}
+              {% if element.titre =="Showroom" %}
+                  <br /><i>{{element.thematique}}</i>
+              {% endif %}
+               </div><br /><div class="dotElementVisite pull-left" style=""></div><b>{{heure}}:{% if minute < 10 %}0{% endif %}{{minute}}</b></li>
               
             {% endfor %}
             <li minute="{{minute}}" heure="{{heure}}"><div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> Fin</div><br /><div class="dotElementVisite pull-left" style=""></div><b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b> </li>

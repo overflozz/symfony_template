@@ -17,7 +17,7 @@
 		
 				<ul>
 				{% for participant in Participants %}
-					<li> {{participant.user.prenom}} {{participant.user.nom}}      {% if participant.user == app.user%} <button id="suppr_conferencier" type="button" class="btn red lighten-1" style="color:#fff"><span class='glyphicon glyphicon-remove'></span> <span class="hidden-xs"> Supprimer</span></button>{% endif %}</li>
+					<li iduser="{{participant.user.id}}"> {{participant.user.prenom}} {{participant.user.nom}}      {% if is_granted("ROLE_ADMIN") %} <button id="suppr_conferencier" type="button" class="btn red lighten-1" style="color:#fff"><span class='glyphicon glyphicon-remove'></span> <span class="hidden-xs"> Supprimer</span></button>{% endif %}</li>
 				{% endfor %}
 				{% for i in 1..(event.nbUserMax - Participants|length) %}
 					<li>
@@ -79,26 +79,26 @@
 				$("#viewModal").removeClass("hidden").hide().fadeIn(1000);
 
 				$('#loading-image').fadeOut(1000);
-				$div.html("{{ app.user.prenom}} {{ app.user.nom}}<button id='suppr_conferencier'  class='btn red lighten-1' style='color:#fff;' type='button' ><span class='glyphicon glyphicon-remove'></span><span class='hidden-xs'> Supprimer</span></button>");
+				$div.html("{{ app.user.prenom}} {{ app.user.nom}}");
 					//Materialize.toast('Vous êtes maintenant conférencier sur cette visite.', 3000);
 			});
 		});
 		$('.modal-content').on("click", "#suppr_conferencier",function(){
-			var $div = $("#suppr_conferencier").parent();
+			var $div = $(this).parent();
+			var $iduser = $div.attr('iduser');
 			$div.html('');
 			$('#loading-image').clone().appendTo($div);
 			$('#loading-image').show();
 			$.ajax({
 				url: "{{ path('of_calendar_supprUserEvent', {'id' : event.id})}}",
 				method: "post",
-				data:{idUser: {{ app.user.id}}}
+				data:{idUser: $iduser}
 
 			}).done(function(){
-				$("#viewModal").fadeOut(1000);
 				
 				$('#loading-image').fadeOut(500);
 				//Materialize.toast('Vous n\'êtes plus conférencier sur cette visite.', 3000);
-				$div.html("N/A <button id='ajout_conferencier' class='btn btn-primary' type='button' ><span class='glyphicon glyphicon-plus'></span> S'ajouter</button>");
+				$div.html("N/A");
 
 			});
 		});

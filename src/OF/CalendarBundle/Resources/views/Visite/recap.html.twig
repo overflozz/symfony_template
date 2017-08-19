@@ -86,6 +86,7 @@
           <div class="panel-heading">Déroulé de la visite : 
           </div>
           <div class="panel-body">
+          <b> Lieu de Rendez-vous : </b> {{ event.lieurdv}}<br />
           <ul id="preview" style="padding-left: 0;list-style:none;">
           {% set heure = event.startDatetime|date("H", "Europe/Paris") %}
           {% set minute = event.startDatetime|date("i", "Europe/Paris") %}
@@ -97,10 +98,14 @@
                 {% set heure  = heure + 1%}
                 {% set minute = minute - (minute//60) * 60 %}
               {% endif %}
-              <li minute="{{minute}}" heure="{{heure}}"> <div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> <b>{{element.titre}}</b> <br /> {{element.description }}</div><br /><div class="dotElementVisite pull-left" style=""></div><b>{{heure}}:{% if minute < 10 %}0{% endif %}{{minute}}</b></li>
+              <li minute="{{minute}}" heure="{{heure}}"> <div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> <b>{{element.titre}}</b> 
+              {% if element.titre =="Showroom" %}
+                  <br /><i>{{element.thematique}}</i>
+              {% endif %}
+              <br /> {{element.description }}</div><br /><div class="dotElementVisite pull-left" style=""></div><b>{{heure}}:{% if minute < 10 %}0{% endif %}{{minute}}</b></li>
               
             {% endfor %}
-            <li minute="{{minute}}" heure="{{heure}}"><div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> Fin</div><br /><div class="dotElementVisite pull-left" style=""></div><b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b> </li>
+            <li minute="{{minute}}" heure="{{heure}}"><div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> Arrivée à {{event.lieudepart}}</div><br /><div class="dotElementVisite pull-left" style=""></div><b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b> </li>
           </ul>
           
 

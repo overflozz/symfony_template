@@ -136,6 +136,29 @@ class VisiteController extends Controller
 
 	}
 
+	public function premiercontactAction(Request $request, $id){
+		$em = $this->getDoctrine()->getManager();
+    	$form = null;
+    	$repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
+    	$repositoryEventUser = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:EventUser');
+
+		$event = $repositoryEvent->findOneBy(array('id' => $id));
+
+		$applications = $event->getApplications();
+
+		
+		if ($event == null){
+			throw new NotFoundHttpException("Visite non trouvée");
+		}
+
+		$event->setPremierContact("ok");
+		$em->persist($event);
+		$em->flush();
+
+		return $this->viewAction($id, 0, $request);
+
+	}
+
     public function viewModalAction(Request $request)
     {	
 
@@ -335,7 +358,7 @@ class VisiteController extends Controller
 
 
 	    $message = \Swift_Message::newInstance()
-	        ->setSubject('Recapitulatif')
+	        ->setSubject('Visite '.$event->getId().' : Demande accès a la Halle d\'essais' )
 	        ->setFrom('overflozz@gmail.com')
 	        ->setTo('overflozz@gmail.com')
 	        ->setBody(
@@ -523,7 +546,7 @@ class VisiteController extends Controller
 
 	public function statsSommeVisitesAction($visites){
 		//dans result autant de tableau que de questions, et dans chaque sous tableaux, autant de tableau que de réponses.
-		$result = array(array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0));
+		$result = array(array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0));
 		foreach ($visites as $visite){
 			$tableauNotes = $visite->getNotes();
 			// on somme le tableau result avec le tableau tableauNotes

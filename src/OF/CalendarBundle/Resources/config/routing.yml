@@ -47,7 +47,11 @@ of_calendar_supprUserEvent:
 
 
 
-
+of_calendar_premierContactEvent:
+    path:     /visite/{id}/premiercontact
+    defaults:
+        _controller: OFCalendarBundle:Visite:premiercontact
+   
 
 
 

@@ -33,6 +33,11 @@ class ElementVisiteType extends AbstractType
 
         ), 'attr'  => array('class' => 'titreInput', 'placeholder' => 'Activité'))) // les classes pour le js
         ->add('duree', TimeType::class,array('attr'  => array('class' => 'dureeInput' , 'placeholder' => 'Durée')))
+        ->add('thematique', ChoiceType::class,array('label' => 'Thématique' , 'choices'  => array(
+        'Clients et territoires' => 'Clients et territoires',
+        'Systèmes électriques' => 'Systèmes électriques',
+        'Production bas carbone'=>'Production bas carbone',
+        'Au coeur de la société'=>'Au coeur de la société')))
         ->add('description', TextType::class, array('required' => false));
     }
     

@@ -24,6 +24,10 @@ class ElementVisite
      * @ORM\Column(name="description", type="string", nullable=true)
      */
     protected $description;
+         /**
+     * @ORM\Column(name="thematique", type="string", nullable=true)
+     */
+    protected $thematique;
   /**
 
     * @ORM\Column(name="duree", type="time")
@@ -145,5 +149,29 @@ class ElementVisite
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set thematique
+     *
+     * @param string $thematique
+     *
+     * @return ElementVisite
+     */
+    public function setThematique($thematique)
+    {
+        $this->thematique = $thematique;
+
+        return $this;
+    }
+
+    /**
+     * Get thematique
+     *
+     * @return string
+     */
+    public function getThematique()
+    {
+        return $this->thematique;
     }
 }

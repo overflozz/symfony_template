@@ -287,6 +287,12 @@ class Event
 
     protected $satisfactiongenere;
 
+    /**
+     * 
+     * @ORM\Column(type="string",length=512, nullable=true)
+     */
+    protected $premierContact;
+
     
     public function __construct()
     {
@@ -323,13 +329,10 @@ class Event
         $resultat5 = array(0,0,0,0, 0, 0,0, 0);
         $resultat6 = array(0,0,0,0, 0, 0,0, 0);
         $resultat7 = array(0,0,0,0, 0, 0,0,0);
-
         $resultat8 = array(0,0,0,0, 0, 0,0,0);
-
         $resultat9 = array(0,0,0,0, 0, 0,0,0);
 
         foreach ($this->enquetes as $enquete) {
-            if ($enquete->getResultat1() != null){
             $resultenquete = 1;
             $resultat1[''.$enquete->getResultat1()] = $resultat1[$enquete->getResultat1()] + 1; 
             $resultat2[''.$enquete->getResultat2()] = $resultat2[$enquete->getResultat2()] + 1; 
@@ -340,7 +343,7 @@ class Event
             $resultat7[''.$enquete->getResultat7()] = $resultat7[$enquete->getResultat7()] + 1;
             $resultat8[''.$enquete->getResultat8()] = $resultat8[$enquete->getResultat8()] + 1;
             $resultat9[''.$enquete->getResultat9()] = $resultat9[$enquete->getResultat9()] + 1;
-        }
+        
 
         }
         array_push($result, $resultat1);
@@ -1548,5 +1551,29 @@ class Event
     public function getCommentaireClient()
     {
         return $this->commentaireClient;
+    }
+
+    /**
+     * Set lieudepart
+     *
+     * @param string $lieudepart
+     *
+     * @return Event
+     */
+    public function setLieudepart($lieudepart)
+    {
+        $this->lieudepart = $lieudepart;
+
+        return $this;
+    }
+
+    /**
+     * Get lieudepart
+     *
+     * @return string
+     */
+    public function getLieudepart()
+    {
+        return $this->lieudepart;
     }
 }

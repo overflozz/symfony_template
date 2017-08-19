@@ -82,13 +82,6 @@ class Satisfaction
      */
 
     protected $resultat8;
-           /**
-     * 
-     * @ORM\Column(type="integer", nullable=true)
-     */
-
-    protected $resultat9;
-   
    
     /**
 
