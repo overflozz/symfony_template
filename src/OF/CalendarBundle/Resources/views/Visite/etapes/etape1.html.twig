@@ -1,9 +1,7 @@
   {% if event.step|abs> 3 %}
-  <div class="row">
  
-  <div class="alert alert-warning z-depth-1 col-xs-12">
+  <div class="alert alert-warning">
     <span class="glyphicon glyphicon-lock"></span> Cette visite a été acceptée par EDF. Aucune modification sur son organisation n'est possible.
-  </div>
   </div>
   {% endif %}
 
@@ -13,7 +11,6 @@
   </div>
   <div class="panel-body">
      
-{% if event.verrou == 0 %}
     {{ form_start(form, {'attr' : {'class' : 'ajaxForm'}}) }} 
     <div class="element col-xs-12">
     {{ form_row(form.nombredebadges) }}
@@ -23,7 +20,6 @@
         <label for='{{ form.otherInfos.vars.id }} ' >Logistique supplémentaire</label>{{  form_widget(form.otherInfos.vars.prototype)|e }} 
 
         </div></div></div>">
-{% endif %}
     {% for info in form.otherInfos %}
       <div class="element col-xs-12">
         <br />
@@ -37,7 +33,6 @@
     {% endfor %}
   
 
-{% if event.verrou == 0 %}
 </div>
   <br />
 <div class='element col-xs-12 pull-left'>
@@ -154,5 +149,3 @@
 
 </script>
 
-
- {% endif %}

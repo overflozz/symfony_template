@@ -275,11 +275,11 @@ class Event
 
   /**
 
-   * @ORM\OneToMany(targetEntity="OF\CalendarBundle\Entity\ElementVisite", mappedBy="visite", cascade={"remove", "persist"})
+   * @ORM\OneToMany(targetEntity="OF\CalendarBundle\Entity\Parcours", mappedBy="visite", cascade={"remove", "persist"})
 
    */
 
-  protected $elementsVisites; // Notez le « s », une annonce est liée à plusieurs candidatures
+  protected $parcours; // Notez le « s », une annonce est liée à plusieurs candidatures
 
     /**
      * @ORM\Column(name="satisfactiongenere", type="boolean")
@@ -302,7 +302,7 @@ class Event
         $this->endDatetime = new \DateTime();
         $this->step = 1;
         $this->enquetes = array();
-        $this->elementsVisites = array();
+        $this->parcours = array();
         $this->nbUserMax = 2;
         $this->satisfactiongenere = false;
         $this->verrou = 0;
@@ -951,40 +951,7 @@ class Event
         return $this->typeClient;
     }
 
-    /**
-     * Add elementsVisite
-     *
-     * @param \OF\CalendarBundle\Entity\ElementVisite $elementsVisite
-     *
-     * @return Event
-     */
-    public function addElementsVisite(\OF\CalendarBundle\Entity\ElementVisite $elementsVisite)
-    {
-        $this->elementsVisites[] = $elementsVisite;
-
-        return $this;
-    }
-
-    /**
-     * Remove elementsVisite
-     *
-     * @param \OF\CalendarBundle\Entity\ElementVisite $elementsVisite
-     */
-    public function removeElementsVisite(\OF\CalendarBundle\Entity\ElementVisite $elementsVisite)
-    {
-        $this->elementsVisites->removeElement($elementsVisite);
-    }
-
-    /**
-     * Get elementsVisites
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getElementsVisites()
-    {
-        return $this->elementsVisites;
-    }
-
+    
 
 
     /**
@@ -1596,5 +1563,39 @@ class Event
     public function getPremierContact()
     {
         return $this->premierContact;
+    }
+
+    /**
+     * Add parcour
+     *
+     * @param \OF\CalendarBundle\Entity\Parcours $parcour
+     *
+     * @return Event
+     */
+    public function addParcour(\OF\CalendarBundle\Entity\Parcours $parcour)
+    {
+        $this->parcours[] = $parcour;
+
+        return $this;
+    }
+
+    /**
+     * Remove parcour
+     *
+     * @param \OF\CalendarBundle\Entity\Parcours $parcour
+     */
+    public function removeParcour(\OF\CalendarBundle\Entity\Parcours $parcour)
+    {
+        $this->parcours->removeElement($parcour);
+    }
+
+    /**
+     * Get parcours
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getParcours()
+    {
+        return $this->parcours;
     }
 }

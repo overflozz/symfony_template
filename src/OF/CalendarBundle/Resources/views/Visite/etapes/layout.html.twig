@@ -181,10 +181,11 @@
 				   type:'GET',
 				   success: function(data){
 				   	
-	      				Materialize.toast('L\'étape a été enregistrée.', 2000);
-
+						Materialize.toast('Etape enregistrée', 3000);
 				       $('#visitecontent').html($(data).filter('#visitecontent').first().children()); // ici on choisi filter car visitecontent est un top element. Sinon on prend find.
 				       $('#visitecontent').fadeIn(1000);  
+
+	      				stopchargement();
 
 				   }
 				});  
@@ -193,6 +194,7 @@
 		};
 
 		function mettreEnValidation(){
+			
 			$.ajax({
 				url: "{{ path('of_calendar_demandeEtapeEvent', {'id' : event.id, 'etape' : steptoshow})}}",
 				method: "post",
@@ -205,10 +207,11 @@
 				   url: Routing.generate('of_calendar_view_visite',{id: $idEvent, etape:$eventStep}),
 				   type:'GET',
 				   success: function(data){
-
+				   		
 				       	Materialize.toast('Une demande de validation a été générée.', 3000);
 				       $('#visitecontent').html($(data).filter('#visitecontent').first().children()); // ici on choisi filter car visitecontent est un top element. Sinon on prend find.
-				       $('#visitecontent').fadeIn(1000);  
+				       $('#visitecontent').fadeIn(1000); 
+				       stopchargement(); 
 				   }
 				});  
 
@@ -219,7 +222,7 @@
 
 			
 		$('body').on('submit', '.ajaxForm', function (e) {
-
+			chargement();
 			var $role = $(this).find('button').attr('role');
 	 		$(this).find('button').html('Merci de patienter...');
 	        e.preventDefault();
@@ -244,11 +247,13 @@
 
 
 		$('#valid').click(function(){
+			chargement();
 			validerEtape();
 		});
 
 
 		$('#validreq').click(function(){
+			chargement();
 			mettreEnValidation();
 		});
 	});

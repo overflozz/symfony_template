@@ -1,85 +1,19 @@
   {% if event.verrou ==1 %}
-  <div class="row">
-  <div class="col-xs-12">
-  <div class="alert alert-warning z-depth-1">
+  <div class="alert alert-warning">
     <span class="glyphicon glyphicon-lock"></span> Cette visite a été acceptée par EDF. Aucune modification sur son organisation n'est possible.
-  </div>
-  </div>
   </div>
   {% endif %}
 <div class="" id="choixVisite">
-	<div class="col-md-3 col-xs-12 pull-left " style="padding-left: 0px">
-		<div class="panel panel-default">
-		 	<div class="panel-heading">Aperçu : 
-		 	</div>
-		 	<div class="panel-body">
-
-		 	<ul id="preview" style="padding-left: 0;list-style:none;">
-
-		  	</ul>
+	
 
 
-		 	</div>
-		 </div>
-
-	</div>
-
-	<div class="col-md-9 col-xs-12 pull-right" style="padding-right: 0px" >
-		<div class="panel panel-default">
-		 	<div class="panel-heading">
-		 		Ordre de visite
-		 	</div>
-		 	<div class="panel-body">
-<div class="alert alert-warning" id="avertissementHalle" style="display:none;"> <b>La Halle d'essais nécessite une validation de la part d'EDF</b>. Cela implique qu'il vous faudra attendre leur confirmation avant de pouvoir terminer le processus de visite. <br />Veillez à bien renseigner les descriptions pour les demandes de la Halle d'essais.
-</div>
-{% if event.verrou == 0 %}
-   {{ form_start(form, {'attr' : {'class' : 'ajaxForm'}})  }}
-
- <ul id="elements-fields-list"  style=" padding-left: 0;" data-prototype="
- <div id='collapsingpanel' class='panel panel-default element' style='margin:auto; width:auto; margin-bottom : 10px;'>
-	 <div class='panel-heading' style='height: 50px;'>
-	   <div class='panel-title  col-md-12'>
-        <span class='glyphicon glyphicon-move pull-left hidden-xs' style='margin-top:7px; margin-left:-7px;opacity:0.5;''></span>
-        <div class='pull-right' style='width: 95%;line-height:45px;'>{{form_widget(form.elementsVisites.vars.prototype.titre, {'attr' : {'class' : ' titreInput browser-default', 'style' : 'margin-top:-9px;'}})|e }} 
-        </div>
-      </div>
-	   </div>
-	      	<div id='collapse' class='panel-default collapse'>
-	        	<div class='panel-body'>
-				
-						<div class='col-md-12' style='padding:0px;''> 
-							<div class='col-md-2 pull-left'>
-								Durée :
-							</div>
-							<div class='col-md-5'>
-								{{  form_widget(form.elementsVisites.vars.prototype.duree.hour, {'attr' : {'class' : 'hourInput browser-default'}})|e }}
-							</div>
-							<div class='col-md-5'>
-								{{ form_widget(form.elementsVisites.vars.prototype.duree.minute, {'attr' : {'class' : 'minuteInput browser-default'}})|e  }}
-							</div>
-              <div class='col-xs-12 hidden thematique input-field'>
-                {{ form_widget(form.elementsVisites.vars.prototype.thematique, {'attr' : {'class' : 'thematiqueInput browser-default'}})|e  }}
-              </div>
-              <div class='col-xs-12'>
-                {{ form_row(form.elementsVisites.vars.prototype.description, {'attr' : {'class' : ''}})|e  }}
-              </div>
-						</div>
-
-				  
-		        </div>
-	        	<div class='panel-footer' style='height: 50px;'></div>
-	      	</div>
-		</div>">
-  {% else %}
-  <ul id="elements-fields-list">
-{% endif %}
-   {% for elementVisite in form.elementsVisites %}
-
-   		 <div id='collapsingpanel' class='panel panel-default element' style='margin:auto; width:auto; margin-bottom : 10px;'>
+<div id="prototype-elements" data-prototype="
+<div class='element'>
+ <div id='collapsingpanel' class='panel panel-default' style='margin:auto; width:auto; margin-bottom : 10px;'>
    <div class='panel-heading' style='height: 50px;'>
      <div class='panel-title  col-md-12'>
         <span class='glyphicon glyphicon-move pull-left hidden-xs' style='margin-top:7px; margin-left:-7px;opacity:0.5;''></span>
-        <div class='pull-right' style='width: 95%;line-height:45px;'>{% if event.verrou == 0 %}{{form_widget(elementVisite.titre, {'attr' : {'class' : ' titreInput browser-default', 'style' : 'margin-top:-9px;'}}) }} {% else %}{{form_widget(elementVisite.titre, {'attr' : {'class' : ' titreInput browser-default','disabled':'disabled', 'style' : 'margin-top:-9px;'}}) }} {% endif %}
+        <div class='pull-right' style='width: 95%;line-height:45px;'>{{form_widget(form.parcours.vars.prototype.elementsVisites.vars.prototype.titre, {'attr' : {'class' : ' titreInput browser-default', 'style' : 'margin-top:-9px;'}})|e }} 
         </div>
       </div>
      </div>
@@ -88,91 +22,225 @@
         
             <div class='col-md-12' style='padding:0px;''> 
               <div class='col-md-2 pull-left'>
-                Durée : 
+                Durée :
               </div>
-              <div class='col-md-5 input-field'>{% if event.verrou == 0 %}
-                {{  form_widget(elementVisite.duree.hour, {'attr' : {'class' : 'hourInput browser-default'}}) }}
-                {% else %}
-                {{  form_widget(elementVisite.duree.hour, {'attr' : {'class' : 'hourInput browser-default', 'disabled' : 'disabled'}}) }}
-                {% endif %}
+              <div class='col-md-5'>
+                {{  form_widget(form.parcours.vars.prototype.elementsVisites.vars.prototype.duree.hour, {'attr' : {'class' : 'hourInput browser-default'}})|e }}
               </div>
-              <div class='col-md-5 input-field'>{% if event.verrou == 0 %}
-              {{ form_widget(elementVisite.duree.minute, {'attr' : {'class' : 'minuteInput browser-default'}})  }}
-              {% else %}
-              {{ form_widget(elementVisite.duree.minute, {'attr' : {'class' : 'minuteInput browser-default', 'disabled' : 'disabled'}})  }}
-
-              {% endif %}
-              
+              <div class='col-md-5'>
+                {{ form_widget(form.parcours.vars.prototype.elementsVisites.vars.prototype.duree.minute, {'attr' : {'class' : 'minuteInput browser-default'}})|e  }}
               </div>
               <div class='col-xs-12 hidden thematique input-field'>
-                {{ form_widget(elementVisite.thematique, {'attr' : {'class' : 'thematiqueInput browser-default'}}) }}
+                {{ form_widget(form.parcours.vars.prototype.elementsVisites.vars.prototype.thematique, {'attr' : {'class' : 'thematiqueInput browser-default'}})|e  }}
               </div>
-
-
               <div class='col-xs-12'>
-              {% if event.verrou == 0 %}
-                {{ form_row(elementVisite.description, {'attr' : {'class' : ''}}) }}
-                {% else %}
-                 {{ form_row(elementVisite.description, {'attr' : { 'disabled' : 'disabled'}})  }}
-                 {% endif %}
+                {{ form_widget(form.parcours.vars.prototype.elementsVisites.vars.prototype.description, {'attr' : {'class' : 'descriptionInput'}})|e  }}
               </div>
             </div>
-        
+
+          
             </div>
             <div class='panel-footer' style='height: 50px;'></div>
           </div>
+    
+    </div></div>"
+    ></div>
+<div id="prototype-parcours" data-prototype="
+<div class='row parcoursElement'>
+        <div class='col-md-3 col-xs-12 pull-left ' style='padding-left: 0px'>
+          <div class='panel panel-default'>
+            <div class='panel-heading'>Aperçu : 
+            </div>
+            <div class='panel-body'>
+
+            <ul id='preview' class='preview' style='padding-left: 0;list-style:none;'>
+
+              </ul>
+
+
+            </div>
+           </div>
+
+        </div>
+        
+        <div class='parcours col-md-9 col-xs-12' style='padding-right: 0px' >
+    <div class='panel panel-default '>
+        <div class='panel-heading'>
+          Parcours
+                   
+        </div>
+      <div class='panel-body'>
+        <ul id='elements-fields-list' class='elements-fields-list'  style=' padding-left: 0;'>
+
+        </ul>
+</div>
+ <div class='panel-footer center-align' style='height: 50px;'>
+   <a  class='add_element ' href='#'><i class='material-icons left'>add</i> Ajouter un element de visite</a>
+ </div>
+                    
+
+                    </div>
+</div></div> <hr>
+
+"></div>
+{% if event.verrou == 0 %}
+   {{ form_start(form, {'attr' : {'class' : 'ajaxForm'}})  }}
+   {% endif %}
+
+
+<ul id="parcours-list" >
+     <div class='alert alert-warning' id='avertissementHalle' style='display:none;'> <b>La Halle d'essais nécessite une validation de la part d'EDF</b>. Cela implique qu'il vous faudra attendre leur confirmation avant de pouvoir terminer le processus de visite. <br />Veillez à bien renseigner les descriptions pour les demandes de la Halle d'essais.
+      </div>
+
+       
+        {% for parcour in form.parcours %}
+      <div class="row parcoursElement">
+        <div class="col-md-3 col-xs-12 pull-left " style="padding-left: 0px">
+          <div class="panel panel-default">
+            <div class="panel-heading">Aperçu : 
+            </div>
+            <div class="panel-body">
+
+            <ul id="preview"   class='preview' style="padding-left: 0;list-style:none;">
+
+              </ul>
+
+
+            </div>
+           </div>
+
+        </div>
+        <div class='parcours col-md-9 col-xs-12' style='padding-right: 0px' >
+
+        <div class='panel panel-default'>
+          <div class='panel-heading'>
+            Parcours
+                
+          </div>
+          <div class='panel-body'>
+            
+            <ul class="elements-fields-list">
+            
+           {% for elementVisite in parcour.elementsVisites %}
+           <div class="element" >
+               <div id='collapsingpanel' class='panel panel-default' style='margin:auto; width:auto; margin-bottom : 10px;'>
+           <div class='panel-heading' style='height: 50px;'>
+             <div class='panel-title  col-md-12'>
+                <span class='glyphicon glyphicon-move pull-left hidden-xs' style='margin-top:7px; margin-left:-7px;opacity:0.5;''></span>
+                <div class='pull-right' style='width: 95%;line-height:45px;'>{% if event.verrou == 0 %}{{form_widget(elementVisite.titre, {'attr' : {'class' : ' titreInput browser-default', 'style' : 'margin-top:-9px;'}}) }} {% else %}{{form_widget(elementVisite.titre, {'attr' : {'class' : ' titreInput browser-default','disabled':'disabled', 'style' : 'margin-top:-9px;'}}) }} {% endif %}
+                </div>
+              </div>
+             </div>
+                  <div id='collapse' class='panel-default collapse'>
+                    <div class='panel-body'>
+                
+                    <div class='col-md-12' style='padding:0px;''> 
+                      <div class='col-md-2 pull-left'>
+                        Durée : 
+                      </div>
+                      <div class='col-md-5 input-field'>{% if event.verrou == 0 %}
+                        {{  form_widget(elementVisite.duree.hour, {'attr' : {'class' : 'hourInput browser-default'}}) }}
+                        {% else %}
+                        {{  form_widget(elementVisite.duree.hour, {'attr' : {'class' : 'hourInput browser-default', 'disabled' : 'disabled'}}) }}
+                        {% endif %}
+                      </div>
+                      <div class='col-md-5 input-field'>{% if event.verrou == 0 %}
+                      {{ form_widget(elementVisite.duree.minute, {'attr' : {'class' : 'minuteInput browser-default'}})  }}
+                      {% else %}
+                      {{ form_widget(elementVisite.duree.minute, {'attr' : {'class' : 'minuteInput browser-default', 'disabled' : 'disabled'}})  }}
+
+                      {% endif %}
+                      
+                      </div>
+                      <div class='col-xs-12 hidden thematique input-field'>
+                        {{ form_widget(elementVisite.thematique, {'attr' : {'class' : 'thematiqueInput browser-default'}}) }}
+                      </div>
+
+
+                      <div class='col-xs-12'>
+                      {% if event.verrou == 0 %}
+                        {{ form_widget(elementVisite.description, {'attr' : {'class' : 'descriptionInput'}}) }}
+                        {% else %}
+                         {{ form_row(elementVisite.description, {'attr' : {'class' : 'descriptionInput disabled'}})  }}
+                         {% endif %}
+                      </div>
+                    </div>
+                
+                    </div>
+                    <div class='panel-footer' style='height: 50px;'>
+                       
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+
+
+
+      </ul>
+            </div>
+    <div class='panel-footer center-align' style='height: 50px;'>
+     <a  class='add_element ' href='#'><i class='material-icons left'>add</i> Ajouter un element de visite</a>
     </div>
+                    
+    </div></div></div>
+  {% endfor %}
+</ul>
 
-    {% endfor %}
-
-</ul>{% if event.verrou == 0 %}
-{{ form_widget(form.save, {'label': 'Enregistrer', 'attr' : {'class' : 'btn btn-primary pull-left', 'role' : 'valid'}}) }}
-       <a  id="add_field" class="btn-floating btn-large waves-effect waves-light btn-primary btn pull-right"><i class="material-icons">add</i></a>
+<a  id='add_parcours' class=' right btn-large waves-effect waves-light btn-primary btn'><i class='material-icons left'>add</i> Ajouter un parcours</a>
+    {{ form_widget(form.save, {'label': 'Enregistrer', 'attr' : {'class' : 'btn btn-large btn-primary left', 'role' : 'valid'}}) }}
+    {{ form_rest(form) }}
     {{ form_end(form) }}
-{% else %}
-</ul>{% endif %}		 	</div>
-		</div>
-	</div>
+
 </div>
  <script>
+
   $(document).ready(function() {
     
+    
   	// On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
-    var $container = $('#elements-fields-list');
-    updatePreview($container);
+    var $container = $('.elements-fields-list');
+    var $containerParcours = $('#parcours-list');
+
+    $('.preview').closest('.row').find('.elements-fields-list').each(function(){
+      updateIndex(1);
+      updatePreview($(this), 1);
+    });
     // on update au début et quand une valeur est changée dans les conf des différents éléments.
 
     $("#choixVisite").on("change", ".titreInput",function(){
 
-        updatePreview($container);
+        updatePreview($(this), 0);
     });
     $("#choixVisite").on("change", ".minuteInput",function(){
 
-        updatePreview($container);
+        updatePreview($(this), 0);
     });
     $("#choixVisite").on("change", ".hourInput",function(){
 
-        updatePreview($container);
+        updatePreview($(this), 0);
     });
     $("#choixVisite").on("change", ".thematiqueInput",function(){
 
-        updatePreview($container);
+        updatePreview($(this), 0);
     });
 
 
 
 
-    $( "#elements-fields-list" ).sortable({
+    $( ".elements-fields-list" ).sortable({
       revert: true,
       stop: function(){
 
-			updateIndex($container); // on met à jour l'ordre
-			updatePreview($container);
+			updateIndex(0); // on met à jour l'ordre
+
+			updatePreview($(this), 0);
       }
     });
     
     $( "#draggable" ).draggable({
-		connectToSortable: "#elements-fields-list",
+		connectToSortable: ".elements-fields-list",
 		helper: "clone",
 		revert: "invalid",
 		start  : function(event, ui){
@@ -184,63 +252,107 @@
 
     $( "ul, li" ).disableSelection();
 
-	$('.panel-group').on("click", "#collapsingpanel .panel-heading",  function(){
-		$(this).parent().find("#collapse").collapse('toggle');
-	});
+  	$('.panel-group').on("click", "#collapsingpanel .panel-heading",  function(){
+  		$(this).parent().find("#collapse").collapse('toggle');
+  	});
 	
 
   
         // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
    	var index = $container.find(':input').length;
+
     // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-    $('#add_field').click(function(e) {
-      addCategory($container);
-      updatePreview($container);
+    $('#add_parcours').click(function(e) {
+      addParcours($containerParcours);
+      e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+      return false;
+    });
+
+    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+    $(document).on('click', '.add_element', function(e) {
+      
+      addElementVisite($(this).closest('.panel').find("ul"));
+      updatePreview($(this).closest('.panel').find("ul"), 0);
       e.preventDefault(); // évite qu'un # apparaisse dans l'URL
       return false;
     });
     // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
 
     if (index == 0) {
-      addCategory($container);
+
     } else {
       // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
 
       $container.find('.element').each(function() {
 
-              {% if event.verrou == 0 %}
-        addDeleteLink($(this));
+        {% if event.verrou == 0 %}
+          addDeleteLink($(this),1, $(this).attr('idelement'), $(this).attr('idparcours'));
+        {% endif %}
+
+      });
+      $containerParcours.find('.parcoursElement').each(function() {
+
+        {% if event.verrou == 0 %}
+          addDeleteParcoursLink($(this),1, $(this).attr('idparcours'));
         {% endif %}
 
       });
 
     }
 
-    function updateIndex($container){
-    	var $compteur  = 0; // nouveau compteur pour mettre dans le bon ordre
-    	$container.find('.element').each(function() {
-    		$(this).find('.titreInput').attr('name', 'of_calendarbundle_event[elementsVisites]['+ $compteur + '][titre]' );
-    		$(this).find('.titreInput').attr('id', 'of_calendarbundle_event_elementsVisites_'+ $compteur + '_titre' );
-    		$(this).find('.dureeInput').attr('id', 'of_calendarbundle_event_elementsVisites_'+ $compteur + '_duree' );
-    		$(this).find('.hourInput').attr('id', 'of_calendarbundle_event_elementsVisites_'+ $compteur + '_duree_hour' );   
-    		$(this).find('.hourInput').attr('name', 'of_calendarbundle_event[elementsVisites]['+ $compteur + '][duree][hour]' );
-    		$(this).find('.minuteInput').attr('id', 'of_calendarbundle_event_elementsVisites_'+ $compteur + '_duree_minute' );   
-    		$(this).find('.minuteInput').attr('name', 'of_calendarbundle_event[elementsVisites]['+ $compteur + '][duree][minute]' );
+    function updateIndex($start){
+      var $compteurParcours = 0;
+      $containerParcours.find('.parcoursElement').each(function(){
+        $(this).attr('idparcours', $compteurParcours);
+        $(this).find('.parcours').attr('id', 'of_calendarbundle_event_parcours_'+ $compteurParcours +'_elementsVisites');
+        $(this).attr('id', 'of_calendarbundle_event_parcours_'+ $compteurParcours );
+        
+
+      var $compteur  = 0; // nouveau compteur pour mettre dans le bon ordre
+      $(this).find('.element').each(function() {
+        if($start == 1){
+          $(this).attr('idelement', $compteur);
+          $(this).attr('idparcours', $compteurParcours);
+        }
+        $(this).attr('id', 'of_calendarbundle_event_parcours_'+ $compteurParcours +'_elementsVisites_'+ $compteur);
 
 
-        	$compteur += 1;
+
+
+        $(this).find('.titreInput').attr('name', 'of_calendarbundle_event[parcours]['+ $compteurParcours + '][elementsVisites]['+ $compteur + '][titre]' );
+        $(this).find('.titreInput').attr('id', 'of_calendarbundle_event_parcours_'+ $compteurParcours + '_elementsVisites_'+ $compteur + '_titre' );
+        $(this).find('.dureeInput').attr('id', 'of_calendarbundle_event_parcours_'+ $compteurParcours + '_elementsVisites_'+ $compteur + '_duree' );
+        $(this).find('.hourInput').attr('id', 'of_calendarbundle_event_parcours_'+ $compteurParcours + '_elementsVisites_'+ $compteur + '_duree_hour' );   
+        $(this).find('.hourInput').attr('name', 'of_calendarbundle_event[parcours]['+ $compteurParcours + '][elementsVisites]['+ $compteur + '][duree][hour]' );
+        $(this).find('.minuteInput').attr('id', 'of_calendarbundle_event_parcours_'+ $compteurParcours + '_elementsVisites_'+ $compteur + '_duree_minute' );   
+        $(this).find('.minuteInput').attr('name', 'of_calendarbundle_event[parcours]['+ $compteurParcours + '][elementsVisites]['+ $compteur + '][duree][minute]' );
+
+        $(this).find('.thematiqueInput').attr('id', 'of_calendarbundle_event_parcours_'+ $compteurParcours + '_elementsVisites_'+ $compteur + '_thematique' );   
+        $(this).find('.thematiqueInput').attr('name', 'of_calendarbundle_event[parcours]['+ $compteurParcours + '][elementsVisites]['+ $compteur + '][thematique]' );
+        $(this).find('.descriptionInput').attr('id', 'of_calendarbundle_event_parcours_'+ $compteurParcours + '_elementsVisites_'+ $compteur + '_description' );   
+        $(this).find('.descriptionInput').attr('name', 'of_calendarbundle_event[parcours]['+ $compteurParcours + '][elementsVisites]['+ $compteur + '][description]' );
+
+        
+
+
+          $compteur += 1;
+      });
+          $compteurParcours +=1;
       });
 
     }
 
-    function updatePreview($container){
+    function updatePreview($element, $start){
+      var $container = $element.closest('.elements-fields-list');
+     
     	var $titre;
       var $avertissementHalle = 0;
     	var $heure  = parseInt({{event.startDatetime|date("H", "Europe/Paris")}}) ;
     	var $minute = parseInt({{event.startDatetime|date("i", "Europe/Paris")}});
 	   	var $replacment='<li><div class="dotElementVisite pull-left" style="margin-left:-6px;"></div> <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b></li>';
 
-    	$container.find('.element').each(function() {
+    	 $container.find('.element').each(function() {
+
     		$titre = $(this).find('.titreInput').val();
 
         if($titre =="Showroom"){
@@ -265,6 +377,7 @@
         if($titre =="Showroom"){
           $thematique = ($(this).find('.thematique :selected').attr('value'));
         }
+
         $replacment+= ('<div class="elementPreview"><div class="titreElementVisite">'+ $titre + '<br /> <i>' + $thematique+ '</i></div><br /><li><div class="dotElementVisite pull-left"></div> ' +'<b>'+ $heure);
         if($minute<10){ // pour rajouter le 0 devant la minute.
           $replacment+= ('h0'+ $minute +' </b></li></div>');
@@ -272,13 +385,13 @@
           $replacment+= ('h'+ $minute +' </b></li></div>');
         }
     	});
-    	$('#preview').hide().html($replacment).fadeIn(1000);
+    	$container.closest('.row').find('.preview').hide().html($replacment).fadeIn(1000);
 
 
     }
     // La fonction qui ajoute un formulaire CategoryType
 
-    function addCategory($container) {
+    function addElementVisite($container) {
 
       // Dans le contenu de l'attribut « data-prototype », on remplace :
 
@@ -286,9 +399,35 @@
 
       // - le texte "__name__" qu'il contient par le numéro du champ
 
-      var template = $container.attr('data-prototype')
+      var template = $('#prototype-elements').attr('data-prototype');
 
-        .replace(/__name__label__/g, 'Catégorie n°' + (index+1))
+
+      // On crée un objet jquery qui contient ce template
+
+      var $prototype = $(template);
+
+
+      // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+
+      addDeleteLink($prototype, 0, 0, 0);
+      // On ajoute le prototype modifié à la fin de la balise <div>
+      $($container).append($prototype);
+      updateIndex(0);
+      // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+      index++;
+
+    }
+    function addParcours($container) {
+
+      // Dans le contenu de l'attribut « data-prototype », on remplace :
+
+      // - le texte "__name__label__" qu'il contient par le label du champ
+
+      // - le texte "__name__" qu'il contient par le numéro du champ
+
+       var template = $('#prototype-parcours').attr('data-prototype')
+
+        .replace(/__name__label__/g, 'Parcours' + (index+1))
 
         .replace(/__name__/g,        index)
 
@@ -302,23 +441,28 @@
 
       // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
 
-      addDeleteLink($prototype);
+      addDeleteParcoursLink($prototype, 0, 0);
 
       // On ajoute le prototype modifié à la fin de la balise <div>
-      $container.append($prototype);
+      $containerParcours.append($prototype);
       // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
       index++;
 
     }
 
 
+
     // La fonction qui ajoute un lien de suppression d'une catégorie
 
-    function addDeleteLink($prototype) {
+    function addDeleteLink($prototype, $start, $idElement, $idParcours ) {
 
       // Création du lien
-
+      if($start == 1){
+        var $deleteLink = $('<a href="#" id="suppr_elementVisite" class="btn btn-danger red col-xs-12">Supprimer</a>');
+      }else{
       var $deleteLink = $('<a href="#" class="btn btn-danger red col-xs-12">Supprimer</a>');
+
+      }
 
 
       // Ajout du lien
@@ -329,7 +473,60 @@
       // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
 
       $deleteLink.click(function(e) {
+        chargement();
+        if($(this).attr('id') == 'suppr_elementVisite'){
+          $.ajax({
+            url: "{{ path('of_calendar_deleteElementParcours')}}",
+            method: "post",
+            data:{idParcours: $idParcours, idElement : $idElement, idEvent:{{event.id}}}
+
+          }).done(function(){
+              stopchargement();
+           });
+        }
+        var $parent =($prototype.closest('ul'));
         $prototype.remove();
+        updateIndex(0);
+        updatePreview($parent, 0);
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+
+
+        return false;
+      });
+
+    }
+    function addDeleteParcoursLink($prototype,$start, $idParcours) {
+
+      // Création du lien
+      if($start==1){
+        var $deleteLink = $('<a href="#" class="right" id="suppr_parcours" style=" text-align:center; background:none;color:red;">Supprimer le parcours</a>');
+      }else{
+        var $deleteLink = $('<a href="#" class="right" style=" text-align:center; background:none;color:red;">Supprimer le parcours</a>');
+      }
+      
+
+
+      // Ajout du lien
+      $prototype.children('.parcours').children('.panel').children('.panel-heading').append($deleteLink);
+
+
+      // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
+
+      $deleteLink.click(function(e) {
+          
+        if($(this).attr('id') == 'suppr_parcours'){
+          chargement();
+          $.ajax({
+            url: "{{ path('of_calendar_deleteParcours')}}",
+            method: "post",
+            data:{idParcours: $idParcours, idEvent:{{event.id}}}
+
+          }).done(function(){
+            stopchargement();
+           });
+        }
+        $prototype.remove();
+        updateIndex(0);
         e.preventDefault(); // évite qu'un # apparaisse dans l'URL
         return false;
       });

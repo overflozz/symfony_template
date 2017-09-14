@@ -9,8 +9,8 @@
 {% block body %}
 
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
-<div class="col-md-8">
-<a href="{{path('of_faq_homepage')}}" ><span class="glyphicon glyphicon-chevron-left"></span> Retourner à la liste des questions</a>
+<div class="col-md-8 col-md-offset-2 col-xs-12">
+<a href="{{path('of_faq_homepage')}}" class="button_inversed" ><i class="material-icons left">keyboard_arrow_left</i> Retourner à la liste des questions</a><br /><br />
 <div class="panel panel-default">
 	<div class="panel-heading">{{ question.title }}	 {% if is_granted('ROLE_ADMIN') %}<a href="{{path('of_faq_Suppr', {'id' : question.id})}}" class="pull-right">Supprimer</a>	</div>{% endif %}
 	<div class="panel-body">{{ question.content }}<br />

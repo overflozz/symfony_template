@@ -1,123 +1,124 @@
-{% extends "OFCalendarBundle::layout.html.twig" %} 
-{% block stylesheets %}
-	{{ parent()}}
-	<link rel="stylesheet" href="{{ asset('css/visites/visites.css') }}">
-{% endblock %}
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Visites EDF{% endblock %}</title>
+    <style>
 
-{% block menu %}
-{% endblock %}
-{% block body %}
-<div style="margin-top:-50px;">
-<div style="margin: 0 auto; width: 250px; text-align:center; border-bottom: 2px solid var(--color-secondaire);padding-bottom:5px"><b>Récapitulatif de la visite {{ event.id }}</b></div><br />
-<div style="margin: 0 auto; width: 250px; text-align:center; margin-top : -20px; ">Le <b>{{event.startDatetime|date("d/m/Y", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b></div><br />
+.dotElementVisite{
+  margin-left:-12px;
+  margin-top:2px;
+  border-radius:50%;
+  background-color:#f1471c;
+  width:20px;
+  height:20px;
+  border:4px solid #f1471c;
+  float: left !important;
+}
+.titreElementVisite{
+  padding-left: 20px;
+  
+  padding-top : 16px;
+  padding-bottom: 8px;
+  margin-top : -5px;
+}
+.elementPreview{
+  border-left : 5px solid #f1471c;
+  padding:0px;
+}
+.elementPreview b{
+    float:right;
+    margin-top:-20px;
+}
+#preview li b{
+	
+}
+.past .elementPreview{
+  border-left : 5px solid #f1471c ;
+  padding:0px;
+}
+.past .dotElementVisite{
 
-	<div class="row">
-			<div class="col-xs-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<span class="glyphicon glyphicon-cog"></span> Gestion de la visite
-				</div>
-				<div class="panel-body">
-					<div class="col-xs-6">
-						<b>Conférenciers</b> :  
-						<ul>
-							{% for participant in event.applications %}
-								<li>{{participant.user.prenom}} {{participant.user.nom}} ( {{ participant.user.telephone }}, {{ participant.user.email }} )</li>
-							{% endfor %}
-							{% for i in 1..(event.nbUserMax - event.applications|length) %}
-								<li>
-									N/A
-
-								</li>
-							{% endfor %}
-						</ul>
-					</div>
-					<div class="col-xs-6">
-						<b>Reponsable Qualité</b> :<br /> 
-						<ul>
-							<li>{{event.respoQuali.prenom }} {{event.respoQuali.nom }} ( {{ event.respoQuali.telephone }}, {{event.respoQuali.email}} )</li><br />
-						</ul>
-					</div>
-				</div>
-		
-			</div></div>
+  margin-left:-12px;
+  margin-top:2px;
+  background-color:#f1471c;
+  width:20px;
+  height:20px;
+  border:4px solid #f1471c;
+}
 
 
+    </style>
+   </head>
+   <body style="">
+   <img src="./images/logoEDF.jpg" style="width:100px; float:right;">
+   		<h2 style="color:#13356d; text-align:center">Déroulé de la visite</h2>
+   		<i>La R&D d’EDF est heureuse de vous accueillir sur son site EDF Lab Paris-Saclay. Afin de faciliter votre entrée sur notre site, merci de prévoir une pièce d’identité le jour de votre visite. Nous vous informons également que vos sacs peuvent être soumis à vérification.</i><br /><br />
 
-		<div class="col-xs-6 pull-left">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<span class="glyphicon glyphicon-th-list"></span> Informations générales
-				</div>
- 				<div class="panel-body">
-					<b> Client </b>: {{ event.entrepriseClient }} <br />
-					<b> Type Client </b>: {{ event.typeClient }} <br />
-					<b> Thématique</b> : {{ event.contexte}} <br />
-					<b> Objectif de la visite</b>: {{ event.objectif }} <br />
-					<b> Nombre de partcipants </b> : {{ event.nombreParticipants }} <br />
-					<b> Langue </b> : {{ event.langue }}  <br />
-				</div>
+
+		<div style=" width:100%; border: 2px solid #f1471c;">
+			<h4 style="color:#13356d; text-align:center;">Informations Générales</h4><div style="color:#f1471c; border: 0 none; background-color: #f1471c; height: 5px;padding-right:-20px;width:749px;"></div>
+			<div style="margin-left:30px;">
+				<u>Date de la visite :</u> <b> {{event.startDatetime|date("d/m/Y", "Europe/Paris")}} </b><br />
+				<u>Heure d'arrivée :</u> <b>{{event.startDatetime|date("H:i", "Europe/Paris")}} </b><br />
+				<u>Lieu du rendez-vous :</u> <b>{{event.lieurdv}}</b><br />
+				<u>Conférenciers :</u>
+				<ul>
+					{% for participant in event.applications %}
+						<li>{{participant.user.prenom}} {{participant.user.nom}} ( {{ participant.user.telephone }}, {{ participant.user.email }} )</li>
+					{% endfor %}
+					{% for i in 1..(event.nbUserMax - event.applications|length) %}
+						<li>
+							N/A
+
+						</li>
+					{% endfor %}
+				</ul>
+
 			</div>
-			<div class="panel panel-default">
-					<div class="panel-heading">
-						<span class="glyphicon glyphicon-align-center"></span> Contact Visiteur
-					</div>
-					<div class="panel-body">
-						<b>Responsable</b> : {{ event.nomClient }} {{ event.prenomClient }} <br />
-						<b>Téléphone</b> : {{ event.telephoneClient }}<br />
-						<b>Adresse Mail</b> : {{ event.adresseMailClient }}
-					</div>
-			</div>
-			<div class="panel panel-default">
-					<div class="panel-heading">
-						<span class="glyphicon glyphicon-inbox"></span> Logistique Complémentaire
-					</div>
-					<div class="panel-body">
-						{% for logistique in event.otherInfos %}
-							{{ logistique }} <br />
-						{% endfor %}
-					</div>
-			</div>
-
-
 		</div>
-		<div class="col-xs-6 pull-right">
-			 <div class="panel panel-default">
-          <div class="panel-heading">Déroulé de la visite : 
-          </div>
-          <div class="panel-body">
-          <b> Lieu de Rendez-vous : </b> {{ event.lieurdv}}<br />
-          <ul id="preview" style="padding-left: 0;list-style:none;">
+		<br />
+    {% set index = 0 %}
+    {% for parcour in event.parcours %}
+    {% set index = index + 1 %}
+		<div style=" width:100%; border: 2px solid #f1471c;padding-right:-20px;">
+			<h4 style="color:#13356d; text-align:center; ">Planning {{ index }}</h4>
+			<div style="color:#f1471c; border: 0 none; background-color: #f1471c; height: 5px;padding-right:-20px;width:749px;"></div>
+			<div style="margin-left:30px;">
+<ul id="preview" style="list-style:none;">
           {% set heure = event.startDatetime|date("H", "Europe/Paris") %}
           {% set minute = event.startDatetime|date("i", "Europe/Paris") %}
-          <li minute="{{minute}}" heure="{{heure}}"><div class="dotElementVisite pull-left" style="margin-left:-7px;"></div> <b>{{ heure }}:{{ minute }}</b><div class="elementPreview"></li>
-            {% for element in event.elementsVisites %}
+          <li minute="{{minute}}" heure="{{heure}}"><b>{{ heure }}:{{ minute }}</b></li>
+            {% for element in parcour.elementsVisites %}
               {% set heure = heure + element.duree|date("H", "Europe/Paris") %}
               {% set minute = minute + element.duree|date("i", "Europe/Paris") %}
               {% if (minute//60 > 0)%}
                 {% set heure  = heure + 1%}
                 {% set minute = minute - (minute//60) * 60 %}
               {% endif %}
-              <li minute="{{minute}}" heure="{{heure}}"> <div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> <b>{{element.titre}}</b> 
+              
+              <li minute="{{minute}}" heure="{{heure}}"> <div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> {{element.titre}}
               {% if element.titre =="Showroom" %}
                   <br /><i>{{element.thematique}}</i>
               {% endif %}
-              <br /> {{element.description }}</div><br /><div class="dotElementVisite pull-left" style=""></div><b>{{heure}}:{% if minute < 10 %}0{% endif %}{{minute}}</b></li>
+               </div><br /></div><b>{{heure}}:{% if minute < 10 %}0{% endif %}{{minute}}</b></li>
               
             {% endfor %}
-            <li minute="{{minute}}" heure="{{heure}}"><div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> Arrivée à {{event.lieudepart}}</div><br /><div class="dotElementVisite pull-left" style=""></div><b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b> </li>
+            <li minute="{{minute}}" heure="{{heure}}"><div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> Fin</div><br /><b><br />{{event.endDatetime|date("H:i", "Europe/Paris")}}</b> </div></li><br />
           </ul>
-          
-
-
           </div>
-         </div>
-
-
-
-			
-
-	</div>
-</div>
-</div>
-{% endblock %}
+		</div>		
+<br />
+    {% endfor %}	
+		
+		<div style="width:100%; border: 2px solid #f1471c;">
+			<h4 style="color:#13356d; text-align:center; ">Contacts</h4>
+			<div style="color:#f1471c; border: 0 none; background-color: #f1471c; height: 5px;padding-right:-20px;width:749px;"></div>
+				<div style="margin-left:30px;margin-bottom:10px;"><br />
+					<i>EDF Lab Paris-Saclay Communication : <b>Bénédicte Aubery</b>: 01.78.19.32.89 - benedicte-externe.aubery@edf.fr</i><br />
+					<i>Junior CentraleSupélec -Gestion des visites: <b>Ilana Dahan</b> : 06.12.44.58.69-ilana.dahan@supelec.fr</i>
+				</div>
+		</div>
+	</body>
+</html>

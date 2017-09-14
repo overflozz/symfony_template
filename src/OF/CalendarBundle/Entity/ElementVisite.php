@@ -37,13 +37,13 @@ class ElementVisite
   private $duree;
     /**
 
-   * @ORM\ManyToOne(targetEntity="OF\CalendarBundle\Entity\Event", inversedBy="elementsVisites")
+   * @ORM\ManyToOne(targetEntity="OF\CalendarBundle\Entity\Parcours", inversedBy="elementsVisites")
 
    * @ORM\JoinColumn(nullable=false)
 
    */
 
-  private $visite;
+  private $parcours;
 
     /**
      * Get id
@@ -173,5 +173,29 @@ class ElementVisite
     public function getThematique()
     {
         return $this->thematique;
+    }
+
+    /**
+     * Set parcours
+     *
+     * @param \OF\CalendarBundle\Entity\Parcours $parcours
+     *
+     * @return ElementVisite
+     */
+    public function setParcours(\OF\CalendarBundle\Entity\Parcours $parcours)
+    {
+        $this->parcours = $parcours;
+
+        return $this;
+    }
+
+    /**
+     * Get parcours
+     *
+     * @return \OF\CalendarBundle\Entity\Parcours
+     */
+    public function getParcours()
+    {
+        return $this->parcours;
     }
 }

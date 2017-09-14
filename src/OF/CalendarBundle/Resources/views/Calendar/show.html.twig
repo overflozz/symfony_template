@@ -43,9 +43,13 @@
 	<script type="text/javascript" src="{{ asset('js/calendar/fullcalendar.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/calendar/calendar-settings.js') }}"></script>
 	<script>
+		var $visite = -1;
 $(function(){
 
+
+
 $('.main-content').on("click", "#modalVisitetrigger", function(){
+				$visite = $(this).attr("idVisite");
                 $.ajax({
                     url: "{{ path('of_calendar_showModalEvent')}}",
                     method: "post",
@@ -57,9 +61,58 @@ $('.main-content').on("click", "#modalVisitetrigger", function(){
                 });
                 
             });
-});
-	</script>
 
+
+
+	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+	
+		$('.modal-content').on("click", "#ajout_conferencier",function(){
+			chargement();
+			var $div = $("#ajout_conferencier").parent();
+			$div.html('');
+			$('#loading-image').clone().appendTo($div);
+			$('#loading-image').fadeIn(1000);
+			$.ajax({
+				url: "{{ path('of_calendar_ajoutUserEvent')}}",
+				method: "post",
+				data:{idUser: {{ app.user.id}}, visite: $visite}
+
+			}).done(function(){
+				$("#viewModal").removeClass("hidden").hide().fadeIn(1000);
+
+				$('#loading-image').fadeOut(1000);
+				stopchargement();
+
+				$div.html("{{ app.user.prenom}} {{ app.user.nom}}");
+					//Materialize.toast('Vous êtes maintenant conférencier sur cette visite.', 3000);
+			});
+		});
+		$('.modal-content').on("click", "#suppr_conferencier",function(){
+			chargement();
+			var $div = $(this).parent();
+			var $iduser = $div.attr('iduser');
+			$div.html('');
+			$('#loading-image').clone().appendTo($div);
+			$('#loading-image').show();
+			$.ajax({
+				url: "{{ path('of_calendar_supprUserEvent')}}",
+				method: "post",
+				data:{idUser: $iduser, visite: $visite}
+
+			}).done(function(){
+				
+				$('#loading-image').fadeOut(500);
+
+				stopchargement();
+				//Materialize.toast('Vous n\'êtes plus conférencier sur cette visite.', 3000);
+				$div.html("N/A");
+
+			});
+		});
+	});
+	{% endif %}
+	
+</script>
 {% endblock %}
 
 

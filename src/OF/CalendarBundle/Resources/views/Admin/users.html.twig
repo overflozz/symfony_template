@@ -10,7 +10,7 @@
 		    <div class="">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Ajouter une visite</h4>
+		        <h4 class="modal-title" id="myModalLabel">Ajouter un utilisateur</h4>
 		      </div>
 		      <div class="modal-body">
 		        {{form(form)}}
@@ -33,6 +33,7 @@
 			  	<th>Prénom</th>
 			    <th>Username</th>
 			    <th>Email</th>
+			    <th>Téléphone</th>
 			    <th>Actions</th>
 			  </tr>
 			</thead>
@@ -44,6 +45,7 @@
 			  	<td>{{ user.prenom }}</td>
 			    <td>{{ user.username }}</td>
 			    <td>{{ user.email }}</td>
+			    <td>{{ user.telephone }}</td>
 			    <td><a href="{{ path("of_calendar_AdminViewVisiteuser", {'id' : user.id} ) }}">Voir les visites</a><a href="{{ path("of_calendar_Modifusers", {'id' : user.id} ) }}">Modifier</a> <a href=""  data-toggle="modal" data-target=".supprUser{{ user.id }}">Supprimer</a></td>
 
 				<div class="modal fade supprUser{{ user.id }} modal-content" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">

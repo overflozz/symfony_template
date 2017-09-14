@@ -29,7 +29,17 @@ class EventType extends AbstractType
                 }
             ))
         ->add('entrepriseClient', TextType::class)
-        ->add('typeClient', TextType::class)
+        ->add('typeClient', ChoiceType::class, array('choices' => array(
+            'VIP' => 'VIP', 
+            'Interne EDF' => 'Interne EDF', 
+            'Client'=> 'Client', 
+            'Collectivités' => 'Collectivités', 
+            'Grand public'=> 'Grand public'
+
+
+
+
+            )))
         ->add('nomClient', TextType::class)
         ->add('prenomClient', TextType::class)
 

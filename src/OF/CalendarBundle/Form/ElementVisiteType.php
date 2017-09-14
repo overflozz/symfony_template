@@ -21,13 +21,11 @@ class ElementVisiteType extends AbstractType
         $builder
         ->add('titre', ChoiceType::class,array('label' => 'élément de visite' , 'choices'  => array(
         'Extérieurs des bâtiments' => 'Extérieurs des bâtiments',
-        'Iroise' => 'Iroise',
-        'Espace de restauration et espace de créativité' => 'Espace de restauration et espace de créativité',
-        'Azur' => 'Azur',
+        'Espace de créativité' => 'Espace de créativité',
+        'Centre de Conférence' => 'Centre de Conférence',
         'Rez-de-chaussée Opale' =>'Rez-de-chaussée Opale',
         'Showroom' => 'Showroom',
         'Halle d’essais' => 'Halle d’essais',
-        'Bancs d’essais Ermès'=>'Bancs d’essais Ermès',
         'Restauration'=>'Restauration',
 
 

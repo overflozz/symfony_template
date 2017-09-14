@@ -27,7 +27,7 @@
 			  	<td>{{ visite.entrepriseClient }}</td>
 			  	<td>{{ visite.nombreParticipants }}</td>
 			    <td>{{ visite.langue }}</td>
-			    <td><a href=""  data-toggle="modal" data-target=".supprVisite{{ visite.id }}">Supprimer</a>  <a href="{{ path("of_calendar_view_visite", {'id' : visite.id, 'etape' : 0} ) }} " >Voir</a></td>
+			    <td><a href="{{path('of_calendar_modifVisite', {'id':visite.id})}}" >Modifier</a>  <a href=""  data-toggle="modal" data-target=".supprVisite{{ visite.id }}">Supprimer</a>  <a href="{{ path("of_calendar_view_visite", {'id' : visite.id, 'etape' : 0} ) }} " >Voir</a></td>
 
 				<div class="modal fade supprVisite{{ visite.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 				  <div class="modal-dialog modal-lg" role="document">

@@ -7,11 +7,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 use OF\CalendarBundle\Form\DocumentType;
 use OF\CalendarBundle\Form\DocumentEditType;
+
+use OF\CalendarBundle\Entity\Document;
 use OF\CalendarBundle\Form\EventType;
 use OF\UserBundle\Form\Type\ModifAdminType;
+use OF\CalendarBundle\Form\EventModifType;
 use OF\CalendarBundle\Entity\Event;
 use OF\CalendarBundle\Entity\Client;
-use OF\CalendarBundle\Entity\Document;
 use OF\UserBundle\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -24,12 +26,20 @@ class AdminController extends Controller
 {
     public function homeAdminAction(Request $request)
     {	
+        if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))){
+
+            throw new NotFoundHttpException("Forbidden.");
+        }
         return $this->render('OFCalendarBundle:Admin:home.html.twig');
     }
 
     //ADMINISTRATION USER
     public function usersAdminAction(Request $request)
     {	
+        if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))){
+
+            throw new NotFoundHttpException("Forbidden.");
+        }
         $em = $this->getDoctrine()->getManager();
         $user = new User();
 
@@ -37,11 +47,36 @@ class AdminController extends Controller
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
           $em = $this->getDoctrine()->getManager();
-          $user->setPlainPassword($user->getNom().$user->getPrenom());
-          $user->setUsername( strtolower(substr($user->getNom(),0, 10)).'_'.strtolower(substr($user->getPrenom(),0, 3)));
+          $password=preg_replace('/\s/','',strtolower($user->getNom()).strtolower($user->getPrenom()));
+          $user->setPlainPassword($password);
+          $user->setUsername( preg_replace('/\s/','',strtolower(substr($user->getNom(),0, 10)).'_'.strtolower(substr($user->getPrenom(),0, 3))));
           $user->setEnabled(true);
           $em->persist($user);
           $em->flush();
+          $message = \Swift_Message::newInstance()
+            ->setSubject('Visite Sacclay JCS : Votre compte a été créé' )
+            ->setFrom('visitesaclayjcs@gmail.com')
+            ->setTo($user->getEmail())
+            ->setBody(
+                $this->renderView('OFCalendarBundle:Admin:Emails/userCreation.html.twig',
+                    array('user' => $user, 'password' => $password)
+                ),
+                'text/html'
+            )
+            /*
+             * If you also want to include a plaintext version of the message
+            ->addPart(
+                $this->renderView(
+                    'Emails/registration.txt.twig',
+                    array('name' => $name)
+                ),
+                'text/plain'
+            )
+            */
+        ;
+        $this->get('mailer')->send($message);
+
+
           $request->getSession()->getFlashBag()->add('success', 'Le compte de '.$user->getNom().' '.$user->getPrenom().' a bien été ajouté !');
         }
 
@@ -52,6 +87,10 @@ class AdminController extends Controller
     }
        public function supprUserAdminAction($id, Request $request)
     {	
+        if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))){
+
+            throw new NotFoundHttpException("Forbidden.");
+        }
  		$em = $this->getDoctrine()->getManager();
     	$user = $this->getDoctrine()->getManager()->getRepository('OFUserBundle:User')->findOneBy(array('id' => $id));
         if($user != null){
@@ -64,6 +103,10 @@ class AdminController extends Controller
     } 
        public function modifUserAdminAction($id, Request $request)
     {   
+        if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))){
+
+            throw new NotFoundHttpException("Forbidden.");
+        }
         $em = $this->getDoctrine()->getManager();
         $user = $this->getDoctrine()->getManager()->getRepository('OFUserBundle:User')->findOneBy(array('id' => $id));
 
@@ -84,6 +127,10 @@ class AdminController extends Controller
 
     public function viewVisiteUserAdminAction($id, Request $request)
     {   
+        if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))){
+
+            throw new NotFoundHttpException("Forbidden.");
+        }
         $em = $this->getDoctrine()->getManager();
         $user = $this->getDoctrine()->getManager()->getRepository('OFUserBundle:User')->findOneBy(array('id' => $id));
         if($user == null){
@@ -111,7 +158,10 @@ class AdminController extends Controller
     //ADMINISTRATION Visites
         public function visitesAdminAction(Request $request)
     {   
+if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))){
 
+            throw new NotFoundHttpException("Forbidden.");
+        }
         $listeVisites = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->createQueryBuilder('alias')->add('orderBy', 'alias.startDatetime DESC')->getQuery()->getResult();
  
         return $this->render('OFCalendarBundle:Admin:visites.html.twig', array('listeVisites' => $listeVisites));
@@ -120,6 +170,10 @@ class AdminController extends Controller
 
        public function supprVisiteAdminAction($id, Request $request)
     {   
+        if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))){
+
+            throw new NotFoundHttpException("Forbidden.");
+        }
         $em = $this->getDoctrine()->getManager();
         $client = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findOneBy(array('id' => $id));
         if($client != null){
@@ -131,8 +185,37 @@ class AdminController extends Controller
         $listeClients = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Client')->createQueryBuilder('alias')->getQuery()->getResult();
         return $this->visitesAdminAction($request);
     } 
+
+          public function modifVisiteAdminAction($id, Request $request)
+    {   
+        if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))){
+
+            throw new NotFoundHttpException("Forbidden.");
+        }
+        $em = $this->getDoctrine()->getManager();
+        $visite = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findOneBy(array('id' => $id));
+
+        $form   = $this->get('form.factory')->create(EventModifType::class, $visite);
+
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+          $em = $this->getDoctrine()->getManager();
+          $visite->updateValues();
+          $em->persist($visite);
+          $em->flush();
+
+            $request->getSession()->getFlashBag()->add('success', 'La visite a bien été modifiée. ');
+        }
+
+        return $this->render('OFCalendarBundle:Admin:modifVisite.html.twig', array('form' => $form->createView(), 'visite' => $visite));
+    } 
+
        public function modifClientAdminAction($id, Request $request)
     {   
+        if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))){
+
+            throw new NotFoundHttpException("Forbidden.");
+        }
         $em = $this->getDoctrine()->getManager();
         $client = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Client')->findOneBy(array('id' => $id));
 
@@ -172,6 +255,10 @@ class AdminController extends Controller
 
         public function documentsAdminAction(Request $request)
     {   
+        if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))){
+
+            throw new NotFoundHttpException("Forbidden.");
+        }
 
         $listeDocuments = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Document')->createQueryBuilder('alias')->getQuery()->getResult();
         $document = new Document();
@@ -197,6 +284,10 @@ class AdminController extends Controller
 
        public function supprDocumentAdminAction($id, Request $request)
     {   
+        if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))){
+
+            throw new NotFoundHttpException("Forbidden.");
+        }
         $em = $this->getDoctrine()->getManager();
         $document = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Document')->findOneBy(array('id' => $id));
         if($document != null){
@@ -212,6 +303,10 @@ class AdminController extends Controller
 
        public function modifDocumentAdminAction($id, Request $request)
     {   
+        if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))){
+
+            throw new NotFoundHttpException("Forbidden.");
+        }
         $em = $this->getDoctrine()->getManager();
         $document = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Document')->findOneBy(array('id' => $id));
 

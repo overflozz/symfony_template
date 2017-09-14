@@ -334,3 +334,46 @@ a:hover{
 	font-size: 0.8rem;
 	font-weight:400;
 }
+
+.add_element{
+	border: 2px solid var(--color-secondaire);
+	border-radius: 3px;
+	padding: 2px;
+	display: inline-block;
+	padding-right:4px;
+}
+.add_element i.left{
+	margin-right:2px;
+
+}
+.add_element:hover{
+
+	color:#fff;
+	text-decoration:none;
+	background-color:var(--color-secondaire);
+
+}
+
+#sidebarFAQ .boutoncategory{
+	margin-bottom:10px;
+}
+
+
+.button_inversed{
+	border: 2px solid var(--color-secondaire);
+	border-radius: 3px;
+	padding: 2px;
+	display: inline-block;
+	padding-right:4px;
+}
+.button_inversed i.left{
+	margin-right:2px;
+
+}
+.button_inversed:hover{
+
+	color:#fff;
+	text-decoration:none;
+	background-color:var(--color-secondaire);
+
+}

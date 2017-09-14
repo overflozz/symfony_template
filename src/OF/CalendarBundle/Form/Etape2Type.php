@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use OF\CalendarBundle\Form\ElementVisiteType;
+use OF\CalendarBundle\Form\ParcoursType;
 class Etape2Type extends AbstractType
 {
     /**
@@ -19,9 +19,9 @@ class Etape2Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('elementsVisites', CollectionType::class, array(
+        ->add('parcours', CollectionType::class, array(
         // each entry in the array will be an "email" field
-        'entry_type'   => ElementVisiteType::class,
+        'entry_type'   => ParcoursType::class,
         'allow_add' => true,
         'allow_delete' => true,
         'prototype' => true,

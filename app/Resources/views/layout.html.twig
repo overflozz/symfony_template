@@ -39,10 +39,11 @@
 
 
     
-    {% block menu %}
+    
   </head>
   <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
     <!-- Navigation -->
+    {% block menu %}
     <div class="container-fluid  col-md-10 col-md-offset-2 col-sm-12">
         <nav class="navbar navbar-default navbar-fixed-top"  id="menuheader" role="navigation">
             <div class="container">
@@ -100,11 +101,12 @@
                                     <li><a href="{{ path('of_calendar_panelUser')}}"><span class="glyphicon glyphicon-list-alt"></span> Mes visites </a></li>
                                     <li><a href="{{ path('fos_user_profile_show') }}"><span class="glyphicon glyphicon-user"></span> Mon Profil</a></li>          
                                     <li><a href="{{ path('fos_user_profile_edit')}}"><span class="glyphicon glyphicon-cog"></span> Réglages Profil</a></li>
-                                    <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-user"></span> Deconnexion</a></li> 
                                     {% if is_granted('ROLE_ADMIN') %} 
 
                             <li><a href="{{ path('of_calendar_statsAdmin') }}"><span class="glyphicon glyphicon-edit"></span> Administration</a></li>
                         {% endif %}
+                                    <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-remove-circle"></span> Deconnexion</a></li> 
+                                    
 
                                 </ul>
                             </li>
@@ -164,73 +166,80 @@
     {% endblock %}
   </body>
 
-<div class="col-sm-12" style="text-align:center">
-    <img src="{{ asset('images/ajax-loader.gif')}}" id= "loading-image"></img>
-</div>
+    <div class="col-sm-12" style="text-align:center">
+        <img src="{{ asset('images/ajax-loader.gif')}}" id= "loading-image">
+    </div>
 
-<script src="{{ asset('offline/bootstrap.js')}}" ></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
-<script type="text/javascript" src="{{ asset('js/materialize/materialize.js') }}"></script>
-<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-<script>
-  $(document).ready(function() {
-    $('select').material_select();
-  });
-  
-    $('#loading-image').hide();
+    <script src="{{ asset('offline/bootstrap.js')}}" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
+    <script type="text/javascript" src="{{ asset('js/materialize/materialize.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script>
+      $(document).ready(function() {
+        $('select').material_select();
+      });
+      
+        $('#loading-image').hide();
 
 
-    {% for label, flashes in app.session.flashbag.all %}
-        {% for flash in flashes %}
-     
-            
-            Materialize.toast('{{ flash }}', 2000);
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+         
+                
+                Materialize.toast('{{ flash }}', 2000);
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
 
-{% block javascript %}
-
+    {% block javascript %}
 
 
-    //Permet d'initialiser le link active du menu à celui de Home 
-    $link_active = "#home";
-    {% block script_menu_active %}
-    
-    //Permet de changer la valeur du link_active
-    {% endblock %}
-    //Permet de passer le link du menu en active selon la valeur de la page 
-    $($link_active).addClass("active"); 
 
-
-</script>
-
-<script>
-    $(".disapear").fadeOut(2000);
+        //Permet d'initialiser le link active du menu à celui de Home 
+        $link_active = "#home";
+        {% block script_menu_active %}
         
-  $(document).ready(function(){
-    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-      $('.modal').modal({
-      dismissible: true, // Modal can be dismissed by clicking outside of the modal
-      opacity: .5, // Opacity of modal background
-      inDuration: 200, // Transition in duration
-      outDuration: 200, // Transition out duration
-      startingTop: '4%', // Starting top style attribute
-      endingTop: '10%', // Ending top style attribute
-      
-  });
-      
-  });
-  $(document).ready(function(){
-    $('.tooltipped').tooltip({delay: 50});
-  });
+        //Permet de changer la valeur du link_active
+        {% endblock %}
+        //Permet de passer le link du menu en active selon la valeur de la page 
+        $($link_active).addClass("active"); 
+            function chargement(){
+                
+            Materialize.toast('<div class="preloader-wrapper small active" style="margin-right: 10px;"> <div class="spinner-layer spinner-blue-only"><div class="circle-clipper left"> <div class="circle"></div> </div><div class="gap-patch"><div class="circle"></div> </div><div class="circle-clipper right">        <div class="circle"></div> </div> </div></div>  <span style="padding-right:10px;">Chargement</span>',10000, 'toast-identifier-loading'); // 4000 is the duration of the 
+          
+        }
+
+        function stopchargement(){
+              $('.toast-identifier-loading').remove();
+        }
+    </script>
+
+    <script>
+        $(".disapear").fadeOut(2000);
+            
+      $(document).ready(function(){
+        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+          $('.modal').modal({
+          dismissible: true, // Modal can be dismissed by clicking outside of the modal
+          opacity: .5, // Opacity of modal background
+          inDuration: 200, // Transition in duration
+          outDuration: 200, // Transition out duration
+          startingTop: '4%', // Starting top style attribute
+          endingTop: '10%', // Ending top style attribute
+          
+      });
+          
+      });
+      $(document).ready(function(){
+        $('.tooltipped').tooltip({delay: 50});
+      });
 
 
-</script>
+    </script>
 
 
-{% endblock %}
+    {% endblock %}
 </html>
 
 

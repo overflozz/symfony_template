@@ -33,14 +33,14 @@ of_calendar_Modifusers:
     defaults:
         _controller: OFCalendarBundle:Admin:modifUserAdmin
 of_calendar_ajoutUserEvent:
-    path:     /visite/{id}/ajoutUser
+    path:     /visite/ajoutUser
     defaults:
         _controller: OFCalendarBundle:Visite:ajoutUser
     methods: [post]
 
 
 of_calendar_supprUserEvent:
-    path:     /visite/{id}/supprUser
+    path:     /visite/supprUser
     defaults:
         _controller: OFCalendarBundle:Visite:supprUser
     methods: [post]
@@ -76,6 +76,10 @@ of_calendar_ajoutClientEvent:
     methods: [post]
 
 
+of_calendar_modifVisite:
+    path: /admin/visite/{id}
+    defaults:
+        _controller: OFCalendarBundle:Admin:modifVisiteAdmin
 
 
 of_calendar_documentsadmin:
@@ -174,3 +178,17 @@ of_calendar_panelUser:
     path:     /panelUser/
     defaults:
         _controller: OFCalendarBundle:Visite:showVisites
+
+
+of_calendar_deleteElementParcours:
+    path:     /visitedeleteElementParcours
+    defaults:
+        _controller: OFCalendarBundle:Visite:deleteElementParcours
+    methods: [post]
+
+
+of_calendar_deleteParcours:
+    path:     /visitedeleteParcours
+    defaults:
+        _controller: OFCalendarBundle:Visite:deleteParcours
+    methods: [post]

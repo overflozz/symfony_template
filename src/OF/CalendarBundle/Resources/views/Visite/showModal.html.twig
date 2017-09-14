@@ -13,20 +13,23 @@
 		<div class="row">
 			<div class="col-md-6 col-xs-12 pull-left">
 
-		<b><span class="glyphicon glyphicon-bullhorn" style="border-radius:50%; background-color:#2ecc71;padding : 3px; font-size:12px; color:#fff;"></span> Conférenciers : </b>
+		<b><span class="glyphicon glyphicon-bullhorn" style="border-radius:50%; background-color:#2ecc71;padding : 3px; font-size:12px; color:#fff;"></span> Conférenciers ({{Participants|length}}/{{ event.nbUserMax }}) : </b>
 		
 				<ul>
 				{% for participant in Participants %}
 					<li iduser="{{participant.user.id}}"> {{participant.user.prenom}} {{participant.user.nom}}      {% if is_granted("ROLE_ADMIN") %} <button id="suppr_conferencier" type="button" class="btn red lighten-1" style="color:#fff"><span class='glyphicon glyphicon-remove'></span> <span class="hidden-xs"> Supprimer</span></button>{% endif %}</li>
 				{% endfor %}
-				{% for i in 1..(event.nbUserMax - Participants|length) %}
-					<li>
-						N/A
-						{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userParticipe == false and i==1 %}
-							<button id="ajout_conferencier" class="btn btn-primary" type="button"><span class='glyphicon glyphicon-plus'></span> S'ajouter</button>
-						{% endif %}
-					</li>
-				{% endfor %}
+				{% if event.nbUserMax - Participants|length <= 0 %}
+				{% else %}
+					{% for i in 1..(event.nbUserMax - Participants|length) %}
+						<li>
+							N/A
+							{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userParticipe == false and i==1 %}
+								<button id="ajout_conferencier" class="btn btn-primary" type="button"><span class='glyphicon glyphicon-plus'></span> S'ajouter</button>
+							{% endif %}
+						</li>
+					{% endfor %}
+				{% endif %}
 				</ul>
 			</div>
 
@@ -52,57 +55,10 @@
 		</div>
 	
 		<br />
-		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userParticipe == true %}
+		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and userParticipe == true or is_granted("ROLE_ADMIN") %}
 			<a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : 0})}}" type="button" id="viewModal" class="btn btn-primary col-xs-12" ><span class="glyphicon glyphicon-eye-open"></span> Voir</a>
 		{% else  %}
 			<a href="{{ path('of_calendar_view_visite',{'id' : event.id, 'etape' : 0})}}" type="button" id="viewModal" class="btn btn-primary col-xs-12 hidden" ><span class="glyphicon glyphicon-eye-open"></span> Voir</a>
 		{% endif %}
 
 	</div>
-		
-<script>
-
-	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-	$(document).ready(function(){
-
-		$('.modal-content').on("click", "#ajout_conferencier",function(){
-			var $div = $("#ajout_conferencier").parent();
-			$div.html('');
-			$('#loading-image').clone().appendTo($div);
-			$('#loading-image').fadeIn(1000);
-			$.ajax({
-				url: "{{ path('of_calendar_ajoutUserEvent', {'id' : event.id})}}",
-				method: "post",
-				data:{idUser: {{ app.user.id}}}
-
-			}).done(function(){
-				$("#viewModal").removeClass("hidden").hide().fadeIn(1000);
-
-				$('#loading-image').fadeOut(1000);
-				$div.html("{{ app.user.prenom}} {{ app.user.nom}}");
-					//Materialize.toast('Vous êtes maintenant conférencier sur cette visite.', 3000);
-			});
-		});
-		$('.modal-content').on("click", "#suppr_conferencier",function(){
-			var $div = $(this).parent();
-			var $iduser = $div.attr('iduser');
-			$div.html('');
-			$('#loading-image').clone().appendTo($div);
-			$('#loading-image').show();
-			$.ajax({
-				url: "{{ path('of_calendar_supprUserEvent', {'id' : event.id})}}",
-				method: "post",
-				data:{idUser: $iduser}
-
-			}).done(function(){
-				
-				$('#loading-image').fadeOut(500);
-				//Materialize.toast('Vous n\'êtes plus conférencier sur cette visite.', 3000);
-				$div.html("N/A");
-
-			});
-		});
-	});
-	{% endif %}
-	
-</script>

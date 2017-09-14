@@ -14,6 +14,7 @@ use OF\CalendarBundle\Form\questionnaireType;
 use OF\CalendarBundle\Entity\Event;
 use OF\CalendarBundle\Entity\EventUser;
 use OF\CalendarBundle\Entity\Satisfaction;
+use OF\CalendarBundle\Entity\Parcours;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Doctrine\ORM\Query\Expr\OrderBy;
 use OF\UserBundle\Entity\User;
@@ -102,28 +103,36 @@ class VisiteController extends Controller
 	      }
 
 	      // on accepte les modif de visite que si elle est dévérouillée
-	      if ($event->getVerrou() == 0){
+	      if (true){
 
-		      $em->persist($event);
+		     
 		      $halle = 0;
-		      foreach($event->getElementsVisites() as $elementvisite)
+		      foreach($event->getParcours() as $parcour)
 		      {
-
-		      	$elementvisite->setVisite($event); // car l'id de la visite associée ne se met pas à jour tout seul ( bug )
-		      	if ($elementvisite->getTitre()=="Halle d’essais"){
-		      		$halle = 1;
-		      	}
-		      	$em->persist($elementvisite);
+		      	
+		      	$parcour->setVisite($event); // car l'id de la visite associée ne se met pas à jour tout seul ( bug )
+		      $em->persist($parcour);
+				foreach($parcour->getElementsVisites() as $elementvisite){
+					if ($elementvisite->getTitre()=="Halle d’essais"){
+		      			$halle = 1;
+		      			
+		      		}
+		      		$elementvisite->setParcours($parcour);
+				}
+		      	
+		      	
 		      }
+
 		    if ($halle == 1){
 	   			$event->setHalleessais(1);
 
 		    }else{
 		    	$event->setHalleessais(0);
 		    }
-	
+			
 			$em->persist($event);
-		      $em->flush();
+			
+		    $em->flush();
 	      }
 
 
@@ -134,6 +143,48 @@ class VisiteController extends Controller
 		return $this->render('OFCalendarBundle:Visite:show.html.twig', array('event' => $event,'visitesToDo' =>$visitesToDo, 'nbParticipants' => count($applications), 'userParticipe' => $userParticipe, 'steptoshow' => $etape, 'form' => $form->createView()));
     		
 
+	}
+	public function deleteElementParcoursAction(Request $request){
+		$em = $this->getDoctrine()->getManager();
+		$repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
+    	
+		$event = $repositoryEvent->findOneBy(array('id' => $request->get("idEvent")));
+		$parcours = $event->getParcours()[$request->get("idParcours")];
+		$element = $parcours->getElementsVisites()[$request->get("idElement")];
+		
+		if($parcours == null){
+			return new Response();
+		
+		}
+		if($element == null){
+			return new Response();
+		
+		}
+
+		$em->remove($element);
+		$em->flush();
+		return new Response();
+		
+	}
+	public function deleteParcoursAction(Request $request){
+		$em = $this->getDoctrine()->getManager();
+		$repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
+    	
+		$event = $repositoryEvent->findOneBy(array('id' => $request->get("idEvent")));
+		$parcours = $event->getParcours()[$request->get("idParcours")];
+
+		if($parcours == null){
+			return new Response();
+		
+
+		}
+		
+		
+
+		$em->remove($parcours);
+		$em->flush();
+		return new Response();
+		
 	}
 
 	public function premiercontactAction(Request $request, $id){
@@ -176,7 +227,7 @@ class VisiteController extends Controller
     		
 
 	}
-	public function ajoutUserAction($id, Request $req){
+	public function ajoutUserAction(Request $req){
 
 		$em = $this->getDoctrine()->getManager();
 		$repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
@@ -185,6 +236,7 @@ class VisiteController extends Controller
     	
 		if ($req->isXMLHttpRequest()){
 			$idUser = $req->get('idUser');
+			$id = $req->get('visite');
 			$user = $repositoryUser->findOneBy(array('id' => $idUser));
 			$event = $repositoryEvent->findOneBy(array('id' => $id));
 			$listeUser = $event->getUsers();
@@ -211,7 +263,7 @@ class VisiteController extends Controller
 		}
 
 	}
-	public function supprUserAction($id, Request $req){
+	public function supprUserAction(Request $req){
 
 		$em = $this->getDoctrine()->getManager();
 		$repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
@@ -220,6 +272,7 @@ class VisiteController extends Controller
     	
 		if ($req->isXMLHttpRequest()){
 			$idUser = $req->get('idUser');
+			$id = $req->get('visite');
 			$user = $repositoryUser->findOneBy(array('id' => $idUser));
 			$event = $repositoryEvent->findOneBy(array('id' => $id));
 			$listeUser = $event->getUsers();
@@ -360,7 +413,7 @@ class VisiteController extends Controller
 	    $message = \Swift_Message::newInstance()
 	        ->setSubject('Visite '.$event->getId().' : Demande accès a la Halle d\'essais' )
 	        ->setFrom('overflozz@gmail.com')
-	        ->setTo('overflozz@gmail.com')
+	        ->setTo(array('ilana.dahan148@gmail.com', 'overflozz@gmail.com'))
 	        ->setBody(
 	            $this->renderView('OFCalendarBundle:Visite:Emails/mailAdminEDF.html.twig',
 	                array('event' => $event, 'demandeur' => $this->getUser())
@@ -448,7 +501,14 @@ class VisiteController extends Controller
 	public function showrecapHTMLAction($id){
 
 		$visitequalite = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findOneBy(array('id' => $id));
-		return $this->render('OFCalendarBundle:Visite:recap.html.twig',array('event' => $visitequalite));
+		$html = $this->renderView('OFCalendarBundle:Visite:recap.html.twig',array('event' => $visitequalite));
+		$html2pdf = $this->get('html2pdf_factory')->create('P','A4','fr'); // Get the html2pdf instance properly configured
+		$html2pdf->writeHTML($html); // Import the html to convert
+		$html2pdf->Output('Facture.pdf'); // Write the generated pdf somewhere
+	return new Response();
+
+
+		//return $this->render('OFCalendarBundle:Visite:recap.html.twig',array('event' => $visitequalite));
 	}
 	// PANEL User Visite :
 
@@ -500,12 +560,12 @@ class VisiteController extends Controller
    		$statsnbvisiteurs = array_fill(0, 12, 0);
 
    		$statsBatiment = array_fill(0, 12, 0);
-		$statsIroise = array_fill(0, 12, 0);
-		$statsAzur = array_fill(0, 12, 0);
+		$statsCrea = array_fill(0, 12, 0);
+		$statsConf = array_fill(0, 12, 0);
 		$statsOpale = array_fill(0, 12, 0);
 		$statsShowroom = array_fill(0, 12, 0);
 		$statsHalle = array_fill(0, 12, 0);
-		$statsErmes = array_fill(0, 12, 0);
+		$statsRest = array_fill(0, 12, 0);
 
 
    		while($moisenarriere != 0){
@@ -517,21 +577,24 @@ class VisiteController extends Controller
    				// on peut mtn prendre les stats qu'on veut:
    				$statsnbvisites[12-$moisenarriere]+=1;
    				$statsnbvisiteurs[12-$moisenarriere]+=$visite->getNombreParticipants();
-   				foreach($visite->getElementsVisites() as $element){
-   					if($element->getTitre() == 'Extérieurs des bâtiments' ){
-   						$statsBatiment[12-$moisenarriere]+=1;
-   					}else if($element->getTitre() == 'Iroise' ){
-   						$statsIroise[12-$moisenarriere] +=1;
-   					}else if($element->getTitre() == 'Azur' ){
-   						$statsAzur[12-$moisenarriere] +=1;
-   					}else if($element->getTitre() == 'Rez-de-chaussée Opale' ){
-   						$statsOpale[12-$moisenarriere] +=1;
-   					}else if($element->getTitre() == 'Showroom' ){
-   						$statsShowroom[12-$moisenarriere] +=1;
-   					}else if($element->getTitre() == 'Bancs d’essais Ermès' ){
-   						$statsErmes[12-$moisenarriere] +=1;
+   				foreach($visite->getParcours() as $parcour){
+   					foreach($parcour->getElementsVisites() as $element){
+	   					if($element->getTitre() == 'Extérieurs des bâtiments' ){
+	   						$statsBatiment[12-$moisenarriere]+=1;
+	   					}else if($element->getTitre() == 'Espace de créativité' ){
+	   						$statsCrea[12-$moisenarriere] +=1;
+	   					}else if($element->getTitre() == 'Centre de Conférence' ){
+	   						$statsConf[12-$moisenarriere] +=1;
+	   					}else if($element->getTitre() == 'Rez-de-chaussée Opale' ){
+	   						$statsOpale[12-$moisenarriere] +=1;
+	   					}else if($element->getTitre() == 'Showroom' ){
+	   						$statsShowroom[12-$moisenarriere] +=1;
+	   					}else if($element->getTitre() == 'Restauration' ){
+	   						$statsRest[12-$moisenarriere] +=1;
    					}
    				}
+   				}
+   			
    			}
 
    			$moisenarriere -= 1;
@@ -540,7 +603,7 @@ class VisiteController extends Controller
 
 		$stats = $this->statsSommeVisitesAction($visites);
 		$visites2 = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findOneBy(array('id' => 2));
-		return $this->render('OFCalendarBundle:Admin:stats.html.twig',array('stats' => $stats,'visitesMonth'=> $statsVisitesMonth,'statsMoyenneMonth' => $statsMoyenneMonth, 'visitesMonthLabels' => $statsVisitesMonthlabels, 'statsnbvisites' => $statsnbvisites, 'statsnbvisiteurs' => $statsnbvisiteurs, 'statsBatiment' => $statsBatiment, 'statsIroise'=>$statsIroise, 'statsAzur' => $statsAzur, 'statsOpale'=>$statsOpale, 'statsShowroom'=>$statsShowroom, 'statsErmes'=>$statsErmes));
+		return $this->render('OFCalendarBundle:Admin:stats.html.twig',array('stats' => $stats,'visitesMonth'=> $statsVisitesMonth,'statsMoyenneMonth' => $statsMoyenneMonth, 'visitesMonthLabels' => $statsVisitesMonthlabels, 'statsnbvisites' => $statsnbvisites, 'statsnbvisiteurs' => $statsnbvisiteurs, 'statsBatiment' => $statsBatiment, 'statsCrea'=>$statsCrea, 'statsConf' => $statsConf, 'statsOpale'=>$statsOpale, 'statsShowroom'=>$statsShowroom, 'statsRest'=>$statsRest));
 
 	}
 

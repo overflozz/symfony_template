@@ -20,6 +20,7 @@ class ModifAdminType extends AbstractType
         ->add('nom', TextType::class)
         ->add('prenom',TextType::class)
         ->add('email')
+        ->add('telephone')
         ->add('save', SubmitType::class);
     }
 

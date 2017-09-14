@@ -25,11 +25,16 @@ class QuestionType extends AbstractType
         ->add('content', TextType::class, array('label' => 'Information complémentaire'))
         ->add('category', ChoiceType::class, array(
         'choices'  => array(
-            'Technique' => "Technique",
-            'Déroulement visite' => "Visite",
-            'Déroulement de la procédure' => "Procedure",
-            'Autre' => "Autre",
-    ),
+        'Extérieurs des bâtiments' => 'Extérieurs des bâtiments',
+        'Espace de créativité' => 'Espace de créativité',
+        'Centre de Conférence' => 'Centre de Conférence',
+        'Rez-de-chaussée Opale' =>'Rez-de-chaussée Opale',
+        'Showroom' => 'Showroom',
+        'Halle d’essais' => 'Halle d’essais',
+        'Général'=>'Général',
+
+
+        ),
         'label'=> 'Catégorie'
 
         ))

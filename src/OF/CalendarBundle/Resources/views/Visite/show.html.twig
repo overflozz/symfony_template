@@ -26,31 +26,6 @@
 
 {% block javascript %}
 	{{ parent()}}
-	<script>
-	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-	$(document).ready(function(){
-		$('#ajout_conferencier').click(function(){
-			$.ajax({
-				url: "{{ path('of_calendar_ajoutUserEvent', {'id' : event.id})}}",
-				method: "post",
-				data:{idUser: {{ app.user.id}}}
+		
 
-			}).done(function(){
-			
-			});
-		});
-		$('#suppr_conferencier').click(function(){
-			$.ajax({
-				url: "{{ path('of_calendar_supprUserEvent', {'id' : event.id})}}",
-				method: "post",
-				data:{idUser: {{ app.user.id}}}
-
-			}).done(function(){
-			
-			});
-		});
-	});
-	{% endif %}
-	
-	</script>
 {% endblock %}

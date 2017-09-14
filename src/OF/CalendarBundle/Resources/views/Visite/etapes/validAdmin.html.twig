@@ -30,8 +30,121 @@
 </div>
 
 
- <div class="col-md-8 col-xs-12 pull-right">
- {% include("@OFCalendar/Visite/recap.html.twig") %}
+ <div class=" col-xs-12 col-md-9 col-md-offset-3" style="background:#fff;">
+    <style>
+
+.dotElementVisite{
+  margin-left:-12px;
+  margin-top:2px;
+  border-radius:50%;
+  background-color:#f1471c;
+  width:20px;
+  height:20px;
+  border:4px solid #f1471c;
+  float: left !important;
+}
+.titreElementVisite{
+  padding-left: 20px;
+  
+  padding-top : 16px;
+  padding-bottom: 8px;
+  margin-top : -5px;
+}
+.elementPreview{
+  border-left : 5px solid #f1471c;
+  padding:0px;
+}
+.elementPreview b{
+    margin-top:-20px;
+}
+#preview li b{
+	
+}
+.past .elementPreview{
+  border-left : 5px solid #f1471c ;
+  padding:0px;
+}
+.past .dotElementVisite{
+
+  margin-left:-12px;
+  margin-top:2px;
+  background-color:#f1471c;
+  width:20px;
+  height:20px;
+  border:4px solid #f1471c;
+}
+
+
+    </style>
+  
+   		<h2 style="color:#13356d; text-align:center">Déroulé de la visite</h2>
+   		<i>La R&D d’EDF est heureuse de vous accueillir sur son site EDF Lab Paris-Saclay. Afin de faciliter votre entrée sur notre site, merci de prévoir une pièce d’identité le jour de votre visite. Nous vous informons également que vos sacs peuvent être soumis à vérification.</i><br /><br />
+
+
+		<div style=" width:100%; border: 2px solid #f1471c;">
+			<h4 style="color:#13356d; text-align:center;">Informations Générales</h4><div style="color:#f1471c; border: 0 none; background-color: #f1471c; height: 5px;padding-right:-20px;width:100%;"></div>
+			<div style="margin-left:30px;">
+				<u>Date de la visite :</u> <b> {{event.startDatetime|date("d/m/Y", "Europe/Paris")}} </b><br />
+				<u>Heure d'arrivée :</u> <b>{{event.startDatetime|date("H:i", "Europe/Paris")}} </b><br />
+				<u>Lieu du rendez-vous :</u> <b>{{event.lieurdv}}</b><br />
+				<u>Conférenciers :</u>
+				<ul>
+					{% for participant in event.applications %}
+						<li>{{participant.user.prenom}} {{participant.user.nom}} ( {{ participant.user.telephone }}, {{ participant.user.email }} )</li>
+					{% endfor %}
+					{% for i in 1..(event.nbUserMax - event.applications|length) %}
+						<li>
+							N/A
+
+						</li>
+					{% endfor %}
+				</ul>
+
+			</div>
+		</div>
+		<br />
+    {% set index = 0 %}
+    {% for parcour in event.parcours %}
+    {% set index = index + 1 %}
+		<div style=" width:100%; border: 2px solid #f1471c;padding-right:-20px;">
+			<h4 style="color:#13356d; text-align:center; ">Planning {{ index }}</h4>
+			<div style="color:#f1471c; border: 0 none; background-color: #f1471c; height: 5px;padding-right:-20px;width:100%;"></div>
+			<div style="margin-left:30px;">
+<ul id="preview" style="list-style:none;">
+          {% set heure = event.startDatetime|date("H", "Europe/Paris") %}
+          {% set minute = event.startDatetime|date("i", "Europe/Paris") %}
+          <li minute="{{minute}}" heure="{{heure}}"><b>{{ heure }}:{{ minute }}</b></li>
+            {% for element in parcour.elementsVisites %}
+              {% set heure = heure + element.duree|date("H", "Europe/Paris") %}
+              {% set minute = minute + element.duree|date("i", "Europe/Paris") %}
+              {% if (minute//60 > 0)%}
+                {% set heure  = heure + 1%}
+                {% set minute = minute - (minute//60) * 60 %}
+              {% endif %}
+              
+              <li minute="{{minute}}" heure="{{heure}}"> <div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> {{element.titre}}
+              {% if element.titre =="Showroom" %}
+                  <br /><i>{{element.thematique}}</i>
+              {% endif %}
+               </div><br /></div><b>{{heure}}:{% if minute < 10 %}0{% endif %}{{minute}}</b></li>
+              
+            {% endfor %}
+            <li minute="{{minute}}" heure="{{heure}}"><div class="elementPreview" style="float:none;"><div class="titreElementVisite"><span class="statut"></span> Fin</div><br /><b><br />{{event.endDatetime|date("H:i", "Europe/Paris")}}</b> </div></li><br />
+          </ul>
+          </div>
+		</div>		
+<br />
+    {% endfor %}	
+		
+		<div style="width:100%; border: 2px solid #f1471c;">
+			<h4 style="color:#13356d; text-align:center; ">Contacts</h4>
+			<div style="color:#f1471c; border: 0 none; background-color: #f1471c; height: 5px;padding-right:-20px;width:100%;"></div>
+				<div style="margin-left:30px;margin-bottom:10px;"><br />
+					<i>EDF Lab Paris-Saclay Communication : <b>Bénédicte Aubery</b>: 01.78.19.32.89 - benedicte-externe.aubery@edf.fr</i><br />
+					<i>Junior CentraleSupélec -Gestion des visites: <b>Ilana Dahan</b> : 06.12.44.58.69-ilana.dahan@supelec.fr</i>
+				</div>
+		</div>
+	
  </div>
 
 {% elseif event.step == 3 and event.refusEDF == 1 %}

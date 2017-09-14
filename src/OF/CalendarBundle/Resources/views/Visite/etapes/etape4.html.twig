@@ -4,28 +4,31 @@
           <div class="panel-heading">Déroulé en temps réel : 
           </div>
           <div class="panel-body">
-          <ul id="preview" style="padding-left: 0;list-style:none;">
-          {% set heure = event.startDatetime|date("H", "Europe/Paris") %}
-          {% set minute = event.startDatetime|date("i", "Europe/Paris") %}
-          <li minute="{{minute}}" heure="{{heure}}"><div class="dotElementVisite pull-left" style="margin-left:-7px;"></div> <b>{{ heure }}:{{ minute }}</b><div class="elementPreview"></li>
-            {% for element in event.elementsVisites %}
-              {% set heure = heure + element.duree|date("H", "Europe/Paris") %}
-              {% set minute = minute + element.duree|date("i", "Europe/Paris") %}
-              {% if (minute//60 > 0)%}
-                {% set heure  = heure + 1%}
-                {% set minute = minute - (minute//60) * 60 %}
-              {% endif %}
-              
-              <li minute="{{minute}}" heure="{{heure}}"> <div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> {{element.titre}}
-              {% if element.titre =="Showroom" %}
-                  <br /><i>{{element.thematique}}</i>
-              {% endif %}
-               </div><br /><div class="dotElementVisite pull-left" style=""></div><b>{{heure}}:{% if minute < 10 %}0{% endif %}{{minute}}</b></li>
-              
+          {% for parcour in event.parcours %}
+            <ul id="preview" style="padding-left: 0;list-style:none;">
+            {% set heure = event.startDatetime|date("H", "Europe/Paris") %}
+            {% set minute = event.startDatetime|date("i", "Europe/Paris") %}
+            <li minute="{{minute}}" heure="{{heure}}"><div class="dotElementVisite pull-left" style="margin-left:-7px;"></div> <b>{{ heure }}:{{ minute }}</b><div class="elementPreview"></li>
+            
+              {% for element in parcour.elementsVisites %}
+                {% set heure = heure + element.duree|date("H", "Europe/Paris") %}
+                {% set minute = minute + element.duree|date("i", "Europe/Paris") %}
+                {% if (minute//60 > 0)%}
+                  {% set heure  = heure + 1%}
+                  {% set minute = minute - (minute//60) * 60 %}
+                {% endif %}
+                
+                <li minute="{{minute}}" heure="{{heure}}"> <div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> {{element.titre}}
+                {% if element.titre =="Showroom" %}
+                    <br /><i>{{element.thematique}}</i>
+                {% endif %}
+                 </div><br /><div class="dotElementVisite pull-left" style=""></div><b>{{heure}}:{% if minute < 10 %}0{% endif %}{{minute}}</b></li>
+                
+              {% endfor %}
+              <li minute="{{minute}}" heure="{{heure}}"><div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> Fin</div><br /><div class="dotElementVisite pull-left" style=""></div><b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b> </li>
+            </ul>
+            <hr>
             {% endfor %}
-            <li minute="{{minute}}" heure="{{heure}}"><div class="elementPreview"><div class="titreElementVisite"><span class="statut"></span> Fin</div><br /><div class="dotElementVisite pull-left" style=""></div><b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b> </li>
-          </ul>
-          
 
 
           </div>
