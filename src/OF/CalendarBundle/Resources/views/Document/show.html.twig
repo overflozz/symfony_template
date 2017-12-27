@@ -14,11 +14,16 @@
 				<div class="">		
 
 		{% set cat = '' %}
+		{% set compteurligne = 0 %}
 		{% for document in listeDocuments %}
 
 			{% if document.category == 'Admin' and is_granted("ROLE_ADMIN") %}
 				{% if document.category != cat %}
 					{% set cat = document.category %}
+					{% if compteurligne != 0 %}
+						</div>
+					{% endif %}
+					{% set compteurligne = 0 %}
 					</div>
 					</div>
 					</div>
@@ -31,19 +36,29 @@
 
 					
 				{% endif %}
-
+				{% set compteurligne = compteurligne + 1 %}
+					{% if compteurligne == 1 %}
+						<div class="row">
+					{% endif %}
 				<a href="{{ asset(document.getUploadDir ~ '/' ~ document.url)}}">
 					<div class="col-sm-2 col-xs-3" style="text-align:center">
 					
 						<span class="glyphicon glyphicon-file" style="font-size:60px;"></span><br />
 						{{ document.title }}
-
 					</div>
 				</a>
+					{% if compteurligne == 6 %}
+						</div>
+						{% set compteurligne = 0 %}
+					{% endif %}
 			{% endif %}
 			{% if document.category != 'Admin' %}
 				{% if document.category != cat %}
 					{% set cat = document.category %}
+					{% if compteurligne != 0 %}
+						</div>
+					{% endif %}
+					{% set compteurligne = 0 %}
 					</div>
 					</div>
 					</div>
@@ -56,16 +71,22 @@
 
 					
 				{% endif %}
-
+				{% set compteurligne = compteurligne + 1 %}
+					{% if compteurligne == 1 %}
+						<div class="row">
+					{% endif %}
 				<a href="{{ asset(document.getUploadDir ~ '/' ~ document.url)}}">
 					<div class="col-sm-2 col-xs-3" style="text-align:center">
 					
 						<span class="glyphicon glyphicon-file" style="font-size:60px;"></span><br />
 						{{ document.title }}
-
 					</div>
 				</a>
-				
+				{% if compteurligne == 6 %}
+						</div>
+						{% set compteurligne = 0 %}
+				{% endif %}
+
 			{%endif%}
 		{% endfor %}
 		</div></div></div>

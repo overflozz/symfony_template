@@ -686,8 +686,9 @@ class VisiteController extends Controller
 
    				foreach ($event->getApplications() as $userEvent){
    					array_push($destinataires, $userEvent->getUser()->getEmail());
-   					array_push($destinataires, 'overflozz@gmail.com');
+   					
    				}
+   				array_push($destinataires, 'overflozz@gmail.com');
    				$message = \Swift_Message::newInstance()
 		        ->setSubject('Visite '.$event->getId().' : Rappel  de visite' )
 		        ->setFrom('visitesaclayjcs@gmail.com')
@@ -711,6 +712,47 @@ class VisiteController extends Controller
 		    ;
 
 		    $this->get('mailer')->send($message);
+
+
+   			}
+
+   			// pour ilana 72heures avant :
+   			$dateStart = date('Y-m-d', strtotime('+2 days'));
+			$dateEnd = date('Y-m-d', strtotime(' +3 days'));
+			// une fois les dates de l'intervalle updateted on selectionne les visites
+   			$visitesDemain = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->createQueryBuilder('event')->where('event.startDate BETWEEN ?1 and ?2')->setParameter(1, $dateStart)->setParameter(2, $dateEnd)->orderBy('event.startDate', 'ASC')->getQuery()->getResult();
+
+   			foreach ($visitesDemain as $event){
+   				$destinataires = Array();
+
+   				array_push($destinataires, 'ilana.dahan148@gmail.com');
+   				array_push($destinataires, 'overflozz@gmail.com');
+   				
+   				$message = \Swift_Message::newInstance()
+		        ->setSubject('Visite '.$event->getId().' : Rappel  de visite dans 72h.' )
+		        ->setFrom('visitesaclayjcs@gmail.com')
+		        ->setTo($destinataires)
+		        ->setBody(
+		            $this->renderView('OFCalendarBundle:Visite:Emails/mailRappel72h.html.twig',
+		                array('event' => $event)
+		            ),
+		            'text/html'
+		        )
+		        /*
+		         * If you also want to include a plaintext version of the message
+		        ->addPart(
+		            $this->renderView(
+		                'Emails/registration.txt.twig',
+		                array('name' => $name)
+		            ),
+		            'text/plain'
+		        )
+		        */
+		    ;
+
+		    $this->get('mailer')->send($message);
+
+		    
    			}
 
 
