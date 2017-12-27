@@ -143,7 +143,7 @@ $( document ).ready(function() {
 
 //STATS SUR L'ANNEE VISITES
 var data = {
-	"labels":["","","","","","","","","","","","",""],
+	"labels":[{% for mois in tableauMois %}"{{ mois }}",{% endfor %}],
 	"datasets" :[{
 
 		"label":"Nombre de visites",
@@ -176,7 +176,7 @@ new Chart(document.getElementById("ChartEvolAnneeVisites").getContext('2d'), {
 });
 //STATS SUR L'ANNEE VISITEURS
 var data = {
-	"labels":["","","","","","","","","","","","",""],
+	"labels":[{% for mois in tableauMois %}"{{ mois }}",{% endfor %}],
 	"datasets" :[{
 		"label":"Nombre de visiteurs",
 		"data" : [{% for nombre in statsnbvisiteurs %},{{ nombre }}{% endfor %}],
@@ -207,7 +207,7 @@ new Chart(document.getElementById("ChartEvolAnneeVisiteurs").getContext('2d'), {
 
 //STATS SUR L'ANNEE Parcours visite
 var data = {
-	"labels":["","","","","","","","","","","","",""],
+	"labels":[{% for mois in tableauMois %}"{{ mois }}",{% endfor %}],
 	"datasets" :[{
 		"label":"Extérieurs Batiments",
 		"data" : [{% for nombre in statsBatiment %},{{ nombre }}{% endfor %}],

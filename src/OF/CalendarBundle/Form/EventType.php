@@ -40,6 +40,19 @@ class EventType extends AbstractType
 
 
             )))
+        ->add('statutClient', ChoiceType::class, array('choices' => array(
+            'Interne R&D' => 'Interne R&D', 
+            'Interne EDF' => 'Interne EDF', 
+            'Externe EDF'=> 'Externe EDF', 
+
+            )))
+        ->add('nationaliteClient', TextType::class)
+        ->add('handicap', ChoiceType::class, array('label' => 'Personne(s) handicapée(s)','choices' => array(
+            'Non' => 'Non', 
+            'Oui' => 'Oui', 
+             
+
+            )))
         ->add('nomClient', TextType::class)
         ->add('prenomClient', TextType::class)
 
@@ -65,10 +78,6 @@ class EventType extends AbstractType
         'Français' => 'Français',
         'Anglais' => 'Anglais')))
         ->add('contexte', TextType::class, array('required' => false))
-        ->add('priorite', ChoiceType::class,array('choices'  => array(
-        'Elevée' => 'Elevée',
-        'Moyenne' => 'Moyenne',
-        'Faible' => 'Faible' )))
         ->add('save',  SubmitType::class, array('label' => 'Enregistrer'));
     }
     

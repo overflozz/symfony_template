@@ -101,9 +101,18 @@ class VisiteController extends Controller
 	      	$event->setStep(3); // on enlève la demande.
 
 	      }
+	      if($event->getStep() == 1 ){
+	      	// l'envoi du formulaire à l'étape ne se fait pas sous ajax donc pas de validation automatique
+	      	$event->setStep(2);
+	      	$em->persist($event);
+			
+		    $em->flush();
+	      	return $this->redirectToRoute('of_calendar_view_visite', array('id' => $id,'visitesToDo' =>$visitesToDo, 'etape' => 2));
+		  
+	      }
 
 	      // on accepte les modif de visite que si elle est dévérouillée
-	      if (true){
+	     
 
 		     
 		      $halle = 0;
@@ -133,9 +142,12 @@ class VisiteController extends Controller
 			$em->persist($event);
 			
 		    $em->flush();
-	      }
+	      
 
+		    if($event->getStep() == 1){
 
+	      		return $this->redirectToRoute('of_calendar_view_visite', array('id' => $id,'visitesToDo' =>$visitesToDo, 'etape' => 2));
+		    }
 	      return $this->redirectToRoute('of_calendar_view_visite', array('id' => $id,'visitesToDo' =>$visitesToDo, 'etape' => abs($etape)));
 	    }
 
@@ -412,7 +424,7 @@ class VisiteController extends Controller
 
 	    $message = \Swift_Message::newInstance()
 	        ->setSubject('Visite '.$event->getId().' : Demande accès a la Halle d\'essais' )
-	        ->setFrom('overflozz@gmail.com')
+	        ->setFrom('visitesaclayjcs@gmail.com')
 	        ->setTo(array('ilana.dahan148@gmail.com', 'overflozz@gmail.com'))
 	        ->setBody(
 	            $this->renderView('OFCalendarBundle:Visite:Emails/mailAdminEDF.html.twig',
@@ -515,21 +527,28 @@ class VisiteController extends Controller
 	public function statsAllAction(){
 
 		
-		$visites = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findBy(array('satisfactiongenere' => 1));
-		
-   		$MonthAgo = date('Y-m-d', strtotime('-31 days'));
+		$visites = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->createQueryBuilder('event')->getQuery()->getResult();
+		$tableauMois=array(date('F', strtotime('-13 month')), date('F', strtotime('-12 month')),date('F', strtotime('-11 months')),date('F', strtotime('-10 months')),date('F', strtotime('-9 months')),date('F', strtotime('-8 months')),date('F', strtotime('-7 months')),date('F', strtotime('-6 months')),date('F', strtotime('-5 months')),date('F', strtotime('-4 months')),date('F', strtotime('-3 months')),date('F', strtotime('-2 months')),date('F', strtotime('-1 months')));
+
+
+		// on part du monthago et on remonte
+   		// data courante commence au premier de notre mois
+		$datecourante = date('Y-m-d', strtotime('-'.date('d', strtotime('now')).' days'));
+		$datecourante = date('Y-m-d', strtotime($datecourante.' + 1 days'));
+   		$MonthAgo = $datecourante;
+
+
    		$allVisitesmonth = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->createQueryBuilder('event')->where('event.startDate BETWEEN ?1 and CURRENT_DATE()')->setParameter(1, $MonthAgo)->orderBy('event.startDate', 'ASC')->getQuery()->getResult();
 
 			
    		$statsVisitesMonth = array_fill(0, 32, 0);
    		$statsVisitesMonthlabels = array_fill(0, 32, "");
    		$statsMoyenneMonth = array_fill(0, 32, 0);
-   		// on part du monthago et on remonte
-   		$datecourante =  date('Y-m-d', strtotime('-31 days'));
-   		$i = 0;
+   		
    		$nombreMemeJour = 0;
+   		
    		foreach ($allVisitesmonth  as $visite){
-
+   			$i= 0;
 
    			while (date_format($visite->getstartDate(), 'Y-m-d') != $datecourante){
    				if ($nombreMemeJour > 1){
@@ -547,14 +566,18 @@ class VisiteController extends Controller
    			}
    			$nombreMemeJour += 1;
    			$statsMoyenneMonth[$i] += $visite->getNotesMoyenne();
+
    			$statsVisitesMonth[$i] +=1;
    				
    		}
    		
    		//stats sur les 12 derniers mois :
    		$moisenarriere = 12;
-   		$dateStart = date('Y-m-d', strtotime('-13 months'));
-		$dateEnd = date('Y-m-d', strtotime('-12 months'));
+   		$datecourante = date('Y-m-d', strtotime('-'.date('d', strtotime('now')).' days'));
+		$datecourante = date('Y-m-d', strtotime($datecourante.' + 1 days'));
+		
+   		$dateStart = date('Y-m-d', strtotime($datecourante.'-13 months'));
+		$dateEnd = date('Y-m-d', strtotime($datecourante.'-12 months'));
 
    		$statsnbvisites = array_fill(0, 12, 0);
    		$statsnbvisiteurs = array_fill(0, 12, 0);
@@ -602,14 +625,14 @@ class VisiteController extends Controller
 
 
 		$stats = $this->statsSommeVisitesAction($visites);
-		$visites2 = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->findOneBy(array('id' => 2));
-		return $this->render('OFCalendarBundle:Admin:stats.html.twig',array('stats' => $stats,'visitesMonth'=> $statsVisitesMonth,'statsMoyenneMonth' => $statsMoyenneMonth, 'visitesMonthLabels' => $statsVisitesMonthlabels, 'statsnbvisites' => $statsnbvisites, 'statsnbvisiteurs' => $statsnbvisiteurs, 'statsBatiment' => $statsBatiment, 'statsCrea'=>$statsCrea, 'statsConf' => $statsConf, 'statsOpale'=>$statsOpale, 'statsShowroom'=>$statsShowroom, 'statsRest'=>$statsRest));
+		return $this->render('OFCalendarBundle:Admin:stats.html.twig',array('stats' => $stats,'visitesMonth'=> $statsVisitesMonth, 'visitesMonthLabels' => $statsVisitesMonthlabels, 'statsMoyenneMonth'=>$statsMoyenneMonth, 'statsnbvisites' => $statsnbvisites, 'statsnbvisiteurs' => $statsnbvisiteurs, 'statsBatiment' => $statsBatiment, 'statsCrea'=>$statsCrea, 'statsConf' => $statsConf, 'statsOpale'=>$statsOpale, 'statsShowroom'=>$statsShowroom, 'statsRest'=>$statsRest, 'tableauMois'=>$tableauMois));
 
 	}
 
 	public function statsSommeVisitesAction($visites){
+
 		//dans result autant de tableau que de questions, et dans chaque sous tableaux, autant de tableau que de réponses.
-		$result = array(array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0));
+		$result = array(array(0,0,0,0,0,0,0,0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0), array(0,0,0,0,0,0,0, 0));
 		foreach ($visites as $visite){
 			$tableauNotes = $visite->getNotes();
 			// on somme le tableau result avec le tableau tableauNotes
@@ -650,5 +673,83 @@ class VisiteController extends Controller
 
 
 		return $this->render('OFCalendarBundle:Visite:panelUser/show.html.twig',array('listeVisitesQualite' => $visitequalite, 'listeVisites' => $visites,'visitesToDo' => $visitesToDo, 'visitesDone' => $visitesDone));
+	}
+
+	public function mailAutoAction(Request $req){
+			$dateStart = date('Y-m-d', strtotime('-0 days'));
+			$dateEnd = date('Y-m-d', strtotime(' +1 days'));
+			// une fois les dates de l'intervalle updateted on selectionne les visites
+   			$visitesDemain = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->createQueryBuilder('event')->where('event.startDate BETWEEN ?1 and ?2')->setParameter(1, $dateStart)->setParameter(2, $dateEnd)->orderBy('event.startDate', 'ASC')->getQuery()->getResult();
+
+   			foreach ($visitesDemain as $event){
+   				$destinataires = Array();
+
+   				foreach ($event->getApplications() as $userEvent){
+   					array_push($destinataires, $userEvent->getUser()->getEmail());
+   					array_push($destinataires, 'overflozz@gmail.com');
+   				}
+   				$message = \Swift_Message::newInstance()
+		        ->setSubject('Visite '.$event->getId().' : Rappel  de visite' )
+		        ->setFrom('visitesaclayjcs@gmail.com')
+		        ->setTo($destinataires)
+		        ->setBody(
+		            $this->renderView('OFCalendarBundle:Visite:Emails/mailRappelVeille.html.twig',
+		                array('event' => $event)
+		            ),
+		            'text/html'
+		        )
+		        /*
+		         * If you also want to include a plaintext version of the message
+		        ->addPart(
+		            $this->renderView(
+		                'Emails/registration.txt.twig',
+		                array('name' => $name)
+		            ),
+		            'text/plain'
+		        )
+		        */
+		    ;
+
+		    $this->get('mailer')->send($message);
+   			}
+
+
+
+   			// pour ilana lorsqu'elle n'a pas rempli ses elements de visites
+   			$dateStart = date('Y-m-d', strtotime('+20 days'));
+			$dateEnd = date('Y-m-d', strtotime(' +21 days'));
+   			$visitesNoParcours= $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event')->createQueryBuilder('event')->where('event.startDate BETWEEN ?1 and ?2')->setParameter(1, $dateStart)->setParameter(2, $dateEnd)->orderBy('event.startDate', 'ASC')->getQuery()->getResult();
+
+   			foreach ($visitesNoParcours as $event){
+				
+   				if($event->getParcours()->count()== 0){
+   					$message = \Swift_Message::newInstance()
+			        ->setSubject('Visite '.$event->getId().' : Parcours de visite non rempli' )
+			        ->setFrom('visitesaclayjcs@gmail.com')
+			        ->setTo(array('ilana.dahan148@gmail.com', 'overflozz@gmail.com'))
+			        ->setBody(
+			            $this->renderView('OFCalendarBundle:Visite:Emails/mailRappelParcours.html.twig',
+			                array('event' => $event)
+			            ),
+			            'text/html'
+			        )
+			        /*
+			         * If you also want to include a plaintext version of the message
+			        ->addPart(
+			            $this->renderView(
+			                'Emails/registration.txt.twig',
+			                array('name' => $name)
+			            ),
+			            'text/plain'
+			        )
+			        */
+			    ;
+
+			    $this->get('mailer')->send($message);
+   					
+   				}
+
+   			}
+   			return $this->redirectToRoute('of_calendar_homepage');		    
 	}
 }

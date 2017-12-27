@@ -39,9 +39,8 @@
 
 </div>
 <div class="row">
-<div class="col-sm-2">{{ form_row(form.priorite) }}</div>
-<div class="col-md-5">{{form_row(form.lieurdv)}}</div>
-<div class="col-md-5">{{form_row(form.lieudepart)}}</div>
+<div class="col-md-6">{{form_row(form.lieurdv)}}</div>
+<div class="col-md-6">{{form_row(form.lieudepart)}}</div>
 
 <div class="col-sm-6">{{ form_row(form.nombreParticipants) }}</div>
 
@@ -56,9 +55,11 @@
 
 
 <div class="col-md-12">{{form_row(form.entrepriseClient)}}</div>
-<div class="col-md-6">{{form_row(form.typeClient)}}</div>
-<div class="col-md-6">{{form_row(form.serviceClient)}}</div>
-
+<div class="col-md-4">{{form_row(form.typeClient)}}</div>
+<div class="col-md-4">{{form_row(form.statutClient)}}</div>
+<div class="col-md-4">{{form_row(form.serviceClient)}}</div>
+<div class="col-md-6">{{ form_row(form.nationaliteClient)}}</div>
+<div class="col-md-6">{{ form_row(form.handicap)}}</div>
 <div class="col-md-6">{{form_row(form.villeClient)}}</div>
 <div class="col-md-6">{{form_row(form.paysClient)}}</div>
 <div class="col-md-6">{{form_row(form.adresseMailClient)}}</div>

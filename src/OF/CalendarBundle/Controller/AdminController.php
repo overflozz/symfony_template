@@ -156,6 +156,7 @@ class AdminController extends Controller
 
 
     //ADMINISTRATION Visites
+
         public function visitesAdminAction(Request $request)
     {   
 if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))){
@@ -167,6 +168,27 @@ if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))){
         return $this->render('OFCalendarBundle:Admin:visites.html.twig', array('listeVisites' => $listeVisites));
     }
 
+
+    public function annulerVisiteAction($id, Request $req){
+        if (!($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))){
+
+            throw new NotFoundHttpException("Forbidden.");
+        }
+        $em = $this->getDoctrine()->getManager();
+        $repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
+        $event = $repositoryEvent->findOneBy(array('id' => $id));
+        if ($event == null){
+            throw new NotFoundHttpException("Visite non trouvée");
+
+        }
+        $event->setCanceled(1-$event->getCanceled());
+        if($event->getCanceled() == 1){
+            $event->setVerrou(1);            
+        }
+        $em->persist($event);
+        $em->flush();
+        return $this->visitesAdminAction($req);
+    }
 
        public function supprVisiteAdminAction($id, Request $request)
     {   

@@ -1,6 +1,6 @@
   {% if event.verrou ==1 %}
   <div class="alert alert-warning">
-    <span class="glyphicon glyphicon-lock"></span> Cette visite a été acceptée par EDF. Aucune modification sur son organisation n'est possible.
+    <span class="glyphicon glyphicon-lock"></span> Cette visite a été verrouillée par EDF. Aucune modification sur son organisation n'est possible.
   </div>
   {% endif %}
 <div class="" id="choixVisite">
@@ -126,7 +126,7 @@
                <div id='collapsingpanel' class='panel panel-default' style='margin:auto; width:auto; margin-bottom : 10px;'>
            <div class='panel-heading' style='height: 50px;'>
              <div class='panel-title  col-md-12'>
-                <span class='glyphicon glyphicon-move pull-left hidden-xs' style='margin-top:7px; margin-left:-7px;opacity:0.5;''></span>
+                <span class='glyphicon glyphicon-move pull-left hidden-xs' style='margin-top:7px; margin-left:-7px;opacity:0.5;'></span>
                 <div class='pull-right' style='width: 95%;line-height:45px;'>{% if event.verrou == 0 %}{{form_widget(elementVisite.titre, {'attr' : {'class' : ' titreInput browser-default', 'style' : 'margin-top:-9px;'}}) }} {% else %}{{form_widget(elementVisite.titre, {'attr' : {'class' : ' titreInput browser-default','disabled':'disabled', 'style' : 'margin-top:-9px;'}}) }} {% endif %}
                 </div>
               </div>
@@ -134,7 +134,7 @@
                   <div id='collapse' class='panel-default collapse'>
                     <div class='panel-body'>
                 
-                    <div class='col-md-12' style='padding:0px;''> 
+                    <div class='col-md-12' style='padding:0px;'> 
                       <div class='col-md-2 pull-left'>
                         Durée : 
                       </div>
@@ -187,12 +187,12 @@
     </div></div></div>
   {% endfor %}
 </ul>
-
+{% if event.verrou != 1 %}
 <a  id='add_parcours' class=' right btn-large waves-effect waves-light btn-primary btn'><i class='material-icons left'>add</i> Ajouter un parcours</a>
     {{ form_widget(form.save, {'label': 'Enregistrer', 'attr' : {'class' : 'btn btn-large btn-primary left', 'role' : 'valid'}}) }}
     {{ form_rest(form) }}
     {{ form_end(form) }}
-
+{% endif %}
 </div>
  <script>
 

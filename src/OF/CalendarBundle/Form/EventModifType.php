@@ -40,6 +40,19 @@ class EventModifType extends AbstractType
 
 
             )))
+        ->add('statutClient', ChoiceType::class, array('choices' => array(
+            'Interne R&D' => 'Interne R&D', 
+            'Interne EDF' => 'Interne EDF', 
+            'Externe EDF'=> 'Externe EDF', 
+
+            )))
+        ->add('nationaliteClient', TextType::class)
+        ->add('handicap', ChoiceType::class, array('label' => 'Personne(s) handicapée(s)','choices' => array(
+            'Non' => 'Non', 
+            'Oui' => 'Oui', 
+             
+
+            )))
         ->add('nomClient', TextType::class)
         ->add('prenomClient', TextType::class)
 
@@ -58,17 +71,13 @@ class EventModifType extends AbstractType
         ->add('lieudepart', TextType::class, array('label' => 'Lieu de fin'))
         ->add('nbUserMax', IntegerType::class, array('label' => 'Nombre de conférenciers'))
         ->add('nombreParticipants', IntegerType::class)
-        ->add('startDate', DateType::class, array('widget' => 'single_text','format' => 'yyyy-MM-dd HH:mm:ss', 'label' => 'Date'))
+        ->add('startDate', DateType::class, array('widget' => 'single_text','format' => 'yyyy-MM-dd 00:00:00', 'label' => 'Date'))
         ->add('heureDebut', TimeType::class)
         ->add('heureFin', TimeType::class)
         ->add('langue', ChoiceType::class,array('choices'  => array(
         'Français' => 'Français',
         'Anglais' => 'Anglais')))
         ->add('contexte', TextType::class, array('required' => false))
-        ->add('priorite', ChoiceType::class,array('choices'  => array(
-        'Elevée' => 'Elevée',
-        'Moyenne' => 'Moyenne',
-        'Faible' => 'Faible' )))
         ->add('save',  SubmitType::class, array('label' => 'Enregistrer'));
     }
     

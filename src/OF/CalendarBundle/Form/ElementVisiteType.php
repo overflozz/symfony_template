@@ -35,7 +35,10 @@ class ElementVisiteType extends AbstractType
         'Clients et territoires' => 'Clients et territoires',
         'Systèmes électriques' => 'Systèmes électriques',
         'Production bas carbone'=>'Production bas carbone',
-        'Au coeur de la société'=>'Au coeur de la société')))
+        'Au coeur de la société'=>'Au coeur de la société',
+        'Présentation de la R&D' => 'Présentation de la R&D',
+        'Présentation du plateau de Saclay' => 'Présentation du plateau de Saclay',
+        'Showroom complet' => 'Showroom complet')))
         ->add('description', TextType::class, array('required' => false));
     }
     

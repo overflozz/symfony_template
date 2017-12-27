@@ -28,6 +28,12 @@ of_calendar_AdminViewVisiteuser:
     defaults:
         _controller: OFCalendarBundle:Admin:viewVisiteUserAdmin
 
+of_calendar_AdminAnnulerVisite:
+    path:     /adminpanel/annulerVisite/{id}
+    defaults:
+        _controller: OFCalendarBundle:Admin:annulerVisite
+
+
 of_calendar_Modifusers:
     path:     /adminpanel/modifUsers/{id}
     defaults:
@@ -192,3 +198,8 @@ of_calendar_deleteParcours:
     defaults:
         _controller: OFCalendarBundle:Visite:deleteParcours
     methods: [post]
+
+of_calendar_mailAuto:
+    path:    /mailAuto
+    defaults:
+        _controller: OFCalendarBundle:Visite:mailAuto

@@ -40,9 +40,8 @@
 
 </div>
 <div class="row">
-<div class="col-sm-2">{{ form_row(form.priorite) }}</div>
-<div class="col-md-5">{{form_row(form.lieurdv)}}</div>
-<div class="col-md-5">{{form_row(form.lieudepart)}}</div>
+<div class="col-md-6">{{form_row(form.lieurdv)}}</div>
+<div class="col-md-6">{{form_row(form.lieudepart)}}</div>
 
 <div class="col-sm-6">{{ form_row(form.nombreParticipants) }}</div>
 
@@ -65,7 +64,9 @@
 <div class="col-md-6">{{form_row(form.adresseMailClient)}}</div>
 <div class="col-md-6">{{form_row(form.telephoneClient)}}</div>
 <div class="col-md-12">{{form_row(form.commentaireClient)}}</div>
-
+<div class="col-md-4">{{form_row(form.statutClient)}}</div>
+<div class="col-md-4">{{form_row(form.nationaliteClient)}}</div>
+<div class="col-md-4">{{form_row(form.handicap)}}</div>
 </div>
 
 
@@ -73,7 +74,7 @@
 <div class="col-md-8">{{form_row(form.respoQuali)}}</div>
 <div class="col-md-4">{{ form_row(form.nbUserMax) }}</div>
 
-<div class="col-md-8">{{ form_row(form.contexte) }}</div>
+<div class="col-md-12">{{ form_row(form.contexte) }}</div>
 
 
 
@@ -122,7 +123,11 @@
     ampmclickable: true, // make AM PM clickable
     aftershow: function(){} //Function for after opening timepicker  
   });
-        
+      
+      $( document ).ready(function() {  
+      var valueDate= $("input#of_calendarbundle_event_startDate").attr('value');
+      $("input[name='of_calendarbundle_event[startDate]_submit']").attr('value', valueDate);
+     });
            
       		
    			

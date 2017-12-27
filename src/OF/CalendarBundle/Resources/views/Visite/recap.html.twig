@@ -68,12 +68,6 @@
 					{% for participant in event.applications %}
 						<li>{{participant.user.prenom}} {{participant.user.nom}} ( {{ participant.user.telephone }}, {{ participant.user.email }} )</li>
 					{% endfor %}
-					{% for i in 1..(event.nbUserMax - event.applications|length) %}
-						<li>
-							N/A
-
-						</li>
-					{% endfor %}
 				</ul>
 
 			</div>

@@ -52,11 +52,26 @@ class Event
      * @ORM\Column(type="string",length=512, nullable=true)
      */
     protected $typeClient;
+    /**
+     * 
+     * @ORM\Column(type="string",length=512, nullable=true)
+     */
+    protected $statutClient;
      /**
      * 
      * @ORM\Column(type="string",length=512, nullable=true)
      */
     protected $nomClient;
+    /**
+     * 
+     * @ORM\Column(type="string",length=512, nullable=true)
+     */
+    protected $nationaliteClient;
+    /**
+     * 
+     * @ORM\Column(type="string",length=512, nullable=true)
+     */
+    protected $handicap;
     /**
      * 
      * @ORM\Column(type="string",length=512, nullable=true)
@@ -176,7 +191,11 @@ class Event
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $verrou; // permet de savoir si on verouille ou non les etapes de procédure
-
+    /**
+     * 
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $canceled; // permet de savoir si on verouille ou non les etapes de procédure si la visite est annulée
     /**
      * 
      
@@ -306,6 +325,7 @@ class Event
         $this->nbUserMax = 2;
         $this->satisfactiongenere = false;
         $this->verrou = 0;
+        $this->canceled = 0;
         $this->refusEDF = 0;
 
     }
@@ -1597,5 +1617,101 @@ class Event
     public function getParcours()
     {
         return $this->parcours;
+    }
+
+    /**
+     * Set statutClient
+     *
+     * @param string $statutClient
+     *
+     * @return Event
+     */
+    public function setStatutClient($statutClient)
+    {
+        $this->statutClient = $statutClient;
+
+        return $this;
+    }
+
+    /**
+     * Get statutClient
+     *
+     * @return string
+     */
+    public function getStatutClient()
+    {
+        return $this->statutClient;
+    }
+
+    /**
+     * Set nationaliteClient
+     *
+     * @param string $nationaliteClient
+     *
+     * @return Event
+     */
+    public function setNationaliteClient($nationaliteClient)
+    {
+        $this->nationaliteClient = $nationaliteClient;
+
+        return $this;
+    }
+
+    /**
+     * Get nationaliteClient
+     *
+     * @return string
+     */
+    public function getNationaliteClient()
+    {
+        return $this->nationaliteClient;
+    }
+
+    /**
+     * Set handicap
+     *
+     * @param string $handicap
+     *
+     * @return Event
+     */
+    public function setHandicap($handicap)
+    {
+        $this->handicap = $handicap;
+
+        return $this;
+    }
+
+    /**
+     * Get handicap
+     *
+     * @return string
+     */
+    public function getHandicap()
+    {
+        return $this->handicap;
+    }
+
+    /**
+     * Set canceled
+     *
+     * @param integer $canceled
+     *
+     * @return Event
+     */
+    public function setCanceled($canceled)
+    {
+        $this->canceled = $canceled;
+
+        return $this;
+    }
+
+    /**
+     * Get canceled
+     *
+     * @return integer
+     */
+    public function getCanceled()
+    {
+        return $this->canceled;
     }
 }

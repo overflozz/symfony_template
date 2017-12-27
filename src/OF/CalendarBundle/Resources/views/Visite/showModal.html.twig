@@ -5,11 +5,17 @@
 	
 				
 			<div class="col-md-12">
-		
+		 
 		<div style="text-align:center">Le <b>{{event.startDatetime|date("d/m/Y", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b></div>
 		<br /><br/>
 
 		<div class="divider"></div>
+		 {% if event.canceled == 1 %}
+ 
+			  <div class="alert alert-warning">
+			    <span class="glyphicon glyphicon-lock"></span> Cette visite a été <b>annulée</b>.
+			  </div>
+		  {% endif %}
 		<div class="row">
 			<div class="col-md-6 col-xs-12 pull-left">
 
@@ -46,11 +52,13 @@
 			<div class="col-md-6 pull-left">
 				<b>Langue</b> : {{ event.langue }}<br />
 				<b>Client</b> : {{ event.entrepriseClient }} <br />
+				<b>Contexte</b> : {{ event.contexte}} <br />
 
 			</div>
 			<div class="col-md-6  pull-right">
 				<b>Nombre de visiteurs</b> : {{ event.nombreParticipants }} <br />
 				<b>Type de public</b> : {{ event.typeClient }} <br />
+				<b>Commentaire</b> : {{ event.commentaireClient }} <br />
 			</div>
 		</div>
 	

@@ -70,6 +70,8 @@ class CalendarEventListener
 		    }
 		    else if (count($companyEvent->getApplications()) >= $companyEvent->getNbUserMax()){
 		    	$eventEntity->setCssClass('locked');
+		    }else if ($companyEvent->getCanceled() == 1){
+		    	$eventEntity->setCssClass('annulee');
 		    }else{
 		    	$eventEntity->setCssClass('dispo');
 		    }

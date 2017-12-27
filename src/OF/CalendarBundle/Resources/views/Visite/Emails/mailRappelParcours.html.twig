@@ -1,0 +1,9 @@
+<html><body><div style="margin: 0 auto; width: 5000px; text-align:center; border-bottom: 2px solid var(--color-secondaire);padding-bottom:5px"><b>Parcours non renseigné pour la visite : {{ event.id }}</b></div><br />
+<div style="margin: 0 auto; width: 500px; text-align:center; margin-top : -20px; ">Le <b>{{event.startDatetime|date("d/m/Y", "Europe/Paris")}}</b> de <b>{{event.startDatetime|date("H:i", "Europe/Paris")}}</b> à <b>{{event.endDatetime|date("H:i", "Europe/Paris")}}</b></div><br />
+
+Pour ajouter un parcours, <a href="http://visitesaclayjcs.com{{path('of_calendar_view_visite', {'id' : event.id, 'etape' : 2} )}}"> cliquez ici ! </a>
+
+Il faudra vous être au préalable identifié sous votre compte admin.
+
+<i> Ce mail a été généré automatiquement, cela ne sert à rien d'y répondre. </i>
+</div></body></html>

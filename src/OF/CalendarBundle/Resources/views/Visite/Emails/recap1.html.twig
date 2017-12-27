@@ -59,12 +59,7 @@
 							{% for participant in Participants %}
 								<li>{{participant.user.username}}</li>
 							{% endfor %}
-							{% for i in 0..(event.nbUserMax - Participants|length) %}
-								<li>
-									N/A
-
-								</li>
-							{% endfor %}
+							
 						</ul>
 					</div>
 					<div class="col-xs-6">
