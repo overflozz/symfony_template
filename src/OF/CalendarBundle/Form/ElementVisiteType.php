@@ -25,6 +25,7 @@ class ElementVisiteType extends AbstractType
         'Centre de Conférence' => 'Centre de Conférence',
         'Rez-de-chaussée Opale' =>'Rez-de-chaussée Opale',
         'Showroom' => 'Showroom',
+        'Lancement Showroom' => 'Lancement Showroom',
         'Halle d’essais' => 'Halle d’essais',
         'Restauration'=>'Restauration',
 

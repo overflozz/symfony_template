@@ -319,7 +319,7 @@ class Event
         $this->startDate = new \DateTime();
         $this->startDatetime = new \DateTime();
         $this->endDatetime = new \DateTime();
-        $this->step = 1;
+        $this->step = 2;
         $this->enquetes = array();
         $this->parcours = array();
         $this->nbUserMax = 2;

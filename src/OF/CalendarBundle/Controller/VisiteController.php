@@ -339,12 +339,18 @@ class VisiteController extends Controller
 			}			
 
 			if (abs($event->getStep()) >= 3 && $etape == 2 && $event->getHalleessais() == 1){
+				$event->setStep(4);
+				$em->persist($event);
+				$em->flush();
+				return new Response("Validé.", 200 );
+				/*
 				//le gars a changé et veut la halle d'essais.
 				$event->setStep(3);
 				$em->persist($event);
 				$event->setRefusEDF(0);
 				$em->flush();
 				return new Response("Validé.", 200 );
+				*/
 
 			}
 
@@ -360,7 +366,7 @@ class VisiteController extends Controller
 
 				//on verrouille si l'etape est la quatrième
 				if ($event->getStep() == 4){
-					$event->setVerrou(1);
+					//$event->setVerrou(1);
 				}
 				$em->persist($event);
 				$em->flush();
@@ -368,11 +374,11 @@ class VisiteController extends Controller
 			}
 			if ($etape == -48 && $event->getStep() < 0 && $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
 				// alors c'est que l'admin a reçu le mail et cherche à valider 
-				$event->setStep(-($event->getStep()) + 1);
-				$event->setRefusEDF(0);
-				$event->setVerrou(1); // on verrouille
-				$em->persist($event);
-				$em->flush();
+				//$event->setStep(-($event->getStep()) + 1);
+				//$event->setRefusEDF(0);
+				//$event->setVerrou(1); // on verrouille
+				//$em->persist($event);
+				//$em->flush();
 				return new Response("Validé.", 200 );
 			}
 
@@ -402,7 +408,7 @@ class VisiteController extends Controller
 						
 
 							// si halle d'essais
-							$this->envoyerMailAction($id); // si on est à l'étape 3, c'est que l'admin EDF doit recevoir son mail.
+							//$this->envoyerMailAction($id); // si on est à l'étape 3, c'est que l'admin EDF doit recevoir son mail.
 						
 						
 					}
@@ -416,7 +422,7 @@ class VisiteController extends Controller
 
 	}
 	public function envoyerMailAction($id){
-
+		/*
     	$repositoryEvent = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:Event');
     	$repositoryEventUser = $this->getDoctrine()->getManager()->getRepository('OFCalendarBundle:EventUser');
 		$event = $repositoryEvent->findOneBy(array('id' => $id));	
@@ -432,18 +438,10 @@ class VisiteController extends Controller
 	            ),
 	            'text/html'
 	        )
-	        /*
-	         * If you also want to include a plaintext version of the message
-	        ->addPart(
-	            $this->renderView(
-	                'Emails/registration.txt.twig',
-	                array('name' => $name)
-	            ),
-	            'text/plain'
-	        )
-	        */
+	        
+	    
 	    ;
-	    $this->get('mailer')->send($message);
+	    $this->get('mailer')->send($message); */
 
 	}
 
@@ -587,6 +585,7 @@ class VisiteController extends Controller
 		$statsConf = array_fill(0, 12, 0);
 		$statsOpale = array_fill(0, 12, 0);
 		$statsShowroom = array_fill(0, 12, 0);
+		$statsLancementShowroom = array_fill(0, 12, 0);
 		$statsHalle = array_fill(0, 12, 0);
 		$statsRest = array_fill(0, 12, 0);
 
@@ -612,6 +611,8 @@ class VisiteController extends Controller
 	   						$statsOpale[12-$moisenarriere] +=1;
 	   					}else if($element->getTitre() == 'Showroom' ){
 	   						$statsShowroom[12-$moisenarriere] +=1;
+	   					}else if($element->getTitre() == 'Lancement Showroom' ){
+	   						$statsLancementShowroom[12-$moisenarriere] +=1;
 	   					}else if($element->getTitre() == 'Restauration' ){
 	   						$statsRest[12-$moisenarriere] +=1;
    					}
@@ -625,7 +626,7 @@ class VisiteController extends Controller
 
 
 		$stats = $this->statsSommeVisitesAction($visites);
-		return $this->render('OFCalendarBundle:Admin:stats.html.twig',array('stats' => $stats,'visitesMonth'=> $statsVisitesMonth, 'visitesMonthLabels' => $statsVisitesMonthlabels, 'statsMoyenneMonth'=>$statsMoyenneMonth, 'statsnbvisites' => $statsnbvisites, 'statsnbvisiteurs' => $statsnbvisiteurs, 'statsBatiment' => $statsBatiment, 'statsCrea'=>$statsCrea, 'statsConf' => $statsConf, 'statsOpale'=>$statsOpale, 'statsShowroom'=>$statsShowroom, 'statsRest'=>$statsRest, 'tableauMois'=>$tableauMois));
+		return $this->render('OFCalendarBundle:Admin:stats.html.twig',array('stats' => $stats,'visitesMonth'=> $statsVisitesMonth, 'visitesMonthLabels' => $statsVisitesMonthlabels, 'statsMoyenneMonth'=>$statsMoyenneMonth, 'statsnbvisites' => $statsnbvisites, 'statsnbvisiteurs' => $statsnbvisiteurs, 'statsBatiment' => $statsBatiment, 'statsCrea'=>$statsCrea, 'statsConf' => $statsConf, 'statsOpale'=>$statsOpale, 'statsShowroom'=>$statsShowroom,'statsLancementShowroom'=>$statsLancementShowroom, 'statsRest'=>$statsRest, 'tableauMois'=>$tableauMois));
 
 	}
 

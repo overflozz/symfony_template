@@ -228,6 +228,16 @@ var data = {
 		"lineTension":0.1
 
 
+	},	{
+		"label":"Lancement Showroom",
+		"data" : [{% for nombre in statsLancementShowroom %},{{ nombre }}{% endfor %}],
+		"fill":false,
+
+		"borderColor":"#5dbaea",
+
+		"lineTension":0.1
+
+
 	}
 	,	
 	{
@@ -257,7 +267,7 @@ var data = {
 		"data" : [{% for nombre in statsOpale %},{{ nombre }}{% endfor %}],
 		"fill":false,
 
-		"borderColor":"#e74c3c",
+		"borderColor":"#5dbaea",
 
 		"lineTension":0.1
 
