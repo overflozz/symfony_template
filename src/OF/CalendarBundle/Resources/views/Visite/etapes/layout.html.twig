@@ -19,8 +19,8 @@
 	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '3'})}}"><span class="glyphicon glyphicon-envelope"></span> Récapitulatif EDF</a>
 	    </li>
 	    #}
-	    <li class="{% if (steptoshow== 4)%}stepshowed{% endif %} {% if (event.step|abs > 4) %}complete{% elseif (event.step|abs == 4)%}active{% else %}disabled{% endif %}">
-	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '4'})}}"><span class="glyphicon glyphicon-time"></span> Déroulé</a>
+	    <li class="{% if (steptoshow== 3)%}stepshowed{% endif %} {% if (event.step|abs > 3) %}complete{% elseif (event.step|abs == 3)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '3'})}}"><span class="glyphicon glyphicon-time"></span> Déroulé</a>
 	    </li>
 	   	<li class="{% if (steptoshow== 5)%}stepshowed{% endif %} {% if (event.step|abs > 5) %}complete{% elseif (event.step|abs == 5)%}active{% else %}disabled{% endif %}">
 	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '5'})}}"><span class="glyphicon glyphicon-tasks"></span> Bilan</a>
@@ -43,11 +43,8 @@
 	    <li class="{% if (steptoshow== 2)%}stepshowed{% endif %} {% if (event.step|abs > 2) %}complete{% elseif (event.step|abs == 2)%}active{% else %}disabled{% endif %}">
 	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '2'})}}"><span class="glyphicon glyphicon-list-alt"></span> Proposition Visite</a>
 	    </li>
-	   	<li class="{% if (steptoshow== 3)%}stepshowed{% endif %} {% if (event.step|abs > 3) %}complete{% elseif (event.step|abs == 3)%}active{% else %}disabled{% endif %}">
-	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '3'})}}"><span class="glyphicon glyphicon-envelope"></span>Récapitulatif EDF</a>
-	    </li>
-	    <li class="{% if (steptoshow== 4)%}stepshowed{% endif %} {% if (event.step|abs > 4) %}complete{% elseif (event.step|abs == 4)%}active{% else %}disabled{% endif %}">
-	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '4'})}}"><span class="glyphicon glyphicon-time"></span> Déroulé</a>
+	    <li class="{% if (steptoshow== 3)%}stepshowed{% endif %} {% if (event.step|abs > 3) %}complete{% elseif (event.step|abs == 3)%}active{% else %}disabled{% endif %}">
+	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '3'})}}"><span class="glyphicon glyphicon-time"></span> Déroulé</a>
 	    </li>
 	   	<li class="{% if (steptoshow== 5)%}stepshowed{% endif %} {% if (event.step|abs > 5) %}complete{% elseif (event.step|abs == 5)%}active{% else %}disabled{% endif %}">
 	      <a href="{{ path('of_calendar_view_visite', {'id' : event.id, 'etape' : '5'})}}"><span class="glyphicon glyphicon-tasks"></span> Bilan</a>
@@ -109,8 +106,6 @@
 			{% include("@OFCalendar/Visite/etapes/etape2.html.twig") %}
 		{% elseif (steptoshow == 3)%}
 			{% include("@OFCalendar/Visite/etapes/etape3.html.twig") %}
-		{% elseif (steptoshow == 4)%}
-			{% include("@OFCalendar/Visite/etapes/etape4.html.twig") %}
 		{% elseif (steptoshow == 5)%}
 			{% include("@OFCalendar/Visite/etapes/etape5.html.twig") %}
 		{% elseif (steptoshow == -48)%}
